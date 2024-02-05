@@ -1,4 +1,3 @@
-// dijkstra is not done yet!
 #include <iostream>
 #include <unordered_map>
 
@@ -11,21 +10,29 @@ using namespace std;
 
 using namespace std;
 
-class saveDirect
+class saveDirect // saveDirect is that class we want to save our route distance and which viechel we use
 {
     public:
-    int distance {0};
+    int distance {__INT_MAX__};
     vector<string> direct;
     vector<string> type;
 
 };
 
-int minDistance(saveDirect dir[] , bool setSpt[]) // saveDirect is that class we want to save our route distance and which viechel we use
+string search(int inputKey , unordered_map<string , int> inputMap) // searching for stations
+{
+    for (auto i : inputMap)
+    {
+        if (i.second == inputKey) return i.first;
+    }
+}
+
+int minDistance(saveDirect dir[] , bool setSpt[]) 
 {
     int min {__INT_MAX__};
     int minIndex;
 
-    for (int ver{0} ; ver < 61 ; ver++ )//*change
+    for (int ver{0} ; ver < V ; ver++ )//*change
     {
         if (!setSpt[ver] && dir[ver].distance <= min)
         {
@@ -37,20 +44,58 @@ int minDistance(saveDirect dir[] , bool setSpt[]) // saveDirect is that class we
     return minIndex; 
 }
 
-void dijkstra(int src , int dest)
+//* change
+void dijkstra(int src , int dest , DataType stations[V][V])
 {
-    //*change
-    if (src >= 0 && src <= 61 &&
-       dest >= 0 && dest<= 61)
+    if (src >= 0 && src <= V-1 &&
+       dest >= 0 && dest<= V-1)
     {
-        saveDirect dir[61]; //*change
-        bool setSpt[61]; //*change
+        saveDirect dir[V];
+        bool setSpt[V] {false};
 
         dir[src].distance = 0;
-        dir[src].distance = 0;
+        dir[src].direct.push_back(search(src));
 
+        for (int i{0} ; i < V-1 ; i++)
+        {
+            string viechel{""};
+            int minIndex = minDistance(dir , setSpt);
 
+            setSpt[minIndex] {true};
+
+            for (int j{0} ; j< V ; j++)
+            {
+                if (!setSpt[j] && stations[minIndex][j].distance && dir[minIndex].distance != __INT_MAX__&&
+                    dir[minIndex].distance + stations[minIndex][j].distance < dir[j].distance)
+                    {
+                        dir[j].distance = dir[j].distance + stations[minIndex][j].distance;
+
+                        dir[j].direct = dir[minIndex].direct;
+                        dir[j].direct.push_back(search(j));
+
+                        dir[j].type = dir[minIndex].type;
+                        dir[j].type.push_back(stations[j][minIndex].path);
+                    }
+            }
+        }
+
+        cout << dir[dest].distance << "\n";
+
+        for ( int i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+        {
+            cout << dir[dest].direct[i];
+
+            if ( dir[dest].type[i] == "line1" ||
+                 dir[dest].type[i] == "line6" ||
+                 dir[dest].type[i] == "line3" ||
+                 dir[dest].type[i] == "line4" ||) cout << "Taxi or Subway";
+
+            else cout << "Bus";
+        }
+        cout << dir[dest].direct[dir[dest].direct.size() - 1];
     }
+
+    else throw invalid_argument("Not exist!");
 }
 
 int main()
@@ -62,7 +107,5 @@ int main()
     operation operatorr;
 
     operatorr.set_items(index, stations);
-
-    
 
 }
