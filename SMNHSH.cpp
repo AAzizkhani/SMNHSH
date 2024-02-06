@@ -26,6 +26,7 @@ string search(int inputKey , unordered_map<string , int> inputMap) // searching 
     {
         if (i.second == inputKey) return i.first;
     }
+    return 0;
 }
 
 int minDistance(saveDirect dir[] , bool setSpt[]) 
@@ -108,5 +109,16 @@ int main()
     operation operatorr;
 
     operatorr.setItems(index, stations);
+
+    string st1,st2;
+
+    cin>>st1>>st2;
+
+    int in1,in2;
+
+    in1=operatorr.getIndex(index,st1);
+    in2=operatorr.getIndex(index,st2);
+
+
 
 }

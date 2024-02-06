@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream> 
 #include <unordered_map>
 #include "Operation.hpp"
 
@@ -10,7 +11,8 @@ void setItems(unordered_map<string , int> t, DataType m [V][V])
 {
     int dis, j=0;
     string dataline1,dataline2,num;
-    ifstream stfile("bus_Routes.txt");
+    ifstream stfile;
+    stfile.open("bus_Routes.txt", ios::in);
     if (stfile.is_open())
     { 
         while (stfile) 
@@ -43,14 +45,15 @@ void setItems(unordered_map<string , int> t, DataType m [V][V])
         }
     }
     stfile.close();  
-    ifstream stfile("subway_Routes.txt");
-    if (stfile.is_open())
+    ifstream stfile1;
+    stfile1.open("subway_Routes.txt", ios::in);
+    if (stfile1.is_open())
     {
-        while (stfile) 
+        while (stfile1) 
         {
-            getline (stfile, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
-            getline (stfile, dataline1); //station1
-            getline (stfile, dataline2); //station2
+            getline (stfile1, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
+            getline (stfile1, dataline1); //station1
+            getline (stfile1, dataline2); //station2
             
             bool flag1=true, flag2=true;
 
@@ -69,23 +72,24 @@ void setItems(unordered_map<string , int> t, DataType m [V][V])
                 t[dataline2]=j;
                 j++;     
             }
-            getline (stfile, num);
+            getline (stfile1, num);
             dis = stoi(num); 
             m[t[dataline1]][t[dataline2]].set_dis(dis);
             m[t[dataline2]][t[dataline1]].set_dis(dis);
             
         }
     } 
-    stfile.close();  
+    stfile1.close();  
 
-    ifstream stfile("taxi_Routes.txt");
-    if (stfile.is_open())
+    ifstream stfile2;
+    stfile2.open("taxi_Routes.txt", ios::in);
+    if (stfile2.is_open())
     {
-        while (stfile) 
+        while (stfile2) 
         {
-            getline (stfile, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
-            getline (stfile, dataline1); //station1
-            getline (stfile, dataline2); //station2
+            getline (stfile2, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
+            getline (stfile2, dataline1); //station1
+            getline (stfile2, dataline2); //station2
             
             bool flag1=true, flag2=true;
 
@@ -104,14 +108,14 @@ void setItems(unordered_map<string , int> t, DataType m [V][V])
                 t[dataline2]=j;
                 j++;     
             }
-            getline (stfile, num);
+            getline (stfile2, num);
             dis = stoi(num); 
             m[t[dataline1]][t[dataline2]].set_dis(dis);
             m[t[dataline2]][t[dataline1]].set_dis(dis);
             
         }
     } 
-    stfile.close();  
+    stfile2.close();  
 
 }
 
