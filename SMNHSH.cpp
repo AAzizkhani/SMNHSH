@@ -1,12 +1,13 @@
 #include <iostream>
 #include <unordered_map>
-
-#define V 59
-using namespace std;
-
-
 #include <iostream>
 #include <vector>
+#include "DataType.hpp"
+#include "Operation.hpp"
+
+#define V 59
+
+
 
 using namespace std;
 
@@ -45,7 +46,7 @@ int minDistance(saveDirect dir[] , bool setSpt[])
 }
 
 //* change
-void dijkstra(int src , int dest , DataType stations[V][V])
+void dijkstra (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap)
 {
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
@@ -54,27 +55,27 @@ void dijkstra(int src , int dest , DataType stations[V][V])
         bool setSpt[V] {false};
 
         dir[src].distance = 0;
-        dir[src].direct.push_back(search(src));
+        dir[src].direct.push_back(search(src,inputMap));
 
         for (int i{0} ; i < V-1 ; i++)
         {
             string viechel{""};
             int minIndex = minDistance(dir , setSpt);
 
-            setSpt[minIndex] {true};
+            setSpt[minIndex] =true;
 
             for (int j{0} ; j< V ; j++)
             {
-                if (!setSpt[j] && stations[minIndex][j].distance && dir[minIndex].distance != __INT_MAX__&&
-                    dir[minIndex].distance + stations[minIndex][j].distance < dir[j].distance)
+                if (!setSpt[j] && stations[minIndex][j].get_dis() && dir[minIndex].distance != __INT_MAX__&&
+                    dir[minIndex].distance + stations[minIndex][j].get_dis() < dir[j].distance)
                     {
-                        dir[j].distance = dir[j].distance + stations[minIndex][j].distance;
+                        dir[j].distance = dir[j].distance + stations[minIndex][j].get_dis();
 
                         dir[j].direct = dir[minIndex].direct;
-                        dir[j].direct.push_back(search(j));
+                        dir[j].direct.push_back(search(j,inputMap));
 
                         dir[j].type = dir[minIndex].type;
-                        dir[j].type.push_back(stations[j][minIndex].path);
+                        dir[j].type.push_back(stations[j][minIndex].get_path());
                     }
             }
         }
@@ -88,7 +89,7 @@ void dijkstra(int src , int dest , DataType stations[V][V])
             if ( dir[dest].type[i] == "line1" ||
                  dir[dest].type[i] == "line6" ||
                  dir[dest].type[i] == "line3" ||
-                 dir[dest].type[i] == "line4" ||) cout << "Taxi or Subway";
+                 dir[dest].type[i] == "line4" ) cout << "Taxi or Subway";
 
             else cout << "Bus";
         }
@@ -102,10 +103,10 @@ int main()
 {
     unordered_map<string ,  int> index;
 
-    data_type stations[V][V];
+    DataType stations[V][V];
 
     operation operatorr;
 
-    operatorr.set_items(index, stations);
+    operatorr.setItems(index, stations);
 
 }

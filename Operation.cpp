@@ -1,10 +1,12 @@
+#include <iostream>
+#include <unordered_map>
 #include "Operation.hpp"
 
 #define V 59
 using namespace std;
 
 
-void Operation::setItems(unordered_map<string , int> t, data_type m [V][V])
+void setItems(unordered_map<string , int> t, DataType m [V][V])
 {
     int dis, j=0;
     string dataline1,dataline2,num;
@@ -113,7 +115,7 @@ void Operation::setItems(unordered_map<string , int> t, data_type m [V][V])
 
 }
 
-int Operation::getIndex(unordered_map<string , int> t,string stn)
+int operation::getIndex(unordered_map<string , int> t,string stn)
 {
     if (t.find(stn)==t.end())
         throw "this index does not exist";  
