@@ -19,13 +19,11 @@ void operation::setItems(unordered_map<string , int> & t, DataType m [V][V])
         while (stfile) 
         {
             getline (stfile, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
-          
             getline (stfile, dataline1); //station1
-           
             getline (stfile, dataline2); //station2
            
             
-            bool flag1=false, flag2=true;
+            bool flag1=false, flag2=false;
 
             if (t.find(dataline1)==t.end())
                 flag1=true;
@@ -64,7 +62,7 @@ void operation::setItems(unordered_map<string , int> & t, DataType m [V][V])
             getline (stfile1, dataline2); //station2
            
             
-            bool flag1=false, flag2=true;
+            bool flag1=false, flag2=false;
 
             if (t.find(dataline1)==t.end())
                 flag1=true;
@@ -82,10 +80,15 @@ void operation::setItems(unordered_map<string , int> & t, DataType m [V][V])
                 j++;     
             }
             getline (stfile1, num);
-            //cout<<num<<'\n';
             dis = stoi(num); 
-            m[t[dataline1]][t[dataline2]].set_dis(dis);
-            m[t[dataline2]][t[dataline1]].set_dis(dis);
+            if( m[t[dataline1]][t[dataline2]].get_dis()>dis|| m[t[dataline1]][t[dataline2]]==0)
+            {
+                m[t[dataline1]][t[dataline2]].set_dis(dis);
+                m[t[dataline2]][t[dataline1]].set_dis(dis);
+            }
+
+            
+            
             
         }
     } 
@@ -104,7 +107,7 @@ void operation::setItems(unordered_map<string , int> & t, DataType m [V][V])
             getline (stfile2, dataline2); //station2
             
             
-            bool flag1=false, flag2=true;
+            bool flag1=false, flag2=false;
 
             if (t.find(dataline1)==t.end())
                 flag1=true;
@@ -122,10 +125,14 @@ void operation::setItems(unordered_map<string , int> & t, DataType m [V][V])
                 j++;     
             }
             getline (stfile2, num);
-           // cout<<num<<'\n';
             dis = stoi(num); 
-            m[t[dataline1]][t[dataline2]].set_dis(dis);
-            m[t[dataline2]][t[dataline1]].set_dis(dis);
+            if( m[t[dataline1]][t[dataline2]].get_dis()>dis || m[t[dataline1]][t[dataline2]]==0 )
+            {
+                m[t[dataline1]][t[dataline2]].set_dis(dis);
+                m[t[dataline2]][t[dataline1]].set_dis(dis);
+            }
+
+            
             
         }
     } 

@@ -114,7 +114,8 @@ int main()
 
         string st1,st2;
 
-        cin>>st1>>st2;
+        getline(cin,st1);
+        getline(cin,st2);
 
         int in1,in2;
 
