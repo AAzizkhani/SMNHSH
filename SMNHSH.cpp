@@ -70,7 +70,7 @@ void dijkstra (int src , int dest , DataType stations[V][V], unordered_map<strin
                 if (!setSpt[j] && stations[minIndex][j].get_dis() && dir[minIndex].distance != __INT_MAX__&&
                     dir[minIndex].distance + stations[minIndex][j].get_dis() < dir[j].distance)
                     {
-                        dir[j].distance = dir[j].distance + stations[minIndex][j].get_dis();
+                        dir[j].distance = dir[minIndex].distance + stations[minIndex][j].get_dis();
 
                         dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
