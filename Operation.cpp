@@ -7,26 +7,31 @@
 using namespace std;
 
 
-void operation::setItems(unordered_map<string , int> t, DataType m [V][V])
+void operation::setItems(unordered_map<string , int> & t, DataType m [V][V])
 {
     int dis, j=0;
     string dataline1,dataline2 , num;
     ifstream stfile;
     stfile.open("bus_Routes.txt", ios::in);
+
     if (stfile.is_open())
     { 
         while (stfile) 
         {
             getline (stfile, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
+          
             getline (stfile, dataline1); //station1
+           
             getline (stfile, dataline2); //station2
+           
             
-            bool flag1=true, flag2=true;
+            bool flag1=false, flag2=true;
 
-            if (t.find(dataline1)!=t.end())
-                flag1=false;
-            if (t.find(dataline2)!=t.end())
-                flag2=false;
+            if (t.find(dataline1)==t.end())
+                flag1=true;
+                
+            if (t.find(dataline2)==t.end())
+                flag2=true;
                 
             if(flag1)
             {
@@ -43,8 +48,9 @@ void operation::setItems(unordered_map<string , int> t, DataType m [V][V])
             m[t[dataline1]][t[dataline2]].set_dis(dis);
             m[t[dataline2]][t[dataline1]].set_dis(dis);
         }
-    }
-    stfile.close();  
+       
+    }  
+    stfile.close();
     ifstream stfile1;
     stfile1.open("subway_Routes.txt", ios::in);
     if (stfile1.is_open())
@@ -52,15 +58,18 @@ void operation::setItems(unordered_map<string , int> t, DataType m [V][V])
         while (stfile1) 
         {
             getline (stfile1, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
+           
             getline (stfile1, dataline1); //station1
-            getline (stfile1, dataline2); //station2
             
-            bool flag1=true, flag2=true;
+            getline (stfile1, dataline2); //station2
+           
+            
+            bool flag1=false, flag2=true;
 
-            if (t.find(dataline1)!=t.end())
-                flag1=false;
-            if (t.find(dataline2)!=t.end())
-                flag2=false;
+            if (t.find(dataline1)==t.end())
+                flag1=true;
+            if (t.find(dataline2)==t.end())
+                flag2=true;
                 
             if(flag1)
             {
@@ -73,6 +82,7 @@ void operation::setItems(unordered_map<string , int> t, DataType m [V][V])
                 j++;     
             }
             getline (stfile1, num);
+            //cout<<num<<'\n';
             dis = stoi(num); 
             m[t[dataline1]][t[dataline2]].set_dis(dis);
             m[t[dataline2]][t[dataline1]].set_dis(dis);
@@ -88,15 +98,18 @@ void operation::setItems(unordered_map<string , int> t, DataType m [V][V])
         while (stfile2) 
         {
             getline (stfile2, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
+          
             getline (stfile2, dataline1); //station1
+      
             getline (stfile2, dataline2); //station2
             
-            bool flag1=true, flag2=true;
+            
+            bool flag1=false, flag2=true;
 
-            if (t.find(dataline1)!=t.end())
-                flag1=false;
-            if (t.find(dataline2)!=t.end())
-                flag2=false;
+            if (t.find(dataline1)==t.end())
+                flag1=true;
+            if (t.find(dataline2)==t.end())
+                flag2=true;
                 
             if(flag1)
             {
@@ -109,6 +122,7 @@ void operation::setItems(unordered_map<string , int> t, DataType m [V][V])
                 j++;     
             }
             getline (stfile2, num);
+           // cout<<num<<'\n';
             dis = stoi(num); 
             m[t[dataline1]][t[dataline2]].set_dis(dis);
             m[t[dataline2]][t[dataline1]].set_dis(dis);

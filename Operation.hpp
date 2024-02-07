@@ -13,7 +13,7 @@ using namespace std;
 class operation
 {
     public:
-    void setItems(unordered_map<string , int> , DataType[59][59]);
+    void setItems(unordered_map<string , int> &, DataType[59][59]);
     int getIndex (unordered_map<string , int> , string);
 };
 #endif
