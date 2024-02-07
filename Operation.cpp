@@ -7,10 +7,10 @@
 using namespace std;
 
 
-void setItems(unordered_map<string , int> t, DataType m [V][V])
+void operation::setItems(unordered_map<string , int> t, DataType m [V][V])
 {
     int dis, j=0;
-    string dataline1,dataline2,num;
+    string dataline1,dataline2 , num;
     ifstream stfile;
     stfile.open("bus_Routes.txt", ios::in);
     if (stfile.is_open())
@@ -122,7 +122,7 @@ void setItems(unordered_map<string , int> t, DataType m [V][V])
 int operation::getIndex(unordered_map<string , int> t,string stn)
 {
     if (t.find(stn)==t.end())
-        throw "this index does not exist";  
+        throw invalid_argument("this index does not exist");  
         
     return t[stn];
 }

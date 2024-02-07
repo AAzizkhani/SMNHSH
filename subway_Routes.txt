@@ -54,7 +54,6 @@ line1
 Shahr-e Rey
 Kahrizak
 13
-*
 line6
 Haram-e Hazrat-e Abdolazim
 Shahid Rezaei
@@ -89,8 +88,8 @@ Kashani
 6
 line6
 Kashani
-Kouhsar10
-*
+Kouhsar
+10
 line3
 Gha'em
 Aghdasiyeh
@@ -151,7 +150,6 @@ line3
 Zamzam
 Azadegan
 8
-*
 line4
 Shahid Kolahdouz
 Nirou Havaei
@@ -224,4 +222,3 @@ line4
 Kashani
 Chaharbagh
 5
-*

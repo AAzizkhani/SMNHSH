@@ -102,23 +102,32 @@ void dijkstra (int src , int dest , DataType stations[V][V], unordered_map<strin
 
 int main()
 {
-    unordered_map<string ,  int> index;
+    try
+    {
+        unordered_map<string ,  int> index;
 
-    DataType stations[V][V];
+        DataType stations[V][V];
 
-    operation operatorr;
+        operation operatorr;
 
-    operatorr.setItems(index, stations);
+        operatorr.setItems(index, stations);
 
-    string st1,st2;
+        string st1,st2;
 
-    cin>>st1>>st2;
+        cin>>st1>>st2;
 
-    int in1,in2;
+        int in1,in2;
 
-    in1=operatorr.getIndex(index,st1);
-    in2=operatorr.getIndex(index,st2);
+        in1=operatorr.getIndex(index,st1);
+        in2=operatorr.getIndex(index,st2);
 
+        dijkstra(in1 , in2 , stations , index);
+    }
 
+    catch(invalid_argument &e)
+    {
+        cout << e.what();
+    }
+    
 
 }

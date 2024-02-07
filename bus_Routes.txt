@@ -30,7 +30,6 @@ BUS1
 Meydan-e Azadi
 Bimeh
 3
-*
 BUS2
 Khajeh Abdollah-e Ansari
 Gha'em
@@ -47,7 +46,6 @@ BUS2
 Shahid Rezaei
 Payaneh Javanmard
 8
-*
 BUS3
 Shahid Sadr
 Tajrish
@@ -68,4 +66,3 @@ BUS3
 Rahahan
 Shahrak-e Shari'ati
 5
-*
