@@ -6,8 +6,7 @@
 #define V 59
 using namespace std;
 
-
-void operation::setItems(unordered_map<string , int> t, DataType m [V][V])
+void operation::setItems(unordered_map<string , int> &t, DataType m [V][V])
 {
     int dis, j=0;
     string dataline1,dataline2 , num;
