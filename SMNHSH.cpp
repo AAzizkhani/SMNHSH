@@ -62,7 +62,6 @@ void dijkstra (int src , int dest , DataType stations[V][V], unordered_map<strin
         {
             string viechel{""};
             int minIndex = minDistance(dir , setSpt);
-
             setSpt[minIndex] =true;
 
             for (int j{0} ; j< V ; j++)
@@ -85,14 +84,16 @@ void dijkstra (int src , int dest , DataType stations[V][V], unordered_map<strin
 
         for ( int i{0} ; i<dir[dest].direct.size() - 1 ;i++)
         {
-            cout << dir[dest].direct[i];
+            cout << dir[dest].direct[i]<<"\t";
 
-            if ( dir[dest].type[i] == "line1" ||
+           /* if ( dir[dest].type[i] == "line1" ||
                  dir[dest].type[i] == "line6" ||
                  dir[dest].type[i] == "line3" ||
-                 dir[dest].type[i] == "line4" ) cout << "Taxi or Subway";
+                 dir[dest].type[i] == "line4" ) cout << " Taxi or Subway";
 
-            else cout << "Bus";
+            else cout << "  Bus  ";*/
+            cout<<dir[dest].type[i]<<"\t";
+
         }
         cout << dir[dest].direct[dir[dest].direct.size() - 1];
     }
@@ -120,6 +121,7 @@ int main()
         int in1,in2;
 
         in1=operatorr.getIndex(index,st1);
+
         in2=operatorr.getIndex(index,st2);
 
         dijkstra(in1 , in2 , stations , index);

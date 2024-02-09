@@ -43,8 +43,16 @@ void operation::setItems(unordered_map<string , int> & t, DataType m [V][V])
             }
             getline (stfile, num);
             dis = stoi(num); 
-            m[t[dataline1]][t[dataline2]].set_dis(dis);
-            m[t[dataline2]][t[dataline1]].set_dis(dis);
+            if( m[t[dataline1]][t[dataline2]].get_dis()>dis|| m[t[dataline1]][t[dataline2]].get_dis() == 0)
+            {
+                m[t[dataline1]][t[dataline2]].set_dis(dis);
+                m[t[dataline2]][t[dataline1]].set_dis(dis);
+                m[t[dataline2]][t[dataline1]].set_pathh("bus");
+                m[t[dataline1]][t[dataline2]].set_pathh("bus");
+
+
+            }
+
         }
        
     }  
@@ -81,14 +89,13 @@ void operation::setItems(unordered_map<string , int> & t, DataType m [V][V])
             }
             getline (stfile1, num);
             dis = stoi(num); 
-            if( m[t[dataline1]][t[dataline2]].get_dis()>dis|| m[t[dataline1]][t[dataline2]]==0)
+            if( m[t[dataline1]][t[dataline2]].get_dis()>dis|| m[t[dataline1]][t[dataline2]].get_dis() == 0)
             {
                 m[t[dataline1]][t[dataline2]].set_dis(dis);
                 m[t[dataline2]][t[dataline1]].set_dis(dis);
-            }
-
-            
-            
+                m[t[dataline2]][t[dataline1]].set_pathh("subway");
+                m[t[dataline1]][t[dataline2]].set_pathh("subway");
+            }    
             
         }
     } 
@@ -126,14 +133,13 @@ void operation::setItems(unordered_map<string , int> & t, DataType m [V][V])
             }
             getline (stfile2, num);
             dis = stoi(num); 
-            if( m[t[dataline1]][t[dataline2]].get_dis()>dis || m[t[dataline1]][t[dataline2]]==0 )
+            if( m[t[dataline1]][t[dataline2]].get_dis()>dis || m[t[dataline1]][t[dataline2]].get_dis() == 0 )
             {
                 m[t[dataline1]][t[dataline2]].set_dis(dis);
                 m[t[dataline2]][t[dataline1]].set_dis(dis);
-            }
-
-            
-            
+                m[t[dataline2]][t[dataline1]].set_pathh("taxi");
+                m[t[dataline1]][t[dataline2]].set_pathh("taxi");
+            }     
         }
     } 
     stfile2.close();  
