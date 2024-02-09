@@ -95,7 +95,7 @@ void dijkstra (int src , int dest , DataType stations[V][V], unordered_map<strin
             cout<<dir[dest].type[i]<<"\t";
 
         }
-        cout << dir[dest].direct[dir[dest].direct.size() - 1];
+        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
     }
 
     else throw invalid_argument("Not exist!");
@@ -111,7 +111,7 @@ int main()
 
         operation operatorr;
 
-        operatorr.setItems(index, stations);
+        operatorr.setItems_dis(index, stations);
 
         string st1,st2;
 
@@ -119,12 +119,12 @@ int main()
         getline(cin,st2);
 
         int in1,in2;
-
         in1=operatorr.getIndex(index,st1);
-
         in2=operatorr.getIndex(index,st2);
-
+        cout<<"min distance: "<<'\n';
         dijkstra(in1 , in2 , stations , index);
+        
+
     }
 
     catch(invalid_argument &e)
