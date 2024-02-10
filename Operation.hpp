@@ -5,6 +5,7 @@
 #include <fstream>
 #include <exception>
 #include <string>
+#include <vector>
 #include <unordered_map>
 #include "DataType.hpp"
 
