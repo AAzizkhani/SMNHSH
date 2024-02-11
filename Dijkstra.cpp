@@ -26,7 +26,7 @@ int Dijkstra::minDistance(saveDirect dir[] , bool setSpt[])
     return minIndex; 
 }
 
-void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap)
+void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap,bool level)
 {
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
@@ -48,7 +48,12 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
                 if (!setSpt[j] && stations[minIndex][j].get_dis() && dir[minIndex].distance != __INT_MAX__&&
                     dir[minIndex].distance + stations[minIndex][j].get_dis() < dir[j].distance)
                     {
+
+                        if(!level || stations[j][minIndex].get_path()=="taxi" )
                         dir[j].distance = dir[minIndex].distance + stations[minIndex][j].get_dis();
+                        else
+                        dir[j].distance = dir[minIndex].distance;
+
 
                         dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
@@ -75,6 +80,7 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
 
         }
         cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
+
     }
 
     else throw invalid_argument("Not exist!");

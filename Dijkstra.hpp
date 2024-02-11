@@ -26,7 +26,7 @@ private:
     int minDistance(saveDirect[] , bool[]);
 
 public:
-    void dijkstra (int, int, DataType[V][V], unordered_map<string , int> );
+    void dijkstra (int, int, DataType[V][V], unordered_map<string , int>,bool );
 
 };
 

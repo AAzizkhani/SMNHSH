@@ -3,12 +3,12 @@
 #include <vector>
 #include <unordered_map>
 #include "Operation.hpp"
-
+#include <set>
 #define V 59
 using namespace std;
 
 
-void operation::read_cost(char type, vector <int> costs, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V] )
+void operation::read_cost( char type, vector <int> costs, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V] )
 {
     string dataline1,dataline2;
     int dis;
@@ -34,6 +34,7 @@ void operation::read_cost(char type, vector <int> costs, ifstream &stfile1, unor
                 m[t[dataline1]][t[dataline2]].set_dis((costs[0]*dis));
                 m[t[dataline2]][t[dataline1]].set_dis((costs[0]*dis));  
             }
+                       
         }
 }
 
@@ -123,6 +124,32 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[59][59
             costs.push_back(cost);
         }
     }
+    costfile.close();
+    ifstream stfile;
+    stfile.open("bus_Routes.txt", ios::in);
+
+    if (stfile.is_open())
+    { 
+        read_cost('b',costs, stfile, t, m);
+    }  
+    stfile.close();
+    ifstream stfile1;
+    stfile1.open("subway_Routes.txt", ios::in);
+    if (stfile1.is_open())
+    {
+        read_cost('s',costs, stfile, t, m);
+
+    } 
+    stfile1.close();  
+
+    ifstream stfile2;
+    stfile2.open("taxi_Routes.txt", ios::in);
+    if (stfile2.is_open())
+    {
+        read_cost('t',costs, stfile, t, m);
+       
+    } 
+    stfile2.close(); 
 
 
 }
