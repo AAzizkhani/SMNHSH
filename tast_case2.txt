@@ -1,0 +1,69 @@
+Sohrevardi
+Javadiyeh
+{
+	Sohrevardi to Meydan-e Hazrat-e ValiAsr ----> taxi or sub (7)
+	
+	Meydan-e Hazrat-e ValiAsr to Rahahan ----> bus (8)
+	
+	Rahahan to Javadiyeh ----> taxi or sub (2)
+	
+	Shortest–Distances = 17
+}
+
+
+Shahid Mofatteh
+Meydan-e Shohada
+{
+	Shahid Mofatteh to Haftom-e Tir ----> taxi or sub (2)
+	
+	از اینجا برای رسیدن به میدان شهدا ۳ راه وجود دارد که هر سه هم اندازه هستند (taxi or sub) یا (taxi- bus - taxi)
+	Haftom-e Tir to Meydan-e Shohada ----> (7)
+	
+	Shortest–Distances = 9
+}
+
+
+Shahid Ghodousi
+Emam Hossein
+{
+	Shahid Ghodousi to Shahid Beheshti ----> taxi or sub (3)
+	
+	Shahid Beheshti to Haftom-e Tir ----> taxi or sub (4)
+	
+	در اینجا برای رسیدن به امام حسین دو راه وجود دارد (taxi or sub) یا (taxi و bus) که هر دو با هم برابرند
+	Haftom-e Tir to Emam Hossein ----> (5)
+	
+	Shortest–Distances = 12
+}
+
+
+Meydan-e Azadi
+Ebn-e Sina
+{
+	Meydan-e Azadi to Ostad Mo'in ----> taxi or sub (2)
+	
+	Ostad Mo'in to Ferdowsi ----> bus (7)
+	
+	برای رسیدن از فردوسی به دروازه دولت تاکسی یا اتوبوس تفاوتی ندارد اندازها یکسان است
+	Ferdowsi to Darvazeh Dowlat ----> (1)
+	
+	برای رسیدن از دروازه دولت به ابن سینا استفاده از (اتوبوس بعد تاکسی) یا تاکسی به تنهایی تفاوتی ندارد اندازها یکسان است
+	Darvazeh Dowlat to Ebn-e Sina ----> (5)
+	
+	Shortest–Distances = 15
+}
+
+
+Gheytariyeh
+Shahid Haghani
+{
+	Gheytariyeh to Shahid Haghani ----> taxi or sub (12)
+	
+	Shortest–Distances = 12
+}
+
+
+
+
+
+	
