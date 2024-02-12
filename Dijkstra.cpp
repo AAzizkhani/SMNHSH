@@ -48,12 +48,12 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
                 if (!setSpt[j] && stations[minIndex][j].get_dis() && dir[minIndex].distance != __INT_MAX__&&
                     dir[minIndex].distance + stations[minIndex][j].get_dis() < dir[j].distance)
                     {
-
+ 
                         if(!level || stations[j][minIndex].get_path()=="taxi" )
                         dir[j].distance = dir[minIndex].distance + stations[minIndex][j].get_dis();
-                        else
-                        dir[j].distance = dir[minIndex].distance;
-
+                        else{
+                        dir[j].distance =stations[minIndex][j].get_dis();
+                        }
 
                         dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
@@ -80,6 +80,9 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
 
         }
         cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
+        dir->type.clear();
+        dir->direct.clear();
+
 
     }
 

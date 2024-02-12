@@ -10,9 +10,9 @@ using namespace std;
 
 void operation::read_cost( char type, vector <int> costs, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V] )
 {
-    string dataline1,dataline2;
+    string dataline1,dataline2,num;
     int dis;
-    while (stfile1) 
+    while (!stfile1.eof()) 
         {
             getline (stfile1, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
             getline (stfile1, dataline1); //station1
@@ -27,10 +27,10 @@ void operation::read_cost( char type, vector <int> costs, ifstream &stfile1, uno
             m[t[dataline1]][t[dataline2]].set_dis(costs[1]);
             m[t[dataline2]][t[dataline1]].set_dis(costs[1]);   
             }
-            getline (stfile1, dataline1);
+            getline (stfile1, num);
             if(type=='t')
             {
-                dis=stoi(dataline1);
+                dis=stoi(num);
                 m[t[dataline1]][t[dataline2]].set_dis((costs[0]*dis));
                 m[t[dataline2]][t[dataline1]].set_dis((costs[0]*dis));  
             }
@@ -43,7 +43,7 @@ void operation::read_dis(string type,ifstream &stfile1, unordered_map<string , i
     int dis;
     static int j;
     string dataline1,dataline2 , num;
-    while (stfile1) 
+    while (!stfile1.eof()) 
         {
             getline (stfile1, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
             getline (stfile1, dataline1); //station1
@@ -108,7 +108,7 @@ void operation::setItems_dis(unordered_map<string , int> & t, DataType m [V][V])
     stfile2.close();  
 
 }
-void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[59][59])
+void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V])
 {
     vector <int> costs;
     ifstream costfile;
@@ -117,7 +117,7 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[59][59
     costfile.open("price.txt", ios::in);
     if(costfile.is_open())
     {
-        while(costfile)
+        while(!costfile.eof())
         {
             getline(costfile, price);//0-> taxi, 1->sub, 2->bus, 3-> traffic(taxi)
             cost=stoi(price);
@@ -137,7 +137,7 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[59][59
     stfile1.open("subway_Routes.txt", ios::in);
     if (stfile1.is_open())
     {
-        read_cost('s',costs, stfile, t, m);
+        read_cost('s',costs, stfile1, t, m);
 
     } 
     stfile1.close();  
@@ -146,7 +146,7 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[59][59
     stfile2.open("taxi_Routes.txt", ios::in);
     if (stfile2.is_open())
     {
-        read_cost('t',costs, stfile, t, m);
+        read_cost('t',costs, stfile2, t, m);
        
     } 
     stfile2.close(); 

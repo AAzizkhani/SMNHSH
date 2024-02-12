@@ -33,7 +33,7 @@ int main()
         cout<<"min distance: "<<'\n';
         Dijkstra d;
         d.dijkstra(in1 , in2 , stations , index, false);
-        cout<<endl;
+        cout<<"min cost: "<<'\n';
         operatorr.setItems_cost(index, stations);
         d.dijkstra(in1 , in2 , stations , index, true);
 
