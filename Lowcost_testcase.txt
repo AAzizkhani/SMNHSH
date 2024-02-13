@@ -1,0 +1,54 @@
+Sohrevardi
+Javadiyeh
+{
+	Sohrevardi to Javadiyeh ----> subway (3267 toman)
+	
+	Low–cost = 3267 toman;
+}
+
+
+Shahid Mofatteh
+Meydan-e Shohada
+{
+	برای این کار دو مسیر با هزینه برابر وجود دارد
+	1) 	Shahid Mofatteh to Haftom-e Tir ----> subway (3267 toman)
+	   
+	   	Haftom-e Tir to Meydan-e Shohada ----> subway (3267 toman)
+	   	
+	2)
+		Shahid Mofatteh to Darvazeh Dowlat ----> subway (3267 toman)
+		
+		Darvazeh Dowlat to Meydan-e Shohada ----> subway (3267 toman)
+		
+		Low–cost = 6534 toman;
+}
+
+
+Shahid Ghodousi
+Emam Hossein
+{
+	Shahid Ghodousi to Meydan-e Hazrat-e ValiAsr ----> subway (3267 toman)
+	
+	Meydan-e Hazrat-e ValiAsr to Emam Hossein ----> subway (3267 toman)
+	
+	Low–cost = 6534 toman;
+}
+
+
+Meydan-e Azadi
+Ebn-e Sina
+{
+	Meydan-e Azadi to Ebn-e Sina ----> bus (2250 toman)
+	
+	Low–cost = 2250 toman;
+}
+
+
+Gheytariyeh
+Shahid Haghani
+{
+	Gheytariyeh to Shahid Haghani ----> subway (3267 toman)
+	
+	Low–cost = 3267 toman;
+}
+
