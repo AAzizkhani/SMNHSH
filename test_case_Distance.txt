@@ -1,3 +1,78 @@
+Tajrish
+Rahahan
+{
+	tajrish to Mirdamad -----> bus (8)
+	
+	mirdamad to meydan vali asr -----> bus (11)
+	
+	meydan vali asr to Rahahan -----> bus
+	
+	Shortest–Distances = 27
+	
+}
+
+
+Pirouzi
+Ferdowsi
+{
+	Pirouzi to Ebn-e Sina ----> taxi or sub  (3)
+	
+	Ebn-e Sina to Meydan-e Shohada -----> taxi or sub  (1)
+	
+	Meydan-e Shohada to Ferdowsi -----> taxi or sub or bus (5)	فرقی نمیکنه میتونه تاکسی و اتوبوس باشه یا کلا تاکسی باشه
+	
+	Shortest–Distances = 9
+}
+	
+
+
+Gha'em
+Shahid Rezaei 
+{
+	Gha'em to Pirouzi ----> bus (19)
+	
+	Pirouzi to Shahid Rezaei ----> bus (8)
+	
+	Shortest–Distances = 28
+}
+
+
+Allameh Jafari
+Rahahan
+{
+	دو را وجود دارد به سمت بالا حرکت کنیم یا پایین؟
+	به هر سمتی حرکت کنیم کمترین مسافت بدست آمده برابر میشود
+	if moved up
+	
+		Allameh Jafari to meydan vali asr ----> taxi or sub (20)
+	
+		meydan vali asr to Rahahan ----> bus (8)
+	
+	if moved down
+	
+		Allameh Jafari to Ostad Mo'in ----> taxi or sub (13)
+	
+		Ostad Mo'in to Meydan-e Enghelab-e Eslami ----> bus (4)
+	
+		Meydan-e Enghelab-e Eslami to Rahahan ----> taxi or sub (11)
+	
+	
+	Shortest–Distances = 28
+}
+	
+	
+Tajrish
+Meydan-e Jahad
+{
+	tajrish to Mirdamad -----> bus (8)
+	
+	mirdamad to meydan vali asr -----> bus (11)
+	
+	meydan vali asr to Meydan-e Jahad ----> taxi or sub (1)
+	
+	Shortest–Distances = 20
+}
+
 Sohrevardi
 Javadiyeh
 {
@@ -61,9 +136,18 @@ Shahid Haghani
 	
 	Shortest–Distances = 12
 }
-
-
-
-
-
 	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+
