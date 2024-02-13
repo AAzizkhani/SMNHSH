@@ -1,0 +1,54 @@
+Tajrish
+Rahahan
+{
+	just Bus;
+	چون مبدا و مقصد در یک لاین اتوبوس قرار داردند کمترین هزینه متعلق به اتوبوس است. همچنین در ساعات ترافیک نیز هزینه آن تغییری ندارد.
+	Low–cost = 2250 toman;
+}
+
+
+Pirouzi
+Ferdowsi
+{
+	Pirouzi to Ebn-e Sina ----> subway (3267 toman)
+	
+	Ebn-e Sina to Ferdowsi -----> bus (2250 toman)
+	
+	Low–cost = 5517 toman;
+}
+
+
+Gha'em
+Shahid Rezaei
+{
+	just Bus;
+	چون مبدا و مقصد در یک لاین اتوبوس قرار داردند کمترین هزینه متعلق به اتوبوس است. همچنین در ساعات ترافیک نیز هزینه آن تغییری ندارد.
+	Low–cost = 2250 toman;
+}
+
+
+Allameh Jafari
+Rahahan
+{
+	Allameh Jafari to Teatr-e Shahr ----> subway (3267 toman)
+	
+	Teatr-e Shahr to Rahahan ----> subway (3267 toman)
+	
+	Low–cost = 6534 toman;
+}
+
+
+Tajrish
+Meydan-e Jahad
+{
+	Tajrish to Meydan-e Hazrat-e ValiAsr ----> bus (2250 toman)
+	
+	Meydan-e Hazrat-e ValiAsr to Meydan-e Jahad ----> subway (3267 toman)
+	
+	Low–cost = 5517 toman;
+}
+	
+	
+	
+	
+	
