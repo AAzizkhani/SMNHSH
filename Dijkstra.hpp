@@ -5,10 +5,10 @@
 #include <unordered_map>
 #include <stdexcept>
 #include <vector>
-
 #include "DataType.hpp"
 
 #define V 59
+
 using namespace std;
 
 class Dijkstra
@@ -20,13 +20,17 @@ private:
     int distance {__INT_MAX__};
     vector<string> direct;
     vector<string> type;
+    vector<string> line;
+
     };
 
     string search(int,unordered_map<string , int>);
     int minDistance(saveDirect[] , bool[]);
 
 public:
-    void dijkstra (int, int, DataType[V][V], unordered_map<string , int>,bool );
+    void dijkstra (int, int, DataType[V][V], unordered_map<string , int> );
+    void dijkstra_cost (int, int, DataType[V][V], unordered_map<string , int>);
+
 
 };
 

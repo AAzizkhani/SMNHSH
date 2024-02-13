@@ -16,6 +16,7 @@ class operation
     public:
     void read_dis(string, ifstream &, unordered_map<string , int> &, DataType [59][59] );
     void read_cost(char, vector <int>, ifstream &, unordered_map<string , int> &, DataType [59][59]);
+  //  void read_cost_line(char, vector <int>, ifstream &, unordered_map<string , int> &, DataType [59][59]);
     void setItems_dis(unordered_map<string , int> &, DataType[59][59]);
     void setItems_cost(unordered_map<string , int> &, DataType[59][59]);
     int getIndex (unordered_map<string , int> , string);

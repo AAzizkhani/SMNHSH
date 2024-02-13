@@ -32,10 +32,10 @@ int main()
         in2=operatorr.getIndex(index,st2);
         cout<<"min distance: "<<'\n';
         Dijkstra d;
-        d.dijkstra(in1 , in2 , stations , index, false);
+        d.dijkstra(in1 , in2 , stations , index);
         cout<<"min cost: "<<'\n';
         operatorr.setItems_cost(index, stations);
-        d.dijkstra(in1 , in2 , stations , index, true);
+        d.dijkstra_cost(in1 , in2 , stations , index);
 
     }
 

@@ -19,13 +19,13 @@ void operation::read_cost( char type, vector <int> costs, ifstream &stfile1, uno
             getline (stfile1, dataline2); //station2
             if(type=='b')
             {
-            m[t[dataline1]][t[dataline2]].set_dis(costs[2]);
-            m[t[dataline2]][t[dataline1]].set_dis(costs[2]);
+                m[t[dataline1]][t[dataline2]].set_dis(costs[2]);
+                m[t[dataline2]][t[dataline1]].set_dis(costs[2]);
             }
             if(type=='s')
             {
-            m[t[dataline1]][t[dataline2]].set_dis(costs[1]);
-            m[t[dataline2]][t[dataline1]].set_dis(costs[1]);   
+                m[t[dataline1]][t[dataline2]].set_dis(costs[1]);
+                m[t[dataline2]][t[dataline1]].set_dis(costs[1]);   
             }
             getline (stfile1, num);
             if(type=='t')
@@ -42,10 +42,10 @@ void operation::read_dis(string type,ifstream &stfile1, unordered_map<string , i
 {
     int dis;
     static int j;
-    string dataline1,dataline2 , num;
+    string dataline1,dataline2 , num, line;
     while (!stfile1.eof()) 
         {
-            getline (stfile1, dataline1); //faghed ahamiyat.firs line. bs1/sub1/tax1/...
+            getline (stfile1, line); //firs line. bs1/sub1/tax1/...
             getline (stfile1, dataline1); //station1
             getline (stfile1, dataline2); //station2
            
@@ -74,6 +74,10 @@ void operation::read_dis(string type,ifstream &stfile1, unordered_map<string , i
                 m[t[dataline2]][t[dataline1]].set_dis(dis);
                 m[t[dataline2]][t[dataline1]].set_pathh(type);
                 m[t[dataline1]][t[dataline2]].set_pathh(type);
+                m[t[dataline1]][t[dataline2]].set_line(line);
+                m[t[dataline2]][t[dataline1]].set_line(line);
+
+
 
             }
         }
