@@ -99,10 +99,9 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                 if (!setSpt[j] && stations[minIndex][j].get_dis() && dir[minIndex].distance != __INT_MAX__)
                     {                       
 
-                        if( stations[minIndex][j].get_line() != dir[j].line[dir[j].line.size()-1]
-                        && dir[minIndex].distance + stations[minIndex][j].get_dis() < dir[j].distance)//وارد حلقه های شرظ نمیشه
+                        if(dir[j].line.size()==0 ||( stations[minIndex][j].get_line() != dir[j].line[dir[j].line.size()-1]
+                        && dir[minIndex].distance + stations[minIndex][j].get_dis() < dir[j].distance) || dir[j].type[dir[j].type.size()-1]=="taxi")//وارد حلقه های شرظ نمیشه
                         {
-                            cout<<"hi!";
                         dir[j].distance = dir[minIndex].distance + stations[minIndex][j].get_dis();
                         dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
@@ -111,7 +110,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                         dir[j].type.push_back(stations[j][minIndex].get_path());  
                         } 
 
-                        if( stations[minIndex][j].get_line() == dir[j].line[dir[j].line.size()-1]
+                        if(dir[j].line.size()>0 && stations[minIndex][j].get_line() == dir[j].line[dir[j].line.size()-1]
                         && dir[minIndex].distance < dir[j].distance)
                         {
 
