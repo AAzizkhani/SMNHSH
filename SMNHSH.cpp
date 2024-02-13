@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <iostream>
 #include <vector>
+#include <stdexcept>
 
 #include "DataType.hpp"
 #include "Operation.hpp"
@@ -12,24 +13,23 @@ using namespace std;
 
 int main()
 {
+    
     try
     {
         unordered_map<string ,  int> index;
-
         DataType stations[V][V];
-
         operation operatorr;
 
         operatorr.setItems_dis(index, stations);
 
-        string st1,st2;
-
+        string st1,st2;    
         getline(cin,st1);
         getline(cin,st2);
 
         int in1,in2;
         in1=operatorr.getIndex(index,st1);
         in2=operatorr.getIndex(index,st2);
+
         cout<<"min distance: "<<'\n';
         Dijkstra d;
         d.dijkstra(in1 , in2 , stations , index);
@@ -43,6 +43,4 @@ int main()
     {
         cout << e.what();
     }
-    
-
 }

@@ -66,7 +66,7 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
 
         cout << dir[dest].distance << "\n";
 
-        for ( int i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+        for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
         {
             cout << dir[dest].direct[i]<<"\t";
             cout<<dir[dest].type[i]<<"\t";
@@ -129,7 +129,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
 
         cout << dir[dest].distance << "\n";
 
-        for ( int i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+        for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
         {
             cout << dir[dest].direct[i]<<"\t";
             cout<<dir[dest].type[i]<<"\t";
