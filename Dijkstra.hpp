@@ -21,7 +21,6 @@ private:
     vector<string> direct;
     vector<string> type;
     vector<string> line;
-
     };
 
     string search(int,unordered_map<string , int>);

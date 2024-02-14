@@ -28,7 +28,7 @@ int Dijkstra::minDistance(saveDirect dir[] , bool setSpt[])
         }
     }
 
-    return minIndex; 
+    return minIndex;
 }
 
 void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap )
@@ -99,27 +99,35 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                 if (!setSpt[j] && stations[minIndex][j].get_dis() && dir[minIndex].distance != __INT_MAX__)
                     {                       
 
-                        if(dir[j].line.size()==0 ||( stations[minIndex][j].get_line() != dir[j].line[dir[j].line.size()-1]
-                        && dir[minIndex].distance + stations[minIndex][j].get_dis() < dir[j].distance) || dir[j].type[dir[j].type.size()-1]=="taxi")//وارد حلقه های شرظ نمیشه
+                        if(dir[minIndex].line.size()==0 || ( stations[minIndex][j].get_line() != dir[minIndex].line[dir[minIndex].line.size()-1]
+                        && dir[minIndex].distance + stations[minIndex][j].get_dis() < dir[j].distance)
+                        || stations[j][minIndex].get_path()=="taxi")
                         {
+                        
                         dir[j].distance = dir[minIndex].distance + stations[minIndex][j].get_dis();
                         dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
 
                         dir[j].type = dir[minIndex].type;
-                        dir[j].type.push_back(stations[j][minIndex].get_path());  
+                        dir[j].type.push_back(stations[j][minIndex].get_path()); 
+
+                        dir[j].line = dir[minIndex].line;
+                        dir[j].line.push_back(stations[j][minIndex].get_line()); 
+                      //  cout<<stations[minIndex][j].get_line()<<"  "<<dir[j].line[dir[j].line.size()-1]<<endl;
                         } 
 
-                        if(dir[j].line.size()>0 && stations[minIndex][j].get_line() == dir[j].line[dir[j].line.size()-1]
+                        if(dir[minIndex].line.size()>0 && stations[minIndex][j].get_line() == dir[minIndex].line[dir[minIndex].line.size()-1]
                         && dir[minIndex].distance < dir[j].distance)
                         {
-
                         dir[j].distance = dir[minIndex].distance;
                         dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
 
                         dir[j].type = dir[minIndex].type;
-                        dir[j].type.push_back(stations[j][minIndex].get_path());   
+                        dir[j].type.push_back(stations[j][minIndex].get_path());
+
+                        dir[j].line = dir[minIndex].line;
+                        dir[j].line.push_back(stations[j][minIndex].get_line());
 
                         }     
                     }
