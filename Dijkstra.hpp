@@ -21,6 +21,7 @@ private:
     vector<string> direct;
     vector<string> type;
     vector<string> line;
+    vector<int> arr_time;
     };
 
     string search(int,unordered_map<string , int>);
@@ -29,7 +30,7 @@ private:
 public:
     void dijkstra (int, int, DataType[V][V], unordered_map<string , int> );
     void dijkstra_cost (int, int, DataType[V][V], unordered_map<string , int>);
-
+    void dijkstra_time (int, int, DataType[V][V], unordered_map<string , int>);
 
 };
 

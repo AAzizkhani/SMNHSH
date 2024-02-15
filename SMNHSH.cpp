@@ -33,9 +33,12 @@ int main()
         cout<<"min distance: "<<'\n';
         Dijkstra d;
         d.dijkstra(in1 , in2 , stations , index);
+        cout<< "Arriving time: "<<'\n';
+        d.dijkstra_time(in1 , in2 , stations , index);
         cout<<"min cost: "<<'\n';
         operatorr.setItems_cost(index, stations);
         d.dijkstra_cost(in1 , in2 , stations , index);
+       
 
     }
 
