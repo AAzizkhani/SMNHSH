@@ -1,68 +1,68 @@
-BUS1
+line4
 Tehran Pars
 Ebn-e Sina
 10
-BUS1
+line4
 Ebn-e Sina
 Emam Hossein
 4
-BUS1
+line4
 Emam Hossein
 Darvazeh Dowlat
 2
-BUS1
+line4
 Darvazeh Dowlat
 Ferdowsi
 1
-BUS1
+line4
 Ferdowsi
 Meydan-e Enghelab-e Eslami
 3
-BUS1
+line4
 Meydan-e Enghelab-e Eslami
 Ostad Mo'in
 4
-BUS1
+line4
 Ostad Mo'in
 Meydan-e Azadi
 4
-BUS1
+line4
 Meydan-e Azadi
 Bimeh
 3
-BUS2
+line2
 Khajeh Abdollah-e Ansari
 Gha'em
 12
-BUS2
+line2
 Gha'em
 Pirouzi
 19
-BUS2
+line2
 Pirouzi
 Shahid Rezaei
 8
-BUS2
+line2
 Shahid Rezaei
 Payaneh Javanmard
 8
-BUS3
+line3
 Shahid Sadr
 Tajrish
 4
-BUS3
+line3
 Tajrish
 Mirdamad
 8
-BUS3
+line3
 Mirdamad
 Meydan-e Hazrat-e ValiAsr
 11
-BUS3
+line3
 Meydan-e Hazrat-e ValiAsr
 Rahahan
 8
-BUS3
+line3
 Rahahan
 Shahrak-e Shari'ati
 5

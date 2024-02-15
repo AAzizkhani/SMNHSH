@@ -2,6 +2,7 @@
 #define DATATYPE_H
 
 #include <iostream>
+#include <vector>
 using namespace std;
 class DataType
 {

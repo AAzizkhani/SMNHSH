@@ -17,27 +17,34 @@ using namespace std;
             getline (stfile1, line); //.firs line. bs1/sub1/tax1/...
             getline (stfile1, dataline1); //station1
             getline (stfile1, dataline2); //station2
-            if(type=='b'&& (m[t[dataline1]][t[dataline2]].get_dis()>costs[2]|| m[t[dataline1]][t[dataline2]].get_dis() == 0))
+            if(type=='b'&& (m[t[dataline1]][t[dataline2]].get_cost()>costs[2]|| m[t[dataline1]][t[dataline2]].get_cost() == 0))
             {
-                m[t[dataline1]][t[dataline2]].set_dis(costs[2]);
-                m[t[dataline2]][t[dataline1]].set_dis(costs[2]);
+                m[t[dataline1]][t[dataline2]].set_cost(costs[2]);
+                m[t[dataline2]][t[dataline1]].set_cost(costs[2]);
                 m[t[dataline1]][t[dataline2]].set_line(line);
                 m[t[dataline2]][t[dataline1]].set_line(line);
+                m[t[dataline1]][t[dataline2]].set_pathh("bus");
+                m[t[dataline2]][t[dataline1]].set_pathh("bus");
+
             }
-            if(type=='s'&& (m[t[dataline1]][t[dataline2]].get_dis()> costs[1] || m[t[dataline1]][t[dataline2]].get_dis() == 0))
+            if(type=='s'&& (m[t[dataline1]][t[dataline2]].get_cost()> costs[1] || m[t[dataline1]][t[dataline2]].get_cost() == 0))
             {
-                m[t[dataline1]][t[dataline2]].set_dis(costs[1]);
-                m[t[dataline2]][t[dataline1]].set_dis(costs[1]);  
+                m[t[dataline1]][t[dataline2]].set_cost(costs[1]);
+                m[t[dataline2]][t[dataline1]].set_cost(costs[1]);  
                 m[t[dataline1]][t[dataline2]].set_line(line);
                 m[t[dataline2]][t[dataline1]].set_line(line);
+                m[t[dataline1]][t[dataline2]].set_pathh("subway");
+                m[t[dataline2]][t[dataline1]].set_pathh("subway");
             }
             getline (stfile1, num); dis=stoi(num);
-            if(type=='t'&& (m[t[dataline1]][t[dataline2]].get_dis()> costs[0]*dis|| m[t[dataline1]][t[dataline2]].get_dis() == 0))
+            if(type=='t'&& (m[t[dataline1]][t[dataline2]].get_cost()> costs[0]*dis|| m[t[dataline1]][t[dataline2]].get_cost() == 0))
             {
-                m[t[dataline1]][t[dataline2]].set_dis((costs[0]*dis));
-                m[t[dataline2]][t[dataline1]].set_dis((costs[0]*dis));  
+                m[t[dataline1]][t[dataline2]].set_cost((costs[0]*dis));
+                m[t[dataline2]][t[dataline1]].set_cost((costs[0]*dis));  
                 m[t[dataline1]][t[dataline2]].set_line(line);
                 m[t[dataline2]][t[dataline1]].set_line(line);
+                m[t[dataline1]][t[dataline2]].set_pathh("taxi");
+                m[t[dataline2]][t[dataline1]].set_pathh("taxi");
             }
                        
         }
@@ -84,6 +91,7 @@ using namespace std;
                 m[t[dataline2]][t[dataline1]].set_line(line);
 
             }
+
         }
     }
 void operation::setItems_dis(unordered_map<string , int> &t, DataType m [V][V])

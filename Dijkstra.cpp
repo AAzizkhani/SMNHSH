@@ -88,7 +88,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
 
         dir[src].distance = 0;
         dir[src].direct.push_back(search(src,inputMap));
-
+        
         for (int i{0} ; i < V-1 ; i++)
         {
             string viechel{""};
@@ -96,7 +96,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
             setSpt[minIndex] = true;
             for (int j{0} ; j< V ; j++)
             {
-                if (!setSpt[j] && stations[minIndex][j].get_dis() && dir[minIndex].distance != __INT_MAX__)
+                if (!setSpt[j] && stations[minIndex][j].get_cost() && dir[minIndex].distance != __INT_MAX__)
                     {                       
 
                         if(dir[minIndex].line.size()==0 || ( stations[minIndex][j].get_line() != dir[minIndex].line[dir[minIndex].line.size()-1]
@@ -104,22 +104,24 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                         || stations[j][minIndex].get_path()=="taxi")
                         {
                         
-                        dir[j].distance = dir[minIndex].distance + stations[minIndex][j].get_dis();
+                        dir[j].distance = dir[minIndex].distance + stations[minIndex][j].get_cost();
+
                         dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
 
                         dir[j].type = dir[minIndex].type;
-                        dir[j].type.push_back(stations[j][minIndex].get_path()); 
+                        dir[j].type.push_back(stations[j][minIndex].get_path());
 
                         dir[j].line = dir[minIndex].line;
                         dir[j].line.push_back(stations[j][minIndex].get_line()); 
                       //  cout<<stations[minIndex][j].get_line()<<"  "<<dir[j].line[dir[j].line.size()-1]<<endl;
                         } 
 
-                        if(dir[minIndex].line.size()>0 && stations[minIndex][j].get_line() == dir[minIndex].line[dir[minIndex].line.size()-1]
+                        else if(dir[minIndex].line.size()==0 || stations[minIndex][j].get_line() == dir[minIndex].line[dir[minIndex].line.size()-1]
                         && dir[minIndex].distance < dir[j].distance)
                         {
                         dir[j].distance = dir[minIndex].distance;
+
                         dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
 
@@ -136,7 +138,6 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
         }
 
         cout << dir[dest].distance << "\n";
-
         for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
         {
             cout << dir[dest].direct[i]<<"\t";
