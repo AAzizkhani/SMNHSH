@@ -187,17 +187,17 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
 
                         if(dir[minIndex].line.size()==0 || stations[minIndex][j].get_line() != dir[minIndex].line[dir[minIndex].line.size()-1])
                         {
-                            if(dir[j].type.size()-1>0 && dir[j].type[dir[j].type.size()-1]=="bus")
+                            if(dir[j].type.size()>0 && dir[j].type[dir[j].type.size()-1]=="bus")
                             {
                                 dir[j].arr_time=dir[minIndex].arr_time;
                                 dir[j].arr_time.push_back(stations[minIndex][j].get_dis()*4 + 15);   
                             }
-                            if(dir[j].type.size()-1>0 && dir[j].type[dir[j].type.size()-1]=="subway")
+                            if(dir[j].type.size()>0 && dir[j].type[dir[j].type.size()-1]=="subway")
                             {
                                 dir[j].arr_time=dir[minIndex].arr_time;
                                 dir[j].arr_time.push_back(stations[minIndex][j].get_dis() + 8);  
                             }
-                            if(dir[j].type.size()-1>0 && dir[j].type[dir[j].type.size()-1]=="taxi")
+                            if(dir[j].type.size()>0 && dir[j].type[dir[j].type.size()-1]=="taxi")
                             {
                                 dir[j].arr_time=dir[minIndex].arr_time;
                                 dir[j].arr_time.push_back(stations[minIndex][j].get_dis()*2 + 5);  
@@ -244,14 +244,17 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
 
         }
 
+        int tut_time=0;
         for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
         {
             cout << dir[dest].direct[i]<<"\t";
             cout<<dir[dest].type[i]<<"\t";
             cout<<dir[dest].arr_time[i]<<"\t";
+            tut_time+=dir[dest].arr_time[i];
 
         }
-        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
+        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n'<<"total: ";
+        cout<<tut_time<<'\n';
         dir->type.clear();
         dir->direct.clear();
         dir->arr_time.clear();
