@@ -28,12 +28,10 @@ private:
     int minDistance(saveDirect[] , bool[]);
 
 public:
-    void dijkstra (int, int, DataType[V][V], unordered_map<string , int> );
-    void dijkstra_cost (int, int, DataType[V][V], unordered_map<string , int>);
+    void dijkstra        (int, int, DataType[V][V], unordered_map<string , int>);
+    void dijkstra_cost   (int, int, DataType[V][V], unordered_map<string , int>);
     void dijkstra_ARtime (int, int, DataType[V][V], unordered_map<string , int>);
-    void dijkstra_time (int, int, DataType[V][V], unordered_map<string , int>, vector <int> timeOfType);
-
-
+    void dijkstra_time   (int, int, DataType[V][V], unordered_map<string , int>, vector <int>);
 };
 
 #endif

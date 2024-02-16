@@ -66,7 +66,7 @@ using namespace std;
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
                 m[t[dataline2]][t[dataline1]].set_timeLine(line);
                 m[t[dataline1]][t[dataline2]].set_timeType("bus");
-                m[t[dataline2]][t[dataline1]].set_timeTyp("bus");
+                m[t[dataline2]][t[dataline1]].set_timeType("bus");
 
             }
             if(type=='s')

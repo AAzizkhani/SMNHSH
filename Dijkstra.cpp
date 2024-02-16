@@ -174,7 +174,7 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                 if (!setSpt[j] && temp && dir[minIndex].distance != __INT_MAX__)
                     {
                         vector <string> templine = stations[minIndex][j].get_timeLine();
-                        vector <string> temptime = stations[minIndex][j].get_time();
+                        vector <int>    temptime = stations[minIndex][j].get_time();
                         vector <string> temptype = stations[minIndex][j].get_timeType();
                         string temp_line, temp_type;
                         for(auto i : temp)
