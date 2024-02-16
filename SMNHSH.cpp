@@ -40,6 +40,7 @@ int main()
         cout<<"min cost: "<<'\n';
         operatorr.setItems_cost(index, stations);
         d.dijkstra_cost(in1 , in2 , stations , index);
+        cout<<"min time:"<<'\n';
        
 
     }

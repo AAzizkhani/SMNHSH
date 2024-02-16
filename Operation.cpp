@@ -49,6 +49,48 @@ using namespace std;
                        
         }
     }
+    void operation::read_time( char type, vector <int> timeOfType, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V] )
+    {
+        string line,dataline1,dataline2,num;
+        int dis;
+         while (!stfile1.eof()) 
+            {
+            getline (stfile1, line); //.firs line. bs1/sub1/tax1/...
+            getline (stfile1, dataline1); //station1
+            getline (stfile1, dataline2); //station2
+            getline (stfile1, num); dis=stoi(num);
+            if(type=='b')
+            {
+                m[t[dataline1]][t[dataline2]].set_time(timeOfType[2]*dis);
+                m[t[dataline2]][t[dataline1]].set_time(timeOfType[2]*dis);
+                m[t[dataline1]][t[dataline2]].set_timeLine(line);
+                m[t[dataline2]][t[dataline1]].set_timeLine(line);
+                m[t[dataline1]][t[dataline2]].set_timeType("bus");
+                m[t[dataline2]][t[dataline1]].set_timeTyp("bus");
+
+            }
+            if(type=='s')
+            {
+                m[t[dataline1]][t[dataline2]].set_time(timeOfType[1]);
+                m[t[dataline2]][t[dataline1]].set_time(timeOfType[1]);
+                m[t[dataline1]][t[dataline2]].set_timeLine(line);
+                m[t[dataline2]][t[dataline1]].set_timeLine(line);
+                m[t[dataline1]][t[dataline2]].set_timeType("subway");
+                m[t[dataline2]][t[dataline1]].set_timeType("subway");
+            }
+            
+            if(type=='t')
+            {
+                m[t[dataline1]][t[dataline2]].set_time(timeOfType[0]*dis);
+                m[t[dataline2]][t[dataline1]].set_time(timeOfType[0]*dis);
+                m[t[dataline1]][t[dataline2]].set_timeLine(line);
+                m[t[dataline2]][t[dataline1]].set_timeLine(line);
+                m[t[dataline1]][t[dataline2]].set_timeType("taxi");
+                m[t[dataline2]][t[dataline1]].set_timeType("taxi");
+            }
+                       
+        }
+    }
 
     void operation::read_dis(string type,ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V] )
     {
@@ -168,7 +210,48 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V])
     }
     stfile2.close();  
 }
+void operation:: setItems_time(unordered_map<string , int> &t, DataType m[V][V])
+{
+    vector <int> timeOfType;
+    ifstream costfile;
+    string price;
+    int cost;
+    costfile.open("time.txt", ios::in);
+    if(costfile.is_open())
+    {
+        while(!costfile.eof())
+        {
+            getline(costfile, price);//0-> taxi, 1->sub, 2->bus, 3-> traffic(taxi)
+            cost=stoi(price);
+            timeOfType.push_back(cost);
+        }
+    }
+    costfile.close();
+    ifstream stfile;
+    stfile.open("bus_Routes.txt", ios::in);
 
+    if (stfile.is_open())
+    { 
+        read_cost('b',timeOfType, stfile, t, m);
+    }  
+    stfile.close();
+
+    ifstream stfile1;
+    stfile1.open("subway_Routes.txt", ios::in);
+    if (stfile1.is_open())
+    {
+        read_cost('s',timeOfType, stfile1, t, m);
+    }
+    stfile1.close();
+
+    ifstream stfile2;
+    stfile2.open("taxi_Routes.txt", ios::in);
+    if (stfile2.is_open())
+    {
+        read_cost('t',timeOfType, stfile2, t, m);
+    }
+    stfile2.close();  
+}
 int operation::getIndex(unordered_map<string , int> t,string stn)
 {
     if (t.find(stn)==t.end())

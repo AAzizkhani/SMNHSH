@@ -8,18 +8,26 @@ class DataType
 {
 
 private:
+    
     int distance=0;
     int cost=0;
-    string path;
-    string line;
+    string path{};
+    string line{};
+    vector <int> times{0};
+    vector <string> time_type{};
+    vector <string> time_line{};
 
 public:
     void set_dis(int);
     void set_cost(int);
     void set_pathh(string);
     void set_line(string);
+    void set_time(int);
     int get_cost();
     int get_dis();
+    vector<int> get_time();
+    vector<string> get_timeLine();
+    vector<string> get_timeType();
     string get_path();
     string get_line();
 
