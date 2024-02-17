@@ -25,7 +25,7 @@ class operation
     void read_cost_line(char, vector <int>, ifstream &, unordered_map<string , int> &, DataType [59][59]);
     void setItems_dis(unordered_map<string , int> &, DataType[59][59]);
     void setItems_cost(unordered_map<string , int> &, DataType[59][59]);
-    void setItems_time(unordered_map<string , int> &, DataType[59][59]);
+    vector <int>  setItems_time(unordered_map<string , int> &, DataType[59][59]);
     int getIndex (unordered_map<string , int> , string);
 };
 #endif

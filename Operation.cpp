@@ -52,13 +52,14 @@ using namespace std;
     void operation::read_time( char type, vector <int> timeOfType, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V] )
     {
         string line,dataline1,dataline2,num;
-        int dis;
+        int dis = 0;
          while (!stfile1.eof()) 
             {
             getline (stfile1, line); //.firs line. bs1/sub1/tax1/...
             getline (stfile1, dataline1); //station1
             getline (stfile1, dataline2); //station2
-            getline (stfile1, num); dis=stoi(num);
+            getline (stfile1, num); 
+            dis=stoi(num);
             if(type=='b')
             {
                 m[t[dataline1]][t[dataline2]].set_time(timeOfType[2]*dis);
@@ -210,13 +211,13 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V])
     }
     stfile2.close();  
 }
-void operation:: setItems_time(unordered_map<string , int> &t, DataType m[V][V])
+vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType m[V][V])
 {
     vector <int> timeOfType;
     ifstream costfile;
     string price;
     int cost;
-    costfile.open("time.txt", ios::in);
+    costfile.open("time_cost.txt", ios::in);
     if(costfile.is_open())
     {
         while(!costfile.eof())
@@ -232,7 +233,7 @@ void operation:: setItems_time(unordered_map<string , int> &t, DataType m[V][V])
 
     if (stfile.is_open())
     { 
-        read_cost('b',timeOfType, stfile, t, m);
+        read_time('b',timeOfType, stfile, t, m);
     }  
     stfile.close();
 
@@ -240,7 +241,7 @@ void operation:: setItems_time(unordered_map<string , int> &t, DataType m[V][V])
     stfile1.open("subway_Routes.txt", ios::in);
     if (stfile1.is_open())
     {
-        read_cost('s',timeOfType, stfile1, t, m);
+        read_time('s',timeOfType, stfile1, t, m);
     }
     stfile1.close();
 
@@ -248,9 +249,10 @@ void operation:: setItems_time(unordered_map<string , int> &t, DataType m[V][V])
     stfile2.open("taxi_Routes.txt", ios::in);
     if (stfile2.is_open())
     {
-        read_cost('t',timeOfType, stfile2, t, m);
+        read_time('t',timeOfType, stfile2, t, m);
     }
     stfile2.close();  
+    return timeOfType;
 }
 int operation::getIndex(unordered_map<string , int> t,string stn)
 {
