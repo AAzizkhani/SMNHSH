@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include <vector>
+#include <atring>
 using namespace std;
 class DataType
 {
@@ -16,8 +17,8 @@ private:
     string line{};
 
     vector <int> times{0};
-    vector <string> time_type;
-    vector <string> time_line;
+    vector <string> time_type{};
+    vector <string> time_line{};
 
 public:
 

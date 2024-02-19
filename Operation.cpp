@@ -214,17 +214,26 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V])
 vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType m[V][V])
 {
     vector <int> timeOfType;
-    ifstream costfile;
     string price;
-    int cost;
+    int cost_time;
+    ifstream costfile;
+    for(int i=0; i<V; i++)
+    {
+        for(int j=0; j<V; j++)
+        {
+            m[i][j].set_dis(0);
+        }
+    }
     costfile.open("time_cost.txt", ios::in);
     if(costfile.is_open())
-    {
+    { 
         while(!costfile.eof())
         {
+           
             getline(costfile, price);//0-> taxi, 1->sub, 2->bus, 3-> traffic(taxi)
-            cost=stoi(price);
-            timeOfType.push_back(cost);
+            cost_time=stoi(price);
+            timeOfType.push_back(cost_time);
+            
         }
     }
     costfile.close();
@@ -241,6 +250,7 @@ vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType 
     stfile1.open("subway_Routes.txt", ios::in);
     if (stfile1.is_open())
     {
+
         read_time('s',timeOfType, stfile1, t, m);
     }
     stfile1.close();
@@ -249,6 +259,7 @@ vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType 
     stfile2.open("taxi_Routes.txt", ios::in);
     if (stfile2.is_open())
     {
+
         read_time('t',timeOfType, stfile2, t, m);
     }
     stfile2.close();  
