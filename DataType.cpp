@@ -2,6 +2,7 @@
 #include <unordered_map>
 #include <iostream>
 #include <vector>
+#include <string>
 
 using namespace std;
 
@@ -18,7 +19,7 @@ int  DataType::get_cost()    {return cost;}
 int  DataType::get_dis()     {return distance;}
 
 vector<int> DataType::get_time()     {return times;}
-vector<string> DataType::get_timeLine()     {return time_line;}
-vector<string> DataType::get_timeType()     {return time_type;}
+vector<string> DataType::get_timeLine() {return time_line;}
+vector<string> DataType::get_timeType() {return time_type;}
 string DataType::get_path() {return path;}
 string DataType::get_line() {return line;}

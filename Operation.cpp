@@ -62,8 +62,8 @@ using namespace std;
             dis=stoi(num);
             if(type=='b')
             {
-                m[t[dataline1]][t[dataline2]].set_time(timeOfType[2]*dis);
-                m[t[dataline2]][t[dataline1]].set_time(timeOfType[2]*dis);
+                m[t[dataline1]][t[dataline2]].set_time((timeOfType[2]*dis));
+                m[t[dataline2]][t[dataline1]].set_time((timeOfType[2]*dis));
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
                 m[t[dataline2]][t[dataline1]].set_timeLine(line);
                 m[t[dataline1]][t[dataline2]].set_timeType("bus");
@@ -72,8 +72,8 @@ using namespace std;
             }
             if(type=='s')
             {
-                m[t[dataline1]][t[dataline2]].set_time(timeOfType[1]);
-                m[t[dataline2]][t[dataline1]].set_time(timeOfType[1]);
+                m[t[dataline1]][t[dataline2]].set_time(timeOfType[1]*dis);
+                m[t[dataline2]][t[dataline1]].set_time(timeOfType[1]*dis);
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
                 m[t[dataline2]][t[dataline1]].set_timeLine(line);
                 m[t[dataline1]][t[dataline2]].set_timeType("subway");

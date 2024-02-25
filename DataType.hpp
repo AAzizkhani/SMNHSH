@@ -3,7 +3,7 @@
 
 #include <iostream>
 #include <vector>
-#include <atring>
+#include <string>
 using namespace std;
 class DataType
 {
@@ -12,13 +12,11 @@ private:
     
     int distance=0;
     int cost=0;
-    
     string path{};
     string line{};
-
-    vector <int> times{0};
-    vector <string> time_type{};
-    vector <string> time_line{};
+    vector <int> times;
+    vector <string> time_type;
+    vector <string> time_line;
 
 public:
 
