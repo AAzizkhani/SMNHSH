@@ -17,6 +17,7 @@ using namespace std;
             getline (stfile1, line); //.firs line. bs1/sub1/tax1/...
             getline (stfile1, dataline1); //station1
             getline (stfile1, dataline2); //station2
+            getline (stfile1, num); dis=stoi(num);
             if(type=='b')
             {
                 m[t[dataline1]][t[dataline2]].set_time(costs[2]);
@@ -36,7 +37,7 @@ using namespace std;
                 m[t[dataline1]][t[dataline2]].set_timeType("subway");
                 m[t[dataline2]][t[dataline1]].set_timeType("subway");
             }
-            getline (stfile1, num); dis=stoi(num);
+
             if(type=='t')
             {
                 m[t[dataline1]][t[dataline2]].set_time(costs[0]*dis);

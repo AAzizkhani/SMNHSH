@@ -105,8 +105,8 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                         string temp_line, temp_type;      
                         for(int k=0; k<tempcost.size(); k++ )
                         {
-                            if(dir[minIndex].type.size()==0 || ( temptype[k] != dir[minIndex].type[dir[minIndex].type.size()-1]
-                            && dir[minIndex].distance + tempcost[k] < dir[j].distance)||(dir[minIndex].distance + tempcost[k] < dir[j].distance && temptype[k]=="taxi"))
+                            if((dir[minIndex].type.size()==0 && dir[minIndex].distance + tempcost[k] < dir[j].distance)||(dir[minIndex].distance + tempcost[k] < dir[j].distance && 
+                            temptype[k] != dir[minIndex].type[dir[minIndex].type.size()-1]) ||(dir[minIndex].distance + tempcost[k] < dir[j].distance && temptype[k]=="taxi" ) )
                             {   
 
                             dir[j].distance = dir[minIndex].distance+tempcost[k];
