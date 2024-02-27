@@ -1,0 +1,109 @@
+Tajrish
+Rahahan
+{
+خارج از تایم ترافیک:
+	Tajrish to Shahid Beheshti ----> subway (21)
+	
+	change subway line ----> (8)
+		
+	Shahid Beheshti to Rahahan ----> subway (16)
+	
+	Best–Time = 45;
+	
+در ساعت ترافیک مترو:
+	Tajrish to Shahid Beheshti ----> subway (21)
+	
+	change subway line ----> (8 * 3)
+	
+	Shahid Beheshti to Rahahan ----> subway (16)
+	
+	Best–Time = 61;
+}
+
+
+Pirouzi
+Ferdowsi
+{
+	Pirouzi to Ferdowsi ----> subway (9)
+	
+	Best–Time = 9;
+}
+
+
+Gha'em
+Shahid Rezaei 
+{
+	Gha'em to Meydan-e Hazrat-e ValiAsr ----> subway (22)
+	
+	change subway line ----> (8)
+	
+	Meydan-e Hazrat-e ValiAsr to Shahid Rezaei ----> subway (15)
+	
+	Best–Time = 51;
+	
+	در ساعت ترافیک مترو:
+	
+	Gha'em to Meydan-e Hazrat-e ValiAsr ----> subway (22)
+	
+	change subway line ----> (8 * 3)
+	
+	Meydan-e Hazrat-e ValiAsr to Shahid Rezaei ----> subway (15)
+	
+	Best–Time = 67;
+}
+
+
+Allameh Jafari
+Rahahan
+{
+	Allameh Jafari to Teatr-e Shahr ----> subway (23)
+	
+	change subway line ----> (8)
+	
+	Teatr-e Shahr to Rahahan ----> subway (8)
+	
+	Best–Time = 39;
+	
+	در ساعت ترافیک مترو:
+	
+	Allameh Jafari to Teatr-e Shahr ----> subway (23)
+	
+	change subway line ----> (8 * 3)
+	
+	Teatr-e Shahr to Rahahan ----> subway (8)
+	
+	Best–Time = 55;
+}
+
+
+Tajrish
+Meydan-e Jahad
+{
+	Tajrish to Shahid Beheshti ----> subway (21)
+	
+	change subway line ----> (8)
+	
+	Shahid Beheshti to Meydan-e Jahad ----> subway (5)
+	
+	Best–Time = 34;
+	
+	در ساعت ترافیک مترو:
+	
+	Tajrish to Shahid Beheshti ----> subway (21)
+	
+	change subway line ----> (8 * 3)
+	
+	Shahid Beheshti to Meydan-e Jahad ----> subway (5)
+	
+	Best–Time = 50;
+}
+	
+	
+	
+	
+
+
+	
+	
+	
+	
