@@ -96,41 +96,52 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
             setSpt[minIndex] = true;
             for (int j{0} ; j< V ; j++)
             {
-                if (!setSpt[j] && stations[minIndex][j].get_cost() && dir[minIndex].distance != __INT_MAX__)
-                    {                       
+                vector <int> tempcost=stations[minIndex][j].get_time();
 
-                        if(dir[minIndex].line.size()==0 || ( stations[minIndex][j].get_line() != dir[minIndex].line[dir[minIndex].line.size()-1]
-                        && dir[minIndex].distance + stations[minIndex][j].get_dis() < dir[j].distance)
-                        || stations[j][minIndex].get_path()=="taxi")
+                if (!setSpt[j] && tempcost.size()>0 && dir[minIndex].distance != __INT_MAX__)
+                    {                 
+                        vector <string> templine= stations[j][minIndex].get_timeLine();
+                        vector <string> temptype= stations[minIndex][j].get_timeType();
+                        string temp_line, temp_type;      
+                        for(int k=0; k<tempcost.size(); k++ )
                         {
-                        
-                        dir[j].distance = dir[minIndex].distance + stations[minIndex][j].get_cost();
+                            if(dir[minIndex].type.size()==0 || ( temptype[k] != dir[minIndex].type[dir[minIndex].type.size()-1]
+                            && dir[minIndex].distance + tempcost[k] < dir[j].distance)||(dir[minIndex].distance + tempcost[k] < dir[j].distance && temptype[k]=="taxi"))
+                            {   
 
+                            dir[j].distance = dir[minIndex].distance+tempcost[k];
+                            temp_line=templine[k];
+                            temp_type=temptype[k];     
+
+                            }
+                            if(dir[minIndex].type.size()>0  && ( temptype[k] == dir[minIndex].type[dir[minIndex].type.size()-1]) && temptype[k]!="taxi")
+                            {
+                                if(dir[minIndex].line.size()>0 && templine[k] == dir[minIndex].line[dir[minIndex].line.size()-1]
+                                && dir[minIndex].distance < dir[j].distance)
+                                {
+                                    dir[j].distance = dir[minIndex].distance;
+                                    temp_line=templine[k];
+                                    temp_type=temptype[k];
+                                }
+                                if(dir[minIndex].line.size()>0 && templine[k] != dir[minIndex].line[dir[minIndex].line.size()-1]
+                                && dir[minIndex].distance+ tempcost[k] < dir[j].distance)
+                                {
+                                    dir[j].distance = dir[minIndex].distance + tempcost[k];
+                                    temp_line=templine[k];
+                                    temp_type=temptype[k];
+                                }
+
+                            } 
+                        }
                         dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
 
                         dir[j].type = dir[minIndex].type;
-                        dir[j].type.push_back(stations[j][minIndex].get_path());
+                        dir[j].type.push_back(temp_type);
 
                         dir[j].line = dir[minIndex].line;
-                        dir[j].line.push_back(stations[j][minIndex].get_line()); 
-                        } 
-
-                        else if(dir[minIndex].line.size()==0 || stations[minIndex][j].get_line() == dir[minIndex].line[dir[minIndex].line.size()-1]
-                        && dir[minIndex].distance < dir[j].distance)
-                        {
-                        dir[j].distance = dir[minIndex].distance;
-
-                        dir[j].direct = dir[minIndex].direct;
-                        dir[j].direct.push_back(search(j,inputMap));
-
-                        dir[j].type = dir[minIndex].type;
-                        dir[j].type.push_back(stations[j][minIndex].get_path());
-
-                        dir[j].line = dir[minIndex].line;
-                        dir[j].line.push_back(stations[j][minIndex].get_line());
-
-                        }     
+                        dir[j].line.push_back(temp_line);
+    
                     }
             }
 
@@ -151,7 +162,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
 
     else throw invalid_argument("Not exist!");
 }
-void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType )
+void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType)
 {
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
@@ -293,11 +304,11 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
         {
             cout << dir[dest].direct[i]<<"\t";
             cout<<dir[dest].type[i]<<"\t";
-            cout<<dir[dest].distance<<"\t";
+           // cout<<dir[dest].distance<<"\t";
             tut_time+=dir[dest].distance;
         }
         cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n'<<"total: ";
-        cout<<tut_time<<'\n';
+        cout<<dir[dest].distance<<'\n';
         dir->type.clear();
         dir->direct.clear();
         dir->arr_time.clear();
