@@ -31,7 +31,7 @@ public:
     void dijkstra        (int, int, DataType[V][V], unordered_map<string , int>);
     void dijkstra_cost   (int, int, DataType[V][V], unordered_map<string , int>);
     void dijkstra_ARtime (int, int, DataType[V][V], unordered_map<string , int>);
-    void dijkstra_time   (int, int, DataType[V][V], unordered_map<string , int>, vector <int>);
+    void dijkstra_time   (int, int, DataType[V][V], unordered_map<string , int>, vector <int>, int);
 };
 
 #endif
