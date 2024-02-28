@@ -8,7 +8,7 @@
 using namespace std;
 
 
-    void operation::read_cost( char type, vector <int> costs, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V] )
+    void operation::read_cost( char type, vector <int> costs, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V], int hour )
     {
         string line,dataline1,dataline2,num;
         int dis;
@@ -20,6 +20,7 @@ using namespace std;
             getline (stfile1, num); dis=stoi(num);
             if(type=='b')
             {
+                
                 m[t[dataline1]][t[dataline2]].set_time(costs[2]);
                 m[t[dataline2]][t[dataline1]].set_time(costs[2]);
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
@@ -30,6 +31,7 @@ using namespace std;
             }
             if(type=='s')
             {
+                
                 m[t[dataline1]][t[dataline2]].set_time(costs[1]);
                 m[t[dataline2]][t[dataline1]].set_time(costs[1]);
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
@@ -40,8 +42,16 @@ using namespace std;
 
             if(type=='t')
             {
-                m[t[dataline1]][t[dataline2]].set_time(costs[0]*dis);
-                m[t[dataline2]][t[dataline1]].set_time(costs[0]*dis);
+                if(hour>17 && hour<21)
+                {
+                 m[t[dataline1]][t[dataline2]].set_time(costs[3]*dis);
+                 m[t[dataline2]][t[dataline1]].set_time(costs[3]*dis);   
+                }
+                else
+                {
+                 m[t[dataline1]][t[dataline2]].set_time(costs[0]*dis);
+                 m[t[dataline2]][t[dataline1]].set_time(costs[0]*dis);   
+                }  
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
                 m[t[dataline2]][t[dataline1]].set_timeLine(line);
                 m[t[dataline1]][t[dataline2]].set_timeType("taxi");
@@ -50,7 +60,7 @@ using namespace std;
                        
         }
     }
-    void operation::read_time( char type, vector <int> timeOfType, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V] )
+    void operation::read_time( char type, vector <int> timeOfType, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V], int hour )
     {
         string line,dataline1,dataline2,num;
         int dis = 0;
@@ -63,8 +73,16 @@ using namespace std;
             dis=stoi(num);
             if(type=='b')
             {
-                m[t[dataline1]][t[dataline2]].set_time((timeOfType[2]*dis));
-                m[t[dataline2]][t[dataline1]].set_time((timeOfType[2]*dis));
+                if(hour>5 && hour<9)
+                {
+                    m[t[dataline1]][t[dataline2]].set_time((timeOfType[2]*dis*2));
+                    m[t[dataline2]][t[dataline1]].set_time((timeOfType[2]*dis*2));
+                }
+                else
+                {
+                    m[t[dataline1]][t[dataline2]].set_time((timeOfType[2]*dis));
+                    m[t[dataline2]][t[dataline1]].set_time((timeOfType[2]*dis));
+                } 
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
                 m[t[dataline2]][t[dataline1]].set_timeLine(line);
                 m[t[dataline1]][t[dataline2]].set_timeType("bus");
@@ -73,6 +91,7 @@ using namespace std;
             }
             if(type=='s')
             {
+
                 m[t[dataline1]][t[dataline2]].set_time(timeOfType[1]*dis);
                 m[t[dataline2]][t[dataline1]].set_time(timeOfType[1]*dis);
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
@@ -83,8 +102,17 @@ using namespace std;
             
             if(type=='t')
             {
-                m[t[dataline1]][t[dataline2]].set_time(timeOfType[0]*dis);
-                m[t[dataline2]][t[dataline1]].set_time(timeOfType[0]*dis);
+                if(hour>17 && hour<21)
+                {
+                    m[t[dataline1]][t[dataline2]].set_time((timeOfType[0]*dis*2));
+                    m[t[dataline2]][t[dataline1]].set_time((timeOfType[0]*dis*2));
+                }
+                else
+                {
+                    m[t[dataline1]][t[dataline2]].set_time(timeOfType[0]*dis);
+                    m[t[dataline2]][t[dataline1]].set_time(timeOfType[0]*dis);
+                }
+                
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
                 m[t[dataline2]][t[dataline1]].set_timeLine(line);
                 m[t[dataline1]][t[dataline2]].set_timeType("taxi");
@@ -163,7 +191,7 @@ void operation::setItems_dis(unordered_map<string , int> &t, DataType m [V][V])
     } 
     stfile2.close(); 
 }
-void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V])
+void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V], int hour)
 {
     vector <int> costs;
     ifstream costfile;
@@ -192,7 +220,7 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V])
 
     if (stfile.is_open())
     { 
-        read_cost('b',costs, stfile, t, m);
+        read_cost('b',costs, stfile, t, m, hour);
     }  
     stfile.close();
 
@@ -200,7 +228,7 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V])
     stfile1.open("subway_Routes.txt", ios::in);
     if (stfile1.is_open())
     {
-        read_cost('s',costs, stfile1, t, m);
+        read_cost('s',costs, stfile1, t, m, hour);
     }
     stfile1.close();
 
@@ -208,11 +236,11 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V])
     stfile2.open("taxi_Routes.txt", ios::in);
     if (stfile2.is_open())
     {
-        read_cost('t',costs, stfile2, t, m);
+        read_cost('t',costs, stfile2, t, m, hour);
     }
     stfile2.close();  
 }
-vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType m[V][V])
+vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType m[V][V], int hour)
 {
     vector <int> timeOfType;
     string price;
@@ -243,7 +271,7 @@ vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType 
 
     if (stfile.is_open())
     { 
-        read_time('b',timeOfType, stfile, t, m);
+        read_time('b',timeOfType, stfile, t, m, hour);
     }  
     stfile.close();
 
@@ -252,7 +280,7 @@ vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType 
     if (stfile1.is_open())
     {
 
-        read_time('s',timeOfType, stfile1, t, m);
+        read_time('s',timeOfType, stfile1, t, m, hour);
     }
     stfile1.close();
 
@@ -261,7 +289,7 @@ vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType 
     if (stfile2.is_open())
     {
 
-        read_time('t',timeOfType, stfile2, t, m);
+        read_time('t',timeOfType, stfile2, t, m, hour);
     }
     stfile2.close();  
     return timeOfType;

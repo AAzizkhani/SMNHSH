@@ -162,7 +162,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
 
     else throw invalid_argument("Not exist!");
 }
-void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType)
+void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType, int hour)
 {
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
@@ -203,13 +203,25 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                 }
                                 if(temptype[k]=="subway")
                                 {
-
-                                    if(dir[minIndex].distance + temptime[k] + timeOfType[3] < dir[j].distance)
+                                    if(hour>5 && hour<9)
                                     {
+                                        if(dir[minIndex].distance + temptime[k] + (timeOfType[3]*3)  < dir[j].distance)
+                                        {
+                                        dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[3]*3;
+                                        temp_line=templine[k];
+                                        temp_type=temptype[k];
+                                        }
+                                    }
+                                    else
+                                    {
+                                        if(dir[minIndex].distance + temptime[k] + timeOfType[3]  < dir[j].distance)
+                                        {
                                         dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[3];
                                         temp_line=templine[k];
                                         temp_type=temptype[k];
+                                        }
                                     }
+  
                                 }
                                 if(temptype[k]=="taxi")
                                 {
@@ -238,11 +250,23 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                     }
                                     if(temptype[k]=="subway")
                                     {
-                                        if(dir[minIndex].distance + temptime[k] + timeOfType[3] < dir[j].distance)
+                                        if(hour>5 && hour<9)
                                         {
-                                        dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[3];
-                                        temp_line=templine[k];
-                                        temp_type=temptype[k];
+                                            if(dir[minIndex].distance + temptime[k] + (timeOfType[3]*3)  < dir[j].distance)
+                                            {
+                                            dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[3]*3;
+                                            temp_line=templine[k];
+                                            temp_type=temptype[k];
+                                            }
+                                        }
+                                        else
+                                        {
+                                            if(dir[minIndex].distance + temptime[k] + timeOfType[3]  < dir[j].distance)
+                                            {
+                                            dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[3];
+                                            temp_line=templine[k];
+                                            temp_type=temptype[k];
+                                            }
                                         }
                                     }
                                     if(temptype[k]=="taxi")
