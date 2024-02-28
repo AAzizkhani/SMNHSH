@@ -1,0 +1,102 @@
+Sohrevardi
+Javadiyeh
+{
+	Sohrevardi to Javadiyeh ----> subway (19)
+	
+	Best–Time = 19;
+}
+
+
+Shahid Mofatteh
+Meydan-e Shohada
+{
+برای رفتن این مسیر دو راه وجود دارد که زمان آنها تفاوتی ندارد باهم و برابرند :
+الف)
+	Shahid Mofatteh to Darvazeh Dowlat ----> subway (5)
+	
+	change subway line ----> (8)
+	
+	Darvazeh Dowlat to Meydan-e Shohada ----> subway (4)
+	
+	Best–Time = 17;
+	
+	ب)
+	
+	Shahid Mofatteh to Haftom-e Tir ----> subway (2)
+	
+	change subway line ----> (8)
+	
+	Haftom-e Tir to Meydan-e Shohada ----> subway (7)
+	
+	Best–Time = 17;
+	
+	اگر بخواهد در زمان ترافیک مترو حرکت کند بهتر است با تاکسی جابجا شود
+	
+	الف)
+	Shahid Mofatteh to Darvazeh Dowlat ----> taxi (10)
+	
+	change taxi line ----> (5)
+	
+	Darvazeh Dowlat to Meydan-e Shohada ----> taxi (8)
+	
+	Best–Time = 23;
+	
+	ب)
+	
+	Shahid Mofatteh to Haftom-e Tir ----> taxi (4)
+	
+	change taxi line ----> (5)
+	
+	Haftom-e Tir to Meydan-e Shohada ----> taxi (14)
+	
+	Best–Time = 23;
+	
+}
+
+
+Shahid Ghodousi
+Emam Hossein
+{
+	Shahid Ghodousi to Meydan-e Hazrat-e ValiAsr ----> subway (9)
+	
+	change subway line ----> (8)
+	
+	Meydan-e Hazrat-e ValiAsr to Emam Hossein ----> subway (7)
+	
+	Best–Time = 17;
+	
+	اگر بخواهد در زمان ترافیک مترو حرکت کند بهتر است با تاکسی جابجا شود
+	
+	Shahid Ghodousi to Meydan-e Hazrat-e ValiAsr ----> taxi (18)
+	
+	change taxi line ----> (5)
+	
+	Meydan-e Hazrat-e ValiAsr to Emam Hossein ----> taxi (14)
+	
+	Best–Time = 37;
+}
+
+
+Meydan-e Azadi
+Ebn-e Sina
+{
+	Meydan-e Azadi to Ebn-e Sina ----> subway (19)
+	
+	Best–Time = 37;
+}
+
+
+Gheytariyeh
+Shahid Haghani
+{
+	Gheytariyeh to Shahid Haghani ----> subway (12)
+	
+	Best–Time = 37;
+}
+
+
+
+
+
+
+
