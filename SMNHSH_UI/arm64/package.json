@@ -1,0 +1,34 @@
+{
+	"name": "SMNHSH",
+	"main": "index.html",
+	"window": {
+		"title": "SMNHSH",
+		"width": 740,
+		"height": 650,
+		"resizable": true,
+		"icon": "www\\icons\\icon-512.png"
+	},
+	"chromium-args": "--autoplay-policy=no-user-gesture-required --disable-features=HardwareMediaKeyHandling",
+	"settings": {
+		"content-mode": "bundle",
+		"distribution-mode": "evergreen",
+		"enable-devtools": false
+	},
+	"messages": {
+		"install-webview2": "This app requires the Microsoft Edge WebView2 runtime. It will be downloaded and installed for you now.",
+		"downloading": "Downloading...",
+		"install-webview2-failed": "Failed to install the Microsoft Edge WebView2 runtime. Check that you have permission to install it, and that your Internet connection is working. Run the app again to try again."
+	},
+	"c3-app-icons": [
+		{
+			"src": "www\\icons\\icon-16.png",
+			"width": 594,
+			"height": 435
+		},
+		{
+			"src": "www\\icons\\icon-512.png",
+			"width": 594,
+			"height": 512
+		}
+	]
+}
