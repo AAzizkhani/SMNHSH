@@ -1,32 +1,32 @@
-line4
+line1
 Tehran Pars
 Ebn-e Sina
 10
-line4
+line1
 Ebn-e Sina
 Emam Hossein
 4
-line4
+line1
 Emam Hossein
 Darvazeh Dowlat
 2
-line4
+line1
 Darvazeh Dowlat
 Ferdowsi
 1
-line4
+line1
 Ferdowsi
 Meydan-e Enghelab-e Eslami
 3
-line4
+line1
 Meydan-e Enghelab-e Eslami
 Ostad Mo'in
 4
-line4
+line1
 Ostad Mo'in
 Meydan-e Azadi
 4
-line4
+line1
 Meydan-e Azadi
 Bimeh
 3
