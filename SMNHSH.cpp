@@ -50,8 +50,6 @@ int main()
         timeOfType=operatorr.setItems_time(index, stations, hour);
         d.dijkstra_time(in1 , in2 , stations , index, timeOfType, hour);
 
-       
-
     }
 
     catch(invalid_argument &e)
