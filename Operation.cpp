@@ -4,11 +4,12 @@
 #include <unordered_map>
 #include "Operation.hpp"
 #include <set>
+#include <algorithm>
 #define V 59
 using namespace std;
 
 
-    void operation::read_cost( char type, vector <int> costs, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V], int hour )
+    void operation::read_cost_tax(  vector <int> costs, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V], int hour )
     {
         string line,dataline1,dataline2,num;
         int dis;
@@ -18,30 +19,7 @@ using namespace std;
             getline (stfile1, dataline1); //station1
             getline (stfile1, dataline2); //station2
             getline (stfile1, num); dis=stoi(num);
-            if(type=='b')
-            {
-                
-                m[t[dataline1]][t[dataline2]].set_time(costs[2]);
-                m[t[dataline2]][t[dataline1]].set_time(costs[2]);
-                m[t[dataline1]][t[dataline2]].set_timeLine(line);
-                m[t[dataline2]][t[dataline1]].set_timeLine(line);
-                m[t[dataline1]][t[dataline2]].set_timeType("bus");
-                m[t[dataline2]][t[dataline1]].set_timeType("bus");
 
-            }
-            if(type=='s')
-            {
-                
-                m[t[dataline1]][t[dataline2]].set_time(costs[1]);
-                m[t[dataline2]][t[dataline1]].set_time(costs[1]);
-                m[t[dataline1]][t[dataline2]].set_timeLine(line);
-                m[t[dataline2]][t[dataline1]].set_timeLine(line);
-                m[t[dataline1]][t[dataline2]].set_timeType("subway");
-                m[t[dataline2]][t[dataline1]].set_timeType("subway");
-            }
-
-            if(type=='t')
-            {
                 if(hour>17 && hour<21)
                 {
                  m[t[dataline1]][t[dataline2]].set_time(costs[3]*dis);
@@ -56,8 +34,228 @@ using namespace std;
                 m[t[dataline2]][t[dataline1]].set_timeLine(line);
                 m[t[dataline1]][t[dataline2]].set_timeType("taxi");
                 m[t[dataline2]][t[dataline1]].set_timeType("taxi");
+               
+
             }
+           /*if(type=='s')
+            {
+                
+                m[t[dataline1]][t[dataline2]].set_time(costs[1]);
+                m[t[dataline2]][t[dataline1]].set_time(costs[1]);
+                m[t[dataline1]][t[dataline2]].set_timeLine(line);
+                m[t[dataline2]][t[dataline1]].set_timeLine(line);
+                m[t[dataline1]][t[dataline2]].set_timeType("subway");
+                m[t[dataline2]][t[dataline1]].set_timeType("subway");
+            }
+
+            if(type=='t')
+            { m[t[dataline1]][t[dataline2]].set_time(costs[2]);
+                m[t[dataline2]][t[dataline1]].set_time(costs[2]);
+                m[t[dataline1]][t[dataline2]].set_timeLine(line);
+                m[t[dataline2]][t[dataline1]].set_timeLine(line);
+                m[t[dataline1]][t[dataline2]].set_timeType("bus");
+                m[t[dataline2]][t[dataline1]].set_timeType("bus");
+                
+            }*/
                        
+    }
+    void operation:: read_cost_bus( vector <int> costs, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V])
+    {
+        vector<string>line1;
+        vector<string>line2;
+        vector<string>line3;
+
+        string line,dataline1,dataline2,num;
+        int dis;
+         while (!stfile1.eof()) 
+            {
+            getline (stfile1, line); //.firs line. bs1/sub1/tax1/...
+            getline (stfile1, dataline1); //station1
+            getline (stfile1, dataline2); //station2
+            getline (stfile1, num); //distance
+            if(line=="line1")
+            {
+                if (auto it = find(line1.begin(), line1.end(), dataline1)== line1.end())
+                {
+                    line1.push_back(dataline1);
+                }
+                if (auto it = find(line1.begin(), line1.end(), dataline2)== line1.end())
+                {
+                    line1.push_back(dataline2);
+                }
+
+            }
+            if(line=="line2")
+            {
+                if (auto it = find(line2.begin(), line2.end(), dataline1)== line2.end())
+                {
+                    line2.push_back(dataline1);
+                }
+                if (auto it = find(line2.begin(), line2.end(), dataline2)== line2.end())
+                {
+                    line2.push_back(dataline2);
+                }
+
+            }
+            if(line=="line3")
+            {
+                if (auto it = find(line3.begin(), line3.end(), dataline1)== line3.end())
+                {
+                    line3.push_back(dataline1);
+                }
+                if (auto it = find(line3.begin(), line3.end(), dataline2)== line3.end())
+                {
+                    line3.push_back(dataline2);
+                }
+            }
+        }
+        for (int i=0; i<line1.size(); i++)
+        {
+            for(int j=0; j<line1.size(); j++)
+            {
+                m[t[line1[i]]][t[line1[j]]].set_time(costs[2]);
+                m[t[line1[j]]][t[line1[i]]].set_time(costs[2]);
+                 m[t[line1[i]]][t[line1[j]]].set_timeLine("line1");
+                 m[t[line1[j]]][t[line1[i]]].set_timeLine("line1");
+                 m[t[line1[i]]][t[line1[j]]].set_timeType("bus");
+                 m[t[line1[j]]][t[line1[i]]].set_timeType("bus");
+            }
+        }
+        for (int i=0; i<line2.size(); i++)
+        {
+            for(int j=0; j<line2.size(); j++)
+            {
+                m[t[line2[i]]][t[line2[j]]].set_time(costs[2]);
+                m[t[line2[j]]][t[line2[i]]].set_time(costs[2]);
+                 m[t[line2[i]]][t[line2[j]]].set_timeLine("line2");
+                 m[t[line2[j]]][t[line2[i]]].set_timeLine("line2");
+                 m[t[line2[i]]][t[line2[j]]].set_timeType("bus");
+                 m[t[line2[j]]][t[line2[i]]].set_timeType("bus");
+            }
+        }
+        for (int i=0; i<line3.size(); i++)
+        {
+            for(int j=0; j<line3.size(); j++)
+            {
+                m[t[line3[i]]][t[line3[j]]].set_time(costs[2]);
+                m[t[line3[j]]][t[line3[i]]].set_time(costs[2]);
+                 m[t[line3[i]]][t[line3[j]]].set_timeLine("line3");
+                 m[t[line3[j]]][t[line3[i]]].set_timeLine("line3");
+                 m[t[line3[i]]][t[line3[j]]].set_timeType("bus");
+                 m[t[line3[j]]][t[line3[i]]].set_timeType("bus");
+            }
+        }
+
+    }
+    void operation::read_cost_sub(vector <int> costs, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V])
+    {
+        vector<string>line1;
+        vector<string>line2;
+        vector<string>line3;
+        vector<string>line4;
+
+        string line,dataline1,dataline2,num;
+        int dis;
+         while (!stfile1.eof()) 
+            {
+            getline (stfile1, line); //.firs line. bs1/sub1/tax1/...
+            getline (stfile1, dataline1); //station1
+            getline (stfile1, dataline2); //station2
+            getline (stfile1, num); //distance
+            if(line=="line1")
+            {
+                if (auto it = find(line1.begin(), line1.end(), dataline1)!= line1.end())
+                {
+                    line1.push_back(dataline1);
+                }
+                if (auto it = find(line1.begin(), line1.end(), dataline2)!= line1.end())
+                {
+                    line1.push_back(dataline2);
+                }
+
+            }
+            if(line=="line2")
+            {
+                if (auto it = find(line2.begin(), line2.end(), dataline1)== line2.end())
+                {
+                    line2.push_back(dataline1);
+                }
+                if (auto it = find(line2.begin(), line2.end(), dataline2)== line2.end())
+                {
+                    line2.push_back(dataline2);
+                }
+
+            }
+            if(line=="line3")
+            {
+                if (auto it = find(line3.begin(), line3.end(), dataline1)== line3.end())
+                {
+                    line3.push_back(dataline1);
+                }
+                if (auto it = find(line3.begin(), line3.end(), dataline2)== line3.end())
+                {
+                    line3.push_back(dataline2);
+                }
+            }
+            if(line=="line4")
+            {
+                if (auto it = find(line4.begin(), line4.end(), dataline1)== line4.end())
+                {
+                    line4.push_back(dataline1);
+                }
+                if (auto it = find(line4.begin(), line4.end(), dataline2)== line4.end())
+                {
+                    line4.push_back(dataline2);
+                }
+            }
+        }
+        for (int i=0; i<line1.size(); i++)
+        {
+            for(int j=0; j<line1.size(); j++)
+            {
+                m[t[line1[i]]][t[line1[j]]].set_time(costs[1]);
+                m[t[line1[j]]][t[line1[i]]].set_time(costs[1]);
+                m[t[line1[i]]][t[line1[j]]].set_timeLine("line1");
+                m[t[line1[j]]][t[line1[i]]].set_timeLine("line1");
+                m[t[line1[i]]][t[line1[j]]].set_timeType("subway");
+                m[t[line1[j]]][t[line1[i]]].set_timeType("subway");
+            }
+        }
+        for (int i=0; i<line2.size(); i++)
+        {
+            for(int j=0; j<line2.size(); j++)
+            {
+                m[t[line2[i]]][t[line2[j]]].set_time(costs[1]);
+                m[t[line2[j]]][t[line2[i]]].set_time(costs[1]);
+                 m[t[line2[i]]][t[line2[j]]].set_timeLine("line2");
+                 m[t[line2[j]]][t[line2[i]]].set_timeLine("line2");
+                 m[t[line2[i]]][t[line2[j]]].set_timeType("subway");
+                 m[t[line2[j]]][t[line2[i]]].set_timeType("subway");
+            }
+        }
+        for (int i=0; i<line3.size(); i++)
+        {
+            for(int j=0; j<line3.size(); j++)
+            {
+                m[t[line3[i]]][t[line3[j]]].set_time(costs[1]);
+                m[t[line3[j]]][t[line3[i]]].set_time(costs[1]);
+                 m[t[line3[i]]][t[line3[j]]].set_timeLine("line3");
+                 m[t[line3[j]]][t[line3[i]]].set_timeLine("line3");
+                 m[t[line3[i]]][t[line3[j]]].set_timeType("subway");
+                 m[t[line3[j]]][t[line3[i]]].set_timeType("subway");
+            }
+        }
+        for (int i=0; i<line4.size(); i++)
+        {
+            for(int j=0; j<line4.size(); j++)
+            {
+                m[t[line4[i]]][t[line4[j]]].set_time(costs[1]);
+                m[t[line4[j]]][t[line4[i]]].set_time(costs[1]);
+                m[t[line4[i]]][t[line4[j]]].set_timeLine("line4");
+                m[t[line4[j]]][t[line4[i]]].set_timeLine("line4");
+                m[t[line4[i]]][t[line4[j]]].set_timeType("subway");
+                m[t[line4[j]]][t[line4[i]]].set_timeType("subway");
+            }
         }
     }
     void operation::read_time( char type, vector <int> timeOfType, ifstream &stfile1, unordered_map<string , int> & t, DataType m [V][V], int hour )
@@ -223,7 +421,7 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V],
 
     if (stfile.is_open())
     { 
-        read_cost('b',costs, stfile, t, m, hour);
+        read_cost_bus(costs, stfile, t, m);
     }  
     stfile.close();
 
@@ -231,7 +429,7 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V],
     stfile1.open("subway_Routes.txt", ios::in);
     if (stfile1.is_open())
     {
-        read_cost('s',costs, stfile1, t, m, hour);
+        read_cost_sub(costs, stfile1, t, m);
     }
     stfile1.close();
 
@@ -239,7 +437,7 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V],
     stfile2.open("taxi_Routes.txt", ios::in);
     if (stfile2.is_open())
     {
-        read_cost('t',costs, stfile2, t, m, hour);
+        read_cost_tax(costs, stfile2, t, m, hour);
     }
     stfile2.close();  
 }

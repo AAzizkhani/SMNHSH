@@ -78,7 +78,7 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
 
     else throw invalid_argument("Not exist!");
 }
-void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap )
+/*void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap )
 {
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
@@ -159,6 +159,71 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
         dir->line.clear();
     }
 
+
+    else throw invalid_argument("Not exist!");
+}*/
+void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap )
+{
+    if (src >= 0 && src <= V-1 &&
+       dest >= 0 && dest<= V-1)
+    {
+        saveDirect dir[V];
+        bool setSpt[V] {false};
+
+        dir[src].distance = 0;
+        dir[src].direct.push_back(search(src,inputMap));
+
+        for (int i{0} ; i < V-1 ; i++)
+        {
+            int minIndex = minDistance(dir , setSpt);
+            setSpt[minIndex] = true;
+            for (int j{0} ; j< V ; j++)
+            {
+
+                vector <int> tempcost=stations[minIndex][j].get_time();
+
+                if (!setSpt[j] && tempcost.size()>0 && dir[minIndex].distance != __INT_MAX__)
+                    {
+                         
+                        vector <string> templine= stations[j][minIndex].get_timeLine();
+                        vector <string> temptype= stations[minIndex][j].get_timeType();
+                        string temp_line, temp_type;      
+                        for(int k=0; k<tempcost.size(); k++ )
+                        {
+                            if(dir[minIndex].distance + tempcost[k] < dir[j].distance )
+                            {   
+
+                            dir[j].distance = dir[minIndex].distance+tempcost[k];
+                            temp_line=templine[k];
+                            temp_type=temptype[k];
+
+                            }
+                        }
+                        dir[j].direct = dir[minIndex].direct;
+                        dir[j].direct.push_back(search(j,inputMap));
+
+                        dir[j].type = dir[minIndex].type;
+                        dir[j].type.push_back(temp_type);
+
+                        dir[j].line = dir[minIndex].line;
+                        dir[j].line.push_back(temp_line);
+    
+                    }
+            }
+
+        }
+
+        cout << dir[dest].distance << "\n";
+
+        for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+        {
+            cout << dir[dest].direct[i]<<"\t";
+            cout<<dir[dest].type[i]<<"\t";
+        }
+        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
+        dir->type.clear();
+        dir->direct.clear();
+    }
 
     else throw invalid_argument("Not exist!");
 }
