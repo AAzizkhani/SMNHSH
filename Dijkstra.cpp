@@ -453,11 +453,6 @@ void Dijkstra::dijkstra_ARtime (int src , int dest , DataType stations[V][V], un
     else throw invalid_argument("Not exist!");
 }
 
-/*void:: Dijkstra::Help ()
-{
-
-}
-*/
 
 void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType,
  int hour)
@@ -479,7 +474,6 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
             setSpt[minIndex] = true;
             for (int j{0} ; j< V ; j++)
             {    
-
                 vector <int> temptime=stations[minIndex][j].get_time();
                 if (!setSpt[j] && temptime.size()>0 && dir[minIndex].distance != __INT_MAX__)
                     {
@@ -498,20 +492,21 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                         temp_line=templine[k];
                                         temp_type=temptype[k];
                                     }
-                                    
-                                    
-                                        if(bus[minIndex].distance != __INT_MAX__)
+                                    if(bus[minIndex].distance != __INT_MAX__)
+                                    {
+                                        
+                                        if(bus[minIndex].line.size()==0||bus[minIndex].line[bus[minIndex].line.size()-1]!=templine[k])
                                         {
-                                            if(bus[minIndex].line.size()==0||bus[minIndex].line[bus[minIndex].line.size()-1]!=templine[k])
-                                            {
-                                                bus[j].distance=bus[minIndex].distance + temptime[k]+timeOfType[5] ;
-                                            }
-                                            else
-                                                bus[j].distance=bus[minIndex].distance + temptime[k] ;
+                                            bus[j].distance=bus[minIndex].distance + temptime[k]+timeOfType[5] ;
                                         }
                                         else
-                                                bus[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[5] ;
-                                    
+                                            bus[j].distance=bus[minIndex].distance + temptime[k] ;
+                                    }
+                                    else
+                                    {
+                                            bus[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[5] ;
+
+                                    }
 
                                     bus[j].direct = bus[minIndex].direct;
                                     bus[j].direct.push_back(search(j,inputMap));
@@ -544,7 +539,6 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                         }
                                     }
                                     
-                                    
                                     if(sub[minIndex].distance != __INT_MAX__)
                                     {
                                         if(sub[minIndex].line.size()==0||sub[minIndex].line[sub[minIndex].line.size()-1]!=templine[k])
@@ -560,7 +554,10 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                     else if(hour>5 && hour<9)
                                     sub[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[3]*3;
                                     else
-                                    sub[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[3];                                        
+                                    {
+                                        sub[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[3];
+                                    }
+                                                                            
 
                                     sub[j].direct = sub[minIndex].direct;
                                     sub[j].direct.push_back(search(j,inputMap));
@@ -618,15 +615,26 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                         temp_line=templine[k];
                                         temp_type=temptype[k];
                                         }
-                                    bus[j].distance=bus[minIndex].distance + temptime[k]+ timeOfType[5] ;
-                                    bus[j].direct = bus[minIndex].direct;
-                                    bus[j].direct.push_back(search(j,inputMap));
+                                        if(bus[minIndex].distance != __INT_MAX__)
+                                        {
+                                            if(bus[minIndex].line.size()==0 ||bus[minIndex].line[bus[minIndex].line.size()-1]!=templine[k])
+                                            {
+                                                bus[j].distance=bus[minIndex].distance + temptime[k]+timeOfType[5];
+                                            }
+                                            else
+                                                bus[j].distance=bus[minIndex].distance + temptime[k];
+                                        }
+                                        else
+                                            bus[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[5];
 
-                                    bus[j].type = bus[minIndex].type;
-                                    bus[j].type.push_back("bus");
+                                        bus[j].direct = bus[minIndex].direct;
+                                        bus[j].direct.push_back(search(j,inputMap));
 
-                                    bus[j].line = bus[minIndex].line;
-                                    bus[j].line.push_back(templine[k]);
+                                        bus[j].type = bus[minIndex].type;
+                                        bus[j].type.push_back("bus");
+
+                                        bus[j].line = bus[minIndex].line;
+                                        bus[j].line.push_back(templine[k]);
                                     }
                                     if(temptype[k]=="subway")
                                     {
@@ -638,7 +646,6 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                             temp_line=templine[k];
                                             temp_type=temptype[k];
                                             }
-                                            sub[j].distance=sub[minIndex].distance + temptime[k]+ (timeOfType[3]*3) ;
                                             
                                         }
                                         else
@@ -649,9 +656,25 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                             temp_line=templine[k];
                                             temp_type=temptype[k];
                                             }
-                                            sub[j].distance=sub[minIndex].distance + temptime[k]+ (timeOfType[3]) ;
 
                                         }
+                                        if(sub[minIndex].distance != __INT_MAX__)
+                                        {
+                                            if(sub[minIndex].line.size()==0||sub[minIndex].line[sub[minIndex].line.size()-1]!=templine[k])
+                                            {
+                                                if(hour>5 && hour<9)
+                                                sub[j].distance=sub[minIndex].distance + temptime[k]+timeOfType[3]*3;
+                                                else
+                                                sub[j].distance=sub[minIndex].distance + temptime[k]+timeOfType[3];
+                                            }
+                                            else
+                                                sub[j].distance=sub[minIndex].distance + temptime[k];
+                                        }
+                                        else if(hour>5 && hour<9) 
+                                                sub[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[3]*3;
+                                        else
+                                                sub[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[3];
+
                                             sub[j].direct = sub[minIndex].direct;
                                             sub[j].direct.push_back(search(j,inputMap));
 
@@ -666,16 +689,28 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                     {
                                         if(dir[minIndex].distance + temptime[i] + timeOfType[4] < dir[j].distance)
                                         {
-                                        dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[4];
-                                        temp_line=templine[k];
-                                        temp_type=temptype[k];
+                                            dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[4];
+                                            temp_line=templine[k];
+                                            temp_type=temptype[k];
                                         }
-                                        taxi[j].distance = taxi[minIndex].distance + temptime[k]+ timeOfType[4] ;
+                                        if(taxi[minIndex].distance != __INT_MAX__)
+                                        {
+                                            if(taxi[minIndex].line.size()==0||taxi[minIndex].line[taxi[minIndex].line.size()-1]!=templine[k])
+                                            {
+                                                
+                                                taxi[j].distance=taxi[minIndex].distance + temptime[k]+timeOfType[4];
+                                            }
+                                            else
+                                                taxi[j].distance=taxi[minIndex].distance + temptime[k];
+                                        }
+                                        else 
+                                        taxi[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[4];
+                           
                                         taxi[j].direct = taxi[minIndex].direct;
                                         taxi[j].direct.push_back(search(j,inputMap));
 
                                         taxi[j].type = taxi[minIndex].type;
-                                        taxi[j].type.push_back("subway");
+                                        taxi[j].type.push_back("taxi");
 
                                         taxi[j].line = taxi[minIndex].line;
                                         taxi[j].line.push_back(templine[k]);
@@ -687,11 +722,23 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                     {
                                         if(dir[minIndex].distance + temptime[k] < dir[j].distance)
                                         {
-                                        dir[j].distance = dir[minIndex].distance + temptime[k];
+                                        dir[j].distance = dir[minIndex].distance + temptime[k] ;
                                         temp_line=templine[k];
                                         temp_type=temptype[k];
                                         }
-                                        bus[j].distance=bus[minIndex].distance + temptime[k];
+                                        if(bus[minIndex].distance != __INT_MAX__)
+                                        {
+                                        if(bus[minIndex].line.size()==0 ||bus[minIndex].line[bus[minIndex].line.size()-1]!=templine[k])
+                                        {
+                                            bus[j].distance=bus[minIndex].distance + temptime[k]+timeOfType[5];
+                                        }
+                                        else
+                                            bus[j].distance=bus[minIndex].distance + temptime[k];
+                                        }
+                                        else
+
+                                            bus[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[5];
+
                                         bus[j].direct = bus[minIndex].direct;
                                         bus[j].direct.push_back(search(j,inputMap));
 
@@ -703,69 +750,104 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
                                     }
                                     if(temptype[k]=="subway")
                                     {
+
                                         if(dir[minIndex].distance + temptime[k]  < dir[j].distance)
+                                            {
+                                            dir[j].distance = dir[minIndex].distance + temptime[k];
+                                            temp_line=templine[k];
+                                            temp_type=temptype[k];
+                                            }
+                                        //sub[j].distance=sub[minIndex].distance + temptime[k] ;
+                                            
+                                        if(sub[minIndex].distance != __INT_MAX__)
                                         {
-                                        dir[j].distance = dir[minIndex].distance + temptime[k];
-                                        temp_line=templine[k];
-                                        temp_type=temptype[k];
+                                            if(sub[minIndex].line.size()==0||sub[minIndex].line[sub[minIndex].line.size()-1]!=templine[k])
+                                            {
+                                                if(hour>5 && hour<9)
+                                                sub[j].distance=sub[minIndex].distance + temptime[k]+timeOfType[3]*3;
+                                                else
+                                                sub[j].distance=sub[minIndex].distance + temptime[k]+timeOfType[3];
+                                            }
+                                            else
+                                                sub[j].distance=sub[minIndex].distance + temptime[k];
                                         }
-                                        sub[j].distance=sub[minIndex].distance + temptime[k] ;
-                                        sub[j].direct = sub[minIndex].direct;
-                                        sub[j].direct.push_back(search(j,inputMap));
+                                        else 
+                                            sub[j].distance=dir[minIndex].distance + temptime[k];
 
-                                        sub[j].type = sub[minIndex].type;
-                                        sub[j].type.push_back("subway");
 
-                                        sub[j].line = sub[minIndex].line;
-                                        sub[j].line.push_back(templine[k]); 
+                                            sub[j].direct = sub[minIndex].direct;
+                                            sub[j].direct.push_back(search(j,inputMap));
+
+                                            sub[j].type = sub[minIndex].type;
+                                            sub[j].type.push_back("subway");
+
+                                            sub[j].line = sub[minIndex].line;
+                                            sub[j].line.push_back(templine[k]); 
                                     }
                                     if(temptype[k]=="taxi")
                                     {
-                                        if(dir[minIndex].distance + temptime[k]  < dir[j].distance)
+                                        if(dir[minIndex].distance + temptime[k]< dir[j].distance)
                                         {
                                         dir[j].distance = dir[minIndex].distance + temptime[k];
                                         temp_line=templine[k];
                                         temp_type=temptype[k];
                                         }
-                                        taxi[j].distance=taxi[minIndex].distance + temptime[k] ;
-                                        taxi[j].direct = taxi[minIndex].direct;
-                                        taxi[j].direct.push_back(search(j,inputMap));
+                                    if(taxi[minIndex].distance != __INT_MAX__)
+                                    {
+                                        if(taxi[minIndex].line.size()==0 ||taxi[minIndex].line[taxi[minIndex].line.size()-1]!=templine[k])
+                                        {
+                                            taxi[j].distance=taxi[minIndex].distance + temptime[k]+timeOfType[4];
+                                        }
+                                        else
+                                            taxi[j].distance=taxi[minIndex].distance + temptime[k];
+                                    }
+                                    else
+                                    {
+                                        taxi[j].distance=dir[minIndex].distance + temptime[k];
+                                    }
+                                    
+                                    taxi[j].direct = taxi[minIndex].direct;
+                                    taxi[j].direct.push_back(search(j,inputMap));
 
-                                        taxi[j].type = taxi[minIndex].type;
-                                        taxi[j].type.push_back("subway");
+                                    taxi[j].type = taxi[minIndex].type;
+                                    taxi[j].type.push_back("taxi");
 
-                                        taxi[j].line = taxi[minIndex].line;
-                                        taxi[j].line.push_back(templine[k]);
+                                    taxi[j].line = taxi[minIndex].line;
+                                    taxi[j].line.push_back(templine[k]);
                                     }    
                                 } 
                             }
                         }
+                        
                         if(dir[minIndex].type.size()>0 &&  bus[j].distance < dir[j].distance)
                         {
                             dir[j].distance=bus[j].distance;
                             temp_line=bus[j].line[bus[j].line.size()-1];
                             temp_type="bus";
+                            dir[j].line = bus[minIndex].line;
+                            dir[j].type = bus[minIndex].type;
                         }
                         if(dir[minIndex].type.size()>0 && taxi[j].distance < dir[j].distance)
                         {
                             dir[j].distance=taxi[j].distance;
                             temp_line=taxi[j].line[taxi[j].line.size()-1];
-                            temp_type="taxi";                            
+                            temp_type="taxi";
+                            dir[j].line = taxi[minIndex].line;
+                            dir[j].type = taxi[minIndex].type;                            
                         }
                         if(dir[minIndex].type.size()>0 &&  sub[j].distance < dir[j].distance)
                         {
                             dir[j].distance=sub[j].distance;
                             temp_line=sub[j].line[sub[j].line.size()-1];
                             temp_type="subway";
+                            dir[j].line = sub[minIndex].line;
+                            dir[j].type = sub[minIndex].type;
                         }
                         dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
-
-                        dir[j].type = dir[minIndex].type;
-                        dir[j].type.push_back(temp_type);
-
-                        dir[j].line = dir[minIndex].line;
-                        dir[j].line.push_back(temp_line);
+                        dir[j].line = dir[minIndex].line; dir[j].line.push_back(temp_line);
+                        dir[j].type = dir[minIndex].type; dir[j].type.push_back(temp_type);
+                        
                         }
                     }
                 }
@@ -775,7 +857,6 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
         {
             cout << dir[dest].direct[i]<<"\t";
             cout<<dir[dest].type[i]<<"\t";
-           // cout<<dir[dest].distance<<"\t";
             tut_time+=dir[dest].distance;
         }
         cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n'<<"total: ";

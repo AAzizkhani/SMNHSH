@@ -15,10 +15,7 @@ class operation
 {
     
     
-    public:
-    vector <int > tax;
-    vector <int > sub;
-    vector <int > bus;
+    public:;
     void read_dis(string, ifstream &, unordered_map<string , int> &, DataType [59][59] );
     void read_cost(char, vector <int>, ifstream &, unordered_map<string , int> &, DataType [59][59], int);
     void read_time(char, vector <int>, ifstream &, unordered_map<string , int> &, DataType [59][59], int);

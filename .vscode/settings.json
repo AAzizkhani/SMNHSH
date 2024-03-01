@@ -61,6 +61,7 @@
     "ostream": "cpp",
     "iostream": "cpp",
     "exception": "cpp",
-    "fstream": "cpp"
+    "fstream": "cpp",
+    "unordered_map": "cpp"
   }
 }

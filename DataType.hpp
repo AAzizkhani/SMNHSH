@@ -28,6 +28,8 @@ public:
     void set_line    (string);
     void set_timeLine(string);
     void set_timeType(string);
+    void free_time();
+
 
     int get_cost();
     int get_dis ();

@@ -82,6 +82,7 @@ using namespace std;
                 {
                     m[t[dataline1]][t[dataline2]].set_time((timeOfType[2]*dis));
                     m[t[dataline2]][t[dataline1]].set_time((timeOfType[2]*dis));
+                    
                 } 
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
                 m[t[dataline2]][t[dataline1]].set_timeLine(line);
@@ -94,6 +95,8 @@ using namespace std;
 
                 m[t[dataline1]][t[dataline2]].set_time(timeOfType[1]*dis);
                 m[t[dataline2]][t[dataline1]].set_time(timeOfType[1]*dis);
+                //for(auto i:m[t[dataline2]][t[dataline1]].get_time())
+                  //  cout<<i<<" ye";
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
                 m[t[dataline2]][t[dataline1]].set_timeLine(line);
                 m[t[dataline1]][t[dataline2]].set_timeType("subway");
@@ -250,7 +253,7 @@ vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType 
     {
         for(int j=0; j<V; j++)
         {
-            m[i][j].set_dis(0);
+            m[i][j].free_time();
         }
     }
     costfile.open("time_cost.txt", ios::in);
