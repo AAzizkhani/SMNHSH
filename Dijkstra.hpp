@@ -6,6 +6,8 @@
 #include <stdexcept>
 #include <vector>
 #include "DataType.hpp"
+#include "Operation.hpp"
+
 
 #define V 59
 
@@ -22,6 +24,7 @@ private:
     vector<string> type;
     vector<string> line;
     vector<int> arr_time;
+
     };
 
     string search(int,unordered_map<string , int>);
@@ -29,7 +32,7 @@ private:
 
 public:
     void dijkstra        (int, int, DataType[V][V], unordered_map<string , int>);
-    void dijkstra_cost   (int, int, DataType[V][V], unordered_map<string , int>);
+    void dijkstra_cost   (int, int, DataType[V][V], unordered_map<string , int>, operation );
     void dijkstra_ARtime (int, int, DataType[V][V], unordered_map<string , int>);
     void dijkstra_time   (int, int, DataType[V][V], unordered_map<string , int>, vector <int>, int);
     

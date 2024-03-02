@@ -162,7 +162,7 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
 
     else throw invalid_argument("Not exist!");
 }*/
-void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap )
+void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, operation operatorr )
 {
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
@@ -179,6 +179,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
             setSpt[minIndex] = true;
             for (int j{0} ; j< V ; j++)
             {
+                
 
                 vector <int> tempcost=stations[minIndex][j].get_time();
 
@@ -188,39 +189,204 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                         vector <string> templine= stations[j][minIndex].get_timeLine();
                         vector <string> temptype= stations[minIndex][j].get_timeType();
                         string temp_line, temp_type;      
+                        bool flag= false;
+                        int temp_cost = __INT_MAX__;
+
                         for(int k=0; k<tempcost.size(); k++ )
                         {
-                            if(dir[minIndex].distance + tempcost[k] < dir[j].distance )
-                            {   
+                             if(dir[minIndex].distance + tempcost[k] < dir[j].distance )
+                             {   
 
-                            dir[j].distance = dir[minIndex].distance+tempcost[k];
-                            temp_line=templine[k];
-                            temp_type=temptype[k];
+                             dir[j].distance = dir[minIndex].distance+tempcost[k];
+                             temp_line=templine[k];
+                             temp_type=temptype[k];
+                             flag = true;
+                             }
 
-                            }
                         }
-                        dir[j].direct = dir[minIndex].direct;
+                        if (flag)
+                        {
+                          dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
 
                         dir[j].type = dir[minIndex].type;
                         dir[j].type.push_back(temp_type);
 
                         dir[j].line = dir[minIndex].line;
-                        dir[j].line.push_back(temp_line);
-    
+                        dir[j].line.push_back(temp_line);  
+                        }
                     }
             }
 
         }
-
         cout << dir[dest].distance << "\n";
-
-        for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+       for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
         {
-            cout << dir[dest].direct[i]<<"\t";
-            cout<<dir[dest].type[i]<<"\t";
+            int start, end;
+            vector<string>temp;
+            if(dir[dest].type[i]=="bus")
+            {
+                if(dir[dest].line[i]=="line1")
+                {
+                    temp=operatorr.get_bline1();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" bus ";
+                  }
+                  cout<<temp[end]<<" ";
+                    
+                }
+                if(dir[dest].line[i]=="line2")
+                {
+                    temp=operatorr.get_bline2();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" bus ";
+                  }
+                    cout<<temp[end]<<" ";
+
+                    
+                }
+                if(dir[dest].line[i]=="line3")
+                {
+                    temp=operatorr.get_bline3();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" bus ";
+                  }
+                  cout<<temp[end]<<" ";
+                    
+                }
+            }
+            if(dir[dest].type[i]=="subway" ||dir[dest].type[i]=="taxi" )
+            {
+                if(dir[dest].line[i]=="line1")
+                {
+                    temp=operatorr.get_sline1();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" subway ";
+                  }
+                    cout<<temp[end]<<" ";
+
+                    
+                }
+                if(dir[dest].line[i]=="line2")
+                {
+                    temp=operatorr.get_sline2();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" subway ";
+                  }
+                    
+                }
+                if(dir[dest].line[i]=="line3")
+                {
+                    temp=operatorr.get_sline3();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" subway ";
+                  }
+                  cout<<temp[end]<<" ";
+                    
+                }
+                if(dir[dest].line[i]=="line4")
+                {
+                    temp=operatorr.get_sline4();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" subway ";
+                  }
+                  cout<<temp[end]<<" ";
+                    
+                }
+            }
         }
-        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
+        cout<<endl;
         dir->type.clear();
         dir->direct.clear();
     }
@@ -517,9 +683,36 @@ void Dijkstra::dijkstra_ARtime (int src , int dest , DataType stations[V][V], un
 
     else throw invalid_argument("Not exist!");
 }
-
-
 void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType,
+ int hour)
+{
+     if (src >= 0 && src <= V-1 &&
+       dest >= 0 && dest<= V-1)
+    {
+        saveDirect dir[V], taxi[V], bus[V], sub[V];
+        bool setSpt[V] {false};
+
+        dir[src].distance = 0;
+        dir[src].direct.push_back(search(src,inputMap));
+        for (int i{0} ; i < V-1 ; i++)
+        {
+            int minIndex = minDistance(dir , setSpt);
+            //setSpt[minIndex] = true;
+            for (int j{0} ; j< V ; j++)
+            {    
+                vector <int> temptime=stations[minIndex][j].get_time();
+                if (!setSpt[j] && temptime.size()>0 && dir[minIndex].distance != __INT_MAX__)
+                    {
+                        vector <string> templine= stations[j][minIndex].get_timeLine();
+                        vector <string> temptype= stations[minIndex][j].get_timeType();
+                        string temp_line, temp_type;
+                    }
+            }
+        }
+    }
+}
+
+/*void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType,
  int hour)
 {
      if (src >= 0 && src <= V-1 &&
@@ -933,5 +1126,5 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
 
     else throw invalid_argument("Not exist!");
 }
-
+*/
 
