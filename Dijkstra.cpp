@@ -179,6 +179,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
             setSpt[minIndex] = true;
             for (int j{0} ; j< V ; j++)
             {
+                
 
                 vector <int> tempcost=stations[minIndex][j].get_time();
 
@@ -188,39 +189,44 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                         vector <string> templine= stations[j][minIndex].get_timeLine();
                         vector <string> temptype= stations[minIndex][j].get_timeType();
                         string temp_line, temp_type;      
+                        bool flag= false;
+                        int temp_cost = __INT_MAX__;
+
                         for(int k=0; k<tempcost.size(); k++ )
                         {
-                            if(dir[minIndex].distance + tempcost[k] < dir[j].distance )
-                            {   
+                             if(dir[minIndex].distance + tempcost[k] < dir[j].distance )
+                             {   
 
-                            dir[j].distance = dir[minIndex].distance+tempcost[k];
-                            temp_line=templine[k];
-                            temp_type=temptype[k];
+                             dir[j].distance = dir[minIndex].distance+tempcost[k];
+                             temp_line=templine[k];
+                             temp_type=temptype[k];
+                             flag = true;
+                             }
 
-                            }
                         }
-                        dir[j].direct = dir[minIndex].direct;
+                        if (flag)
+                        {
+                          dir[j].direct = dir[minIndex].direct;
                         dir[j].direct.push_back(search(j,inputMap));
 
                         dir[j].type = dir[minIndex].type;
                         dir[j].type.push_back(temp_type);
 
                         dir[j].line = dir[minIndex].line;
-                        dir[j].line.push_back(temp_line);
-    
+                        dir[j].line.push_back(temp_line);  
+                        }
                     }
             }
 
         }
 
         cout << dir[dest].distance << "\n";
-
-        for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+      /* for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
         {
             cout << dir[dest].direct[i]<<"\t";
             cout<<dir[dest].type[i]<<"\t";
         }
-        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
+        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';*/
         dir->type.clear();
         dir->direct.clear();
     }
