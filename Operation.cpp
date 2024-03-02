@@ -7,6 +7,8 @@
 #include <set>
 #include <algorithm>
 #include <string>
+#include "Dijkstra.hpp"
+
 #define V 59
 using namespace std;
 
@@ -522,6 +524,46 @@ int operation::getIndex(unordered_map<string , int> t,string stn)
         throw invalid_argument("this index does not exist");  
         
     return t[stn];
+}
+string operation::search(int inputKey , unordered_map<string , int> inputMap) 
+{
+    for (auto i : inputMap)
+    {
+        if (i.second == inputKey) return i.first;
+    }
+    return 0;
+}
+void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, string state, saveDirect dir[V])
+{
+        vector <string>temptype= saveVehicles[index].get_type();
+        vector <string>templine= saveVehicles[index].get_line();
+        vector <string>temptime;
+        dir[index].distance = 0;
+        if(temptype[0]=="bus")
+        {
+            if(templine[0]=="line1")
+            {
+                for(int x=index-1; x>=0; x--)
+                {
+                    temptime=station[index][x].get_timeType();
+                    for(int q=0; q<temptime.size(); q++)
+                    {
+                        if(temptime[q]==temptype[0])
+                        {
+                            dir[x].distance=timeoftype[5] +station[index][x].get_time()[q];
+                            dir[x].direct=dir[index].direct;
+                            dir[x].direct.push_back(search(q,t));
+                            dir[x].type=dir[index].type;
+                            dir[x].type.push_back("line1");
+                            dir[x].line = dir[index].line;
+                            dir[x].line.push_back("bus");
+
+                            break;
+                        }
+                    }
+                }
+            }
+        }
 }
 
 

@@ -36,7 +36,7 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
     {
-        saveDirect dir[V];
+        //saveDirect dir[V];
         bool setSpt[V] {false};
 
         dir[src].distance = 0;
@@ -74,6 +74,8 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
         cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
         dir->type.clear();
         dir->direct.clear();
+        dir->line.clear();
+       
     }
 
     else throw invalid_argument("Not exist!");
@@ -167,7 +169,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
     {
-        saveDirect dir[V];
+       // saveDirect dir[V];
         bool setSpt[V] {false};
 
         dir[src].distance = 0;
@@ -389,6 +391,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
         cout<<endl;
         dir->type.clear();
         dir->direct.clear();
+        dir->line.clear();
     }
 
     else throw invalid_argument("Not exist!");
@@ -578,7 +581,7 @@ void Dijkstra::dijkstra_ARtime (int src , int dest , DataType stations[V][V], un
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
     {
-        saveDirect dir[V];
+        //saveDirect dir[V];
         bool setSpt[V] {false};
 
         dir[src].distance = 0;
@@ -679,6 +682,7 @@ void Dijkstra::dijkstra_ARtime (int src , int dest , DataType stations[V][V], un
         dir->type.clear();
         dir->direct.clear();
         dir->arr_time.clear();
+        dir->line.clear();
     }
 
     else throw invalid_argument("Not exist!");
@@ -689,7 +693,7 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
      if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
     {
-        saveDirect dir[V], taxi[V], bus[V], sub[V];
+        //saveDirect dir[V];
         bool setSpt[V] {false};
 
         dir[src].distance = 0;

@@ -66,6 +66,7 @@
     "array": "cpp",
     "string_view": "cpp",
     "initializer_list": "cpp",
-    "string": "cpp"
+    "string": "cpp",
+    "vector": "cpp"
   }
 }

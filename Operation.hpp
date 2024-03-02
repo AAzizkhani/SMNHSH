@@ -9,7 +9,7 @@
 #include <unordered_map>
 #include "DataType.hpp"
 #include "saveType.hpp"
-
+#include "saveDirect.hpp"
 #define V 59
 
 using namespace std;
@@ -41,8 +41,10 @@ class operation
     void read_cost_line(char, vector <int>, ifstream &, unordered_map<string , int> &, DataType [59][59]);
     void setItems_dis(unordered_map<string , int> &, DataType[59][59]);
     void setItems_cost(unordered_map<string , int> &, DataType[59][59], int );
+    void setAlltype(unordered_map<string , int> &, DataType[59][59], int, vector<int>, string,saveDirect [V]);
     vector <int>  setItems_time(unordered_map<string , int> &, DataType[59][59], int);
     int getIndex (unordered_map<string , int> , string);
+    string search(int,unordered_map<string , int>);
     vector<string> get_bline1(){return bline1;};
     vector<string> get_bline2(){return bline2;};
     vector<string> get_bline3(){return bline3;};

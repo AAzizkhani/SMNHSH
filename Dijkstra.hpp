@@ -7,7 +7,7 @@
 #include <vector>
 #include "DataType.hpp"
 #include "Operation.hpp"
-
+#include "saveDirect.hpp"
 
 #define V 59
 
@@ -16,17 +16,7 @@ using namespace std;
 class Dijkstra
 {
 private:
-    class saveDirect
-    {
-    public:
-    int distance {__INT_MAX__};
-    vector<string> direct;
-    vector<string> type;
-    vector<string> line;
-    vector<int> arr_time;
-
-    };
-
+    saveDirect dir[V];
     string search(int,unordered_map<string , int>);
     int minDistance(saveDirect[] , bool[]);
 
