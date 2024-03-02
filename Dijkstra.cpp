@@ -683,9 +683,36 @@ void Dijkstra::dijkstra_ARtime (int src , int dest , DataType stations[V][V], un
 
     else throw invalid_argument("Not exist!");
 }
-
-
 void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType,
+ int hour)
+{
+     if (src >= 0 && src <= V-1 &&
+       dest >= 0 && dest<= V-1)
+    {
+        saveDirect dir[V], taxi[V], bus[V], sub[V];
+        bool setSpt[V] {false};
+
+        dir[src].distance = 0;
+        dir[src].direct.push_back(search(src,inputMap));
+        for (int i{0} ; i < V-1 ; i++)
+        {
+            int minIndex = minDistance(dir , setSpt);
+            //setSpt[minIndex] = true;
+            for (int j{0} ; j< V ; j++)
+            {    
+                vector <int> temptime=stations[minIndex][j].get_time();
+                if (!setSpt[j] && temptime.size()>0 && dir[minIndex].distance != __INT_MAX__)
+                    {
+                        vector <string> templine= stations[j][minIndex].get_timeLine();
+                        vector <string> temptype= stations[minIndex][j].get_timeType();
+                        string temp_line, temp_type;
+                    }
+            }
+        }
+    }
+}
+
+/*void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType,
  int hour)
 {
      if (src >= 0 && src <= V-1 &&
@@ -1099,5 +1126,5 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
 
     else throw invalid_argument("Not exist!");
 }
-
+*/
 

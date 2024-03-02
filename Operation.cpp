@@ -56,10 +56,23 @@ using namespace std;
                 if (auto it = find(bline1.begin(), bline1.end(), dataline1)== bline1.end())
                 {
                     bline1.push_back(dataline1);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline1) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline1);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("bus");                        
+                    }
+
                 }
                 if (auto it = find(bline1.begin(), bline1.end(), dataline2)== bline1.end())
                 {
                     bline1.push_back(dataline2);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline2) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline2);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("bus");                        
+                    }
                 }
 
             }
@@ -68,10 +81,23 @@ using namespace std;
                 if (auto it = find(bline2.begin(), bline2.end(), dataline1)== bline2.end())
                 {
                     bline2.push_back(dataline1);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline1) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline1);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("bus");                        
+                    }
+
                 }
                 if (auto it = find(bline2.begin(), bline2.end(), dataline2)== bline2.end())
                 {
                     bline2.push_back(dataline2);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline2) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline2);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("bus");                        
+                    }
                 }
 
             }
@@ -80,10 +106,23 @@ using namespace std;
                 if (auto it = find(bline3.begin(), bline3.end(), dataline1)== bline3.end())
                 {
                     bline3.push_back(dataline1);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline1) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline1);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("bus");                        
+                    }
                 }
                 if (auto it = find(bline3.begin(), bline3.end(), dataline2)== bline3.end())
                 {
                    bline3.push_back(dataline2);
+                   if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline2) != saveVehicles[i].get_name().end())
+                   {
+                    saveVehicles[i].set_name(dataline2);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("bus");                    
+                   }
+
                 }
             }
         }
@@ -141,10 +180,24 @@ using namespace std;
                 if (auto it = find(sline1.begin(), sline1.end(), dataline1)!= sline1.end())
                 {
                     sline1.push_back(dataline1);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline1) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline1);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("subway");
+                    }
+                    
                 }
                 if (auto it = find(sline1.begin(), sline1.end(), dataline2)!= sline1.end())
                 {
                     sline1.push_back(dataline2);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline2) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline2);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("subway");                        
+                    }
+
                 }
 
             }
@@ -153,10 +206,24 @@ using namespace std;
                 if (auto it = find(sline2.begin(), sline2.end(), dataline1)== sline2.end())
                 {
                     sline2.push_back(dataline1);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline1) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline1);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("subway");                      
+                    }
+
                 }
                 if (auto it = find(sline2.begin(), sline2.end(), dataline2)== sline2.end())
                 {
                     sline2.push_back(dataline2);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline2) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline2);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("subway");                       
+                    }
+
                 }
 
             }
@@ -165,10 +232,24 @@ using namespace std;
                 if (auto it = find(sline3.begin(), sline3.end(), dataline1)== sline3.end())
                 {
                     sline3.push_back(dataline1);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline1) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline1);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("subway");                        
+                    }
+
                 }
                 if (auto it = find(sline3.begin(), sline3.end(), dataline2)== sline3.end())
                 {
                     sline3.push_back(dataline2);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline2) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline2);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("subway");                        
+                    }
+
                 }
             }
             if(line=="line4")
@@ -176,10 +257,24 @@ using namespace std;
                 if (auto it = find(sline4.begin(), sline4.end(), dataline1)== sline4.end())
                 {
                     sline4.push_back(dataline1);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline1) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline1);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("subway");                        
+                    }
+
                 }
                 if (auto it = find(sline4.begin(), sline4.end(), dataline2)== sline4.end())
                 {
                     sline4.push_back(dataline2);
+                    if(find(saveVehicles[i].get_name().begin(), saveVehicles[i].get_name().end(), dataline2) != saveVehicles[i].get_name().end())
+                    {
+                    saveVehicles[i].set_name(dataline2);
+                    saveVehicles[i].set_line(line);
+                    saveVehicles[i++].set_type("subway");                        
+                    }
+
                 }
             }
         }
@@ -267,8 +362,6 @@ using namespace std;
 
                 m[t[dataline1]][t[dataline2]].set_time(timeOfType[1]*dis);
                 m[t[dataline2]][t[dataline1]].set_time(timeOfType[1]*dis);
-                //for(auto i:m[t[dataline2]][t[dataline1]].get_time())
-                  //  cout<<i<<" ye";
                 m[t[dataline1]][t[dataline2]].set_timeLine(line);
                 m[t[dataline2]][t[dataline1]].set_timeLine(line);
                 m[t[dataline1]][t[dataline2]].set_timeType("subway");

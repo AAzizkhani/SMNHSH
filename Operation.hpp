@@ -8,6 +8,8 @@
 #include <vector>
 #include <unordered_map>
 #include "DataType.hpp"
+#include "saveType.hpp"
+#define V 59
 
 using namespace std;
 
@@ -22,8 +24,12 @@ class operation
          vector<string>sline2;
          vector<string>sline3;
          vector<string>sline4;
+         Save_data saveVehicles[V];
+         int  i = 0;
+
     
-    public:;
+    public:
+     
     void read_dis(string, ifstream &, unordered_map<string , int> &, DataType [59][59] );
     void read_cost_sub( vector <int>, ifstream &, unordered_map<string , int> &, DataType [59][59]);
     void read_cost_tax( vector <int>, ifstream &, unordered_map<string , int> &, DataType [59][59], int);
