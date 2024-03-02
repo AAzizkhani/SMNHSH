@@ -9,6 +9,7 @@
 #include <unordered_map>
 #include "DataType.hpp"
 #include "saveType.hpp"
+
 #define V 59
 
 using namespace std;
@@ -17,6 +18,7 @@ class operation
 {
     
     private:
+
          vector<string>bline1;
          vector<string>bline2;
          vector<string>bline3;
@@ -24,8 +26,9 @@ class operation
          vector<string>sline2;
          vector<string>sline3;
          vector<string>sline4;
-         Save_data saveVehicles[V];
-         int  i = 0;
+        Save_data saveVehicles[V];
+
+         int  z = 0;
 
     
     public:
