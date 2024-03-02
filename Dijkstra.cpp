@@ -162,7 +162,7 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
 
     else throw invalid_argument("Not exist!");
 }*/
-void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap )
+void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, operation operatorr )
 {
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
@@ -219,14 +219,174 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
             }
 
         }
-
         cout << dir[dest].distance << "\n";
-      /* for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+       for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
         {
-            cout << dir[dest].direct[i]<<"\t";
-            cout<<dir[dest].type[i]<<"\t";
+            int start, end;
+            vector<string>temp;
+            if(dir[dest].type[i]=="bus")
+            {
+                if(dir[dest].line[i]=="line1")
+                {
+                    temp=operatorr.get_bline1();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" bus ";
+                  }
+                  cout<<temp[end]<<" ";
+                    
+                }
+                if(dir[dest].line[i]=="line2")
+                {
+                    temp=operatorr.get_bline2();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" bus ";
+                  }
+                    cout<<temp[end]<<" ";
+
+                    
+                }
+                if(dir[dest].line[i]=="line3")
+                {
+                    temp=operatorr.get_bline3();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" bus ";
+                  }
+                  cout<<temp[end]<<" ";
+                    
+                }
+            }
+            if(dir[dest].type[i]=="subway" ||dir[dest].type[i]=="taxi" )
+            {
+                if(dir[dest].line[i]=="line1")
+                {
+                    temp=operatorr.get_sline1();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" subway ";
+                  }
+                    cout<<temp[end]<<" ";
+
+                    
+                }
+                if(dir[dest].line[i]=="line2")
+                {
+                    temp=operatorr.get_sline2();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" subway ";
+                  }
+                    
+                }
+                if(dir[dest].line[i]=="line3")
+                {
+                    temp=operatorr.get_sline3();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" subway ";
+                  }
+                  cout<<temp[end]<<" ";
+                    
+                }
+                if(dir[dest].line[i]=="line4")
+                {
+                    temp=operatorr.get_sline4();
+                  for(int j=0; j< temp.size(); j++)
+                  {
+                    if(dir[dest].direct[i]==temp[j])
+                    {
+                        start=j;
+                    }
+                    if(dir[dest].direct[i+1]==temp[j])
+                    {
+                        end=j;
+                    }
+                  }
+                  int carry = start>end ? -1 : 1;
+                  for(int k=start; k!=end; k+=carry)
+                  {
+                    cout<<temp[k]<<" subway ";
+                  }
+                  cout<<temp[end]<<" ";
+                    
+                }
+            }
         }
-        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';*/
+        cout<<endl;
         dir->type.clear();
         dir->direct.clear();
     }
