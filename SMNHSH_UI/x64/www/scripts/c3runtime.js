@@ -4004,25 +4004,16 @@ projectversion(){return this._runtime.GetProjectVersion()},currenteventsheetname
 }
 
 {
-'use strict';{const C3=self.C3;C3.Plugins.FileSystem=class FileSystemPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.FileSystem.Type=class FileSystemType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
-{const C3=self.C3;const DOM_COMPONENT_ID="filesystem";C3.Plugins.FileSystem.Instance=class FileSystemInstance extends C3.SDKInstanceBase{constructor(inst,properties){super(inst,DOM_COMPONENT_ID);this._isSupported=false;this._pickerTag="";this._fileTag="";this._fileNames=[];this._folderNames=[];this._fileText="";this._acceptTypes=[];this._pickerTagSet=new Set;this._pickerStorage=localforage.createInstance({name:"c3-filesystemhandles-"+this._runtime.GetProjectUniqueId(),description:this._runtime.GetProjectName()});
-this.AddDOMMessageHandlers([["save-picker-map",e=>this._SavePickerMap(e)]]);this._runtime.AddLoadPromise(this._Init())}async _Init(){let pickerMap=null;try{pickerMap=await this._pickerStorage.getItem("picker-map");if(pickerMap)this._UpdatePickerTagSet(pickerMap)}catch(err){pickerMap=null;console.warn("[Construct] Unable to load picked file system handles: ",err)}const data=await this.PostToDOMAsync("init",{"pickerMap":pickerMap});this._isSupported=data["isSupported"]}async _SavePickerMap(e){const pickerMap=
-e["pickerMap"];this._UpdatePickerTagSet(pickerMap);try{await this._pickerStorage.setItem("picker-map",pickerMap)}catch(err){console.warn("[Construct] Unable to save picked file system handles: ",err)}}async _TriggerFileOperationResult(isOk,fileTag){this._fileTag=fileTag;if(isOk){await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnAnyFileOperationComplete);this._fileTag=fileTag;await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnFileOperationComplete)}else{await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnAnyFileOperationError);
-this._fileTag=fileTag;await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnFileOperationError)}this._fileTag=""}_UpdatePickerTagSet(pickerMap){this._pickerTagSet=new Set([...pickerMap.keys()])}_GetBinaryDataSdkInstance(objectClass){if(!objectClass)return null;const target=objectClass.GetFirstPicked(this._inst);if(!target)return null;return target.GetSdkInstance()}}}
-{const C3=self.C3;C3.Plugins.FileSystem.Cnds={IsSupported(){return this._isSupported},OnPickerComplete(pickerTag){return C3.equalsNoCase(this._pickerTag,pickerTag)},OnPickerError(pickerTag){return C3.equalsNoCase(this._pickerTag,pickerTag)},HasPickerTag(pickerTag){return this._pickerTagSet.has(pickerTag.toLowerCase())},OnFileOperationComplete(fileTag){return C3.equalsNoCase(this._fileTag,fileTag)},OnFileOperationError(fileTag){return C3.equalsNoCase(this._fileTag,fileTag)},OnAnyFileOperationComplete(){return true},
-OnAnyFileOperationError(){return true}}}
-{const C3=self.C3;const START_IN_ITEMS=["default","desktop","documents","downloads","music","pictures","videos"];C3.Plugins.FileSystem.Acts={AddAcceptType(mimeType,fileExts,description){if(!this._isSupported)return;const i=mimeType.indexOf(";");if(i>=0)mimeType=mimeType.substr(0,i);this._acceptTypes.push({"description":description,"accept":{[mimeType]:fileExts.split(";")}})},async ShowSaveFilePicker(pickerTag,showAcceptAll,suggestedName,id,startIn){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();
-const pickerOpts={"types":this._acceptTypes.slice(0),"excludeAcceptAllOption":!showAcceptAll};if(suggestedName)pickerOpts["suggestedName"]=suggestedName;if(id)pickerOpts["id"]=id;if(startIn>=1)pickerOpts["startIn"]=START_IN_ITEMS[startIn];C3.clearArray(this._acceptTypes);const result=await this.PostToDOMAsync("show-save-file-picker",{"pickerTag":pickerTag,"pickerOpts":pickerOpts});this._pickerTag=pickerTag;if(result["isOk"]){this._fileNames=result["pickedFileNames"];await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerComplete)}else await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerError);
-this._pickerTag=""},async ShowOpenFilePicker(pickerTag,showAcceptAll,multiple,id,startIn){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();const pickerOpts={"types":this._acceptTypes.slice(0),"excludeAcceptAllOption":!showAcceptAll,"multiple":multiple};if(id)pickerOpts["id"]=id;if(startIn>=1)pickerOpts["startIn"]=START_IN_ITEMS[startIn];C3.clearArray(this._acceptTypes);const result=await this.PostToDOMAsync("show-open-file-picker",{"pickerTag":pickerTag,"pickerOpts":pickerOpts});this._pickerTag=
-pickerTag;if(result["isOk"]){this._fileNames=result["pickedFileNames"];await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerComplete)}else await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerError);this._pickerTag=""},async ShowFolderPicker(pickerTag,mode,id,startIn){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();const pickerOpts={"mode":mode===0?"read":"readwrite"};if(id)pickerOpts["id"]=id;if(startIn>=1)pickerOpts["startIn"]=START_IN_ITEMS[startIn];const result=await this.PostToDOMAsync("show-folder-picker",
-{"pickerTag":pickerTag,"pickerOpts":pickerOpts});this._pickerTag=pickerTag;if(result["isOk"]){this._folderNames=result["pickedFolderNames"];await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerComplete)}else await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerError);this._pickerTag=""},async WriteTextFile(pickerTag,folderPath,fileTag,text,mode){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const result=await this.PostToDOMAsync("write-text-file",
-{"pickerTag":pickerTag,"folderPath":folderPath,"text":text,"keepExisting":mode===1});await this._TriggerFileOperationResult(result["isOk"],fileTag)},async WriteBinaryFile(pickerTag,folderPath,fileTag,objectClass){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const sdkInst=this._GetBinaryDataSdkInstance(objectClass);if(!sdkInst)return;const result=await this.PostToDOMAsync("write-binary-file",{"pickerTag":pickerTag,"folderPath":folderPath,"arrayBuffer":sdkInst.GetArrayBufferReadOnly()});
-await this._TriggerFileOperationResult(result["isOk"],fileTag)},async ReadTextFile(pickerTag,folderPath,fileTag){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const result=await this.PostToDOMAsync("read-text-file",{"pickerTag":pickerTag,"folderPath":folderPath});if(result["isOk"])this._fileText=result["text"];await this._TriggerFileOperationResult(result["isOk"],fileTag)},async ReadBinaryFile(pickerTag,folderPath,fileTag,objectClass){if(!this._isSupported)return;
-pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const sdkInst=this._GetBinaryDataSdkInstance(objectClass);if(!sdkInst)return;const result=await this.PostToDOMAsync("read-binary-file",{"pickerTag":pickerTag,"folderPath":folderPath});if(result["isOk"])sdkInst.SetArrayBufferTransfer(result["arrayBuffer"]);await this._TriggerFileOperationResult(result["isOk"],fileTag)},async CreateFolder(pickerTag,folderPath,fileTag){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=
-fileTag.toLowerCase();const result=await this.PostToDOMAsync("create-folder",{"pickerTag":pickerTag,"folderPath":folderPath});await this._TriggerFileOperationResult(result["isOk"],fileTag)},async CopyFile(pickerTag,srcFolderPath,destFolderPath,fileTag){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const result=await this.PostToDOMAsync("copy-file",{"pickerTag":pickerTag,"srcFolderPath":srcFolderPath,"destFolderPath":destFolderPath});await this._TriggerFileOperationResult(result["isOk"],
-fileTag)},async Delete(pickerTag,folderPath,isRecursive,fileTag){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const result=await this.PostToDOMAsync("delete",{"pickerTag":pickerTag,"folderPath":folderPath,"isRecursive":isRecursive});await this._TriggerFileOperationResult(result["isOk"],fileTag)},async ListContent(pickerTag,folderPath,fileTag){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const result=await this.PostToDOMAsync("list-content",
-{"pickerTag":pickerTag,"folderPath":folderPath});if(result["isOk"]){this._fileNames=result["fileNames"];this._folderNames=result["folderNames"]}await this._TriggerFileOperationResult(result["isOk"],fileTag)}}}
-{const C3=self.C3;C3.Plugins.FileSystem.Exps={FileNameAt(index){index=Math.floor(index);if(index<0||index>=this._fileNames.length)return"";return this._fileNames[index]},FileCount(){return this._fileNames.length},FolderNameAt(index){index=Math.floor(index);if(index<0||index>=this._folderNames.length)return"";return this._folderNames[index]},FolderCount(){return this._folderNames.length},FileText(){return this._fileText},FileTag(){return this._fileTag}}};
+'use strict';{const C3=self.C3;const DOM_COMPONENT_ID="button";C3.Plugins.Button=class ButtonPlugin extends C3.SDKDOMPluginBase{constructor(opts){super(opts,DOM_COMPONENT_ID);this.AddElementMessageHandler("click",(sdkInst,e)=>sdkInst._OnClick(e))}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.Button.Type=class ButtonType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;const C3X=self.C3X;const TYPE=0;const TEXT=1;const TOOLTIP=2;const INITIALLY_VISIBLE=3;const ENABLE=4;const AUTO_FONT_SIZE=5;const CHECKED=6;const ID=7;const CLASS_NAME=8;const DOM_COMPONENT_ID="button";C3.Plugins.Button.Instance=class ButtonInstance extends C3.SDKDOMInstanceBase{constructor(inst,properties){super(inst,DOM_COMPONENT_ID);this._text="OK";this._isCheckbox=false;this._isChecked=false;this._title="";this._id="";this._className="";this._isEnabled=true;this._autoFontSize=
+true;if(properties){this._isCheckbox=properties[TYPE]===1;this._text=properties[TEXT];this._title=properties[TOOLTIP];this.GetWorldInfo().SetVisible(properties[INITIALLY_VISIBLE]);this._isEnabled=properties[ENABLE];this._autoFontSize=properties[AUTO_FONT_SIZE];this._isChecked=properties[CHECKED];this._id=properties[ID];this._className=properties[CLASS_NAME]}this.CreateElement({"id":this._id,"className":this._className})}Release(){super.Release()}GetElementState(){return{"text":this._text,"isCheckbox":this._isCheckbox,
+"isChecked":this._isChecked,"title":this._title,"isVisible":this.GetWorldInfo().IsVisible(),"isEnabled":this._isEnabled}}async _OnClick(e){this._isChecked=e["isChecked"];this.DispatchScriptEvent("click",true);await this.TriggerAsync(C3.Plugins.Button.Cnds.OnClicked)}_SetText(text){if(this._text===text)return;this._text=text;this.UpdateElementState()}_GetText(){return this._text}_SetTooltip(title){if(this._title===title)return;this._title=title;this.UpdateElementState()}_GetTooltip(){return this._title}_SetEnabled(e){e=
+!!e;if(this._isEnabled===e)return;this._isEnabled=e;this.UpdateElementState()}_IsEnabled(){return this._isEnabled}_SetChecked(c){if(!this._isCheckbox)return;c=!!c;if(this._isChecked===c)return;this._isChecked=c;this.UpdateElementState()}_IsChecked(){return this._isChecked}Draw(renderer){}SaveToJson(){return{"text":this._text,"checked":this._isChecked,"title":this._title,"enabled":this._isEnabled}}LoadFromJson(o){this._text=o["text"];this._isChecked=o["checked"];this._title=o["title"];this._isEnabled=
+o["enabled"];this.UpdateElementState()}GetPropertyValueByIndex(index){switch(index){case TEXT:return this._GetText();case TOOLTIP:return this._GetTooltip();case ENABLE:return this._IsEnabled();case AUTO_FONT_SIZE:return this._autoFontSize;case CHECKED:return this._IsChecked()}}SetPropertyValueByIndex(index,value){switch(index){case TEXT:this._SetText(value);break;case TOOLTIP:this._SetTooltip(value);break;case ENABLE:this._SetEnabled(!!value);break;case AUTO_FONT_SIZE:this._autoFontSize=!!value;break;
+case CHECKED:this._SetChecked(!!value);break}}GetDebuggerProperties(){const prefix="plugins.button";return[{title:prefix+".name",properties:[{name:prefix+".properties.text.name",value:this._GetText(),onedit:v=>this._SetText(v)},{name:prefix+".properties.enabled.name",value:this._IsEnabled(),onedit:v=>this._SetEnabled(v)},{name:prefix+".properties.checked.name",value:this._IsChecked(),onedit:v=>this._SetChecked(v)}]}]}GetScriptInterfaceClass(){return self.IButtonInstance}};const map=new WeakMap;self.IButtonInstance=
+class IButtonInstance extends self.IDOMInstance{constructor(){super();map.set(this,self.IInstance._GetInitInst().GetSdkInstance())}set text(str){C3X.RequireString(str);map.get(this)._SetText(str)}get text(){return map.get(this)._GetText()}set tooltip(str){C3X.RequireString(str);map.get(this)._SetTooltip(str)}get tooltip(){return map.get(this)._GetTooltip()}set isEnabled(e){map.get(this)._SetEnabled(e)}get isEnabled(){return map.get(this)._IsEnabled()}set isChecked(c){map.get(this)._SetChecked(c)}get isChecked(){return map.get(this)._IsChecked()}}}
+{const C3=self.C3;C3.Plugins.Button.Cnds={OnClicked(){return true},IsChecked(){return this._isChecked},CompareText(str,caseSensitive){if(caseSensitive)return this._text===str;else return C3.equalsNoCase(this._text,str)}}}{const C3=self.C3;C3.Plugins.Button.Acts={SetText(text){this._SetText(text)},SetTooltip(title){this._SetTooltip(title)},SetChecked(c){this._SetChecked(c!==0)},ToggleChecked(){if(!this._isCheckbox)return;this._isChecked=!this._isChecked;this.UpdateElementState()}}}
+{const C3=self.C3;C3.Plugins.Button.Exps={Text(){return this._text}}};
 
 }
 
@@ -4103,20 +4094,6 @@ index);return ret?ret.x:0},TagY(tag,index){const ret=this._GetTagPosition(tag,in
 }
 
 {
-'use strict';{const C3=self.C3;const DOM_COMPONENT_ID="button";C3.Plugins.Button=class ButtonPlugin extends C3.SDKDOMPluginBase{constructor(opts){super(opts,DOM_COMPONENT_ID);this.AddElementMessageHandler("click",(sdkInst,e)=>sdkInst._OnClick(e))}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.Button.Type=class ButtonType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
-{const C3=self.C3;const C3X=self.C3X;const TYPE=0;const TEXT=1;const TOOLTIP=2;const INITIALLY_VISIBLE=3;const ENABLE=4;const AUTO_FONT_SIZE=5;const CHECKED=6;const ID=7;const CLASS_NAME=8;const DOM_COMPONENT_ID="button";C3.Plugins.Button.Instance=class ButtonInstance extends C3.SDKDOMInstanceBase{constructor(inst,properties){super(inst,DOM_COMPONENT_ID);this._text="OK";this._isCheckbox=false;this._isChecked=false;this._title="";this._id="";this._className="";this._isEnabled=true;this._autoFontSize=
-true;if(properties){this._isCheckbox=properties[TYPE]===1;this._text=properties[TEXT];this._title=properties[TOOLTIP];this.GetWorldInfo().SetVisible(properties[INITIALLY_VISIBLE]);this._isEnabled=properties[ENABLE];this._autoFontSize=properties[AUTO_FONT_SIZE];this._isChecked=properties[CHECKED];this._id=properties[ID];this._className=properties[CLASS_NAME]}this.CreateElement({"id":this._id,"className":this._className})}Release(){super.Release()}GetElementState(){return{"text":this._text,"isCheckbox":this._isCheckbox,
-"isChecked":this._isChecked,"title":this._title,"isVisible":this.GetWorldInfo().IsVisible(),"isEnabled":this._isEnabled}}async _OnClick(e){this._isChecked=e["isChecked"];this.DispatchScriptEvent("click",true);await this.TriggerAsync(C3.Plugins.Button.Cnds.OnClicked)}_SetText(text){if(this._text===text)return;this._text=text;this.UpdateElementState()}_GetText(){return this._text}_SetTooltip(title){if(this._title===title)return;this._title=title;this.UpdateElementState()}_GetTooltip(){return this._title}_SetEnabled(e){e=
-!!e;if(this._isEnabled===e)return;this._isEnabled=e;this.UpdateElementState()}_IsEnabled(){return this._isEnabled}_SetChecked(c){if(!this._isCheckbox)return;c=!!c;if(this._isChecked===c)return;this._isChecked=c;this.UpdateElementState()}_IsChecked(){return this._isChecked}Draw(renderer){}SaveToJson(){return{"text":this._text,"checked":this._isChecked,"title":this._title,"enabled":this._isEnabled}}LoadFromJson(o){this._text=o["text"];this._isChecked=o["checked"];this._title=o["title"];this._isEnabled=
-o["enabled"];this.UpdateElementState()}GetPropertyValueByIndex(index){switch(index){case TEXT:return this._GetText();case TOOLTIP:return this._GetTooltip();case ENABLE:return this._IsEnabled();case AUTO_FONT_SIZE:return this._autoFontSize;case CHECKED:return this._IsChecked()}}SetPropertyValueByIndex(index,value){switch(index){case TEXT:this._SetText(value);break;case TOOLTIP:this._SetTooltip(value);break;case ENABLE:this._SetEnabled(!!value);break;case AUTO_FONT_SIZE:this._autoFontSize=!!value;break;
-case CHECKED:this._SetChecked(!!value);break}}GetDebuggerProperties(){const prefix="plugins.button";return[{title:prefix+".name",properties:[{name:prefix+".properties.text.name",value:this._GetText(),onedit:v=>this._SetText(v)},{name:prefix+".properties.enabled.name",value:this._IsEnabled(),onedit:v=>this._SetEnabled(v)},{name:prefix+".properties.checked.name",value:this._IsChecked(),onedit:v=>this._SetChecked(v)}]}]}GetScriptInterfaceClass(){return self.IButtonInstance}};const map=new WeakMap;self.IButtonInstance=
-class IButtonInstance extends self.IDOMInstance{constructor(){super();map.set(this,self.IInstance._GetInitInst().GetSdkInstance())}set text(str){C3X.RequireString(str);map.get(this)._SetText(str)}get text(){return map.get(this)._GetText()}set tooltip(str){C3X.RequireString(str);map.get(this)._SetTooltip(str)}get tooltip(){return map.get(this)._GetTooltip()}set isEnabled(e){map.get(this)._SetEnabled(e)}get isEnabled(){return map.get(this)._IsEnabled()}set isChecked(c){map.get(this)._SetChecked(c)}get isChecked(){return map.get(this)._IsChecked()}}}
-{const C3=self.C3;C3.Plugins.Button.Cnds={OnClicked(){return true},IsChecked(){return this._isChecked},CompareText(str,caseSensitive){if(caseSensitive)return this._text===str;else return C3.equalsNoCase(this._text,str)}}}{const C3=self.C3;C3.Plugins.Button.Acts={SetText(text){this._SetText(text)},SetTooltip(title){this._SetTooltip(title)},SetChecked(c){this._SetChecked(c!==0)},ToggleChecked(){if(!this._isCheckbox)return;this._isChecked=!this._isChecked;this.UpdateElementState()}}}
-{const C3=self.C3;C3.Plugins.Button.Exps={Text(){return this._text}}};
-
-}
-
-{
 'use strict';{const C3=self.C3;C3.Plugins.Sprite=class SpritePlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}
 {const C3=self.C3;const spawnPickStack=[];C3.Plugins.Sprite.Type=class SpriteType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass);this._animations=objectClass.GetAnimations()}Release(){C3.clearArray(this._animations);super.Release()}OnCreate(){for(const a of this._animations)a.LoadAllAssets(this._runtime)}LoadTextures(renderer){const opts={sampling:this._runtime.GetSampling()};return Promise.all(this._animations.map(a=>a.LoadAllTextures(renderer,opts)))}ReleaseTextures(){for(const a of this._animations)a.ReleaseAllTextures()}OnDynamicTextureLoadComplete(){this._UpdateAllCurrentTexture()}_UpdateAllCurrentTexture(){for(const inst of this._objectClass.instancesIncludingPendingCreate())inst.GetSdkInstance()._UpdateCurrentTexture()}FinishCondition(doPick){C3.Plugins.Sprite.FinishCollisionCondition(this,
 doPick)}BeforeRunAction(method){spawnPickStack.push({objectClass:null,createHierarchy:false,instances:[]})}_SpawnPickInstance(objectClass,inst,createHierarchy){const entry=spawnPickStack.at(-1);entry.objectClass=objectClass;entry.createHierarchy=createHierarchy;entry.instances.push(inst)}AfterRunAction(method){const entry=spawnPickStack.pop();const objectClass=entry.objectClass;const createHierarchy=entry.createHierarchy;if(!objectClass)return;const pickMap=new Map;for(const inst of entry.instances)inst.CollectInstancesToPick(pickMap,
@@ -4169,6 +4146,29 @@ err);if(!this.WasReleased())this.Trigger(C3.Plugins.Sprite.Cnds.OnURLFailed);ret
 SetSolidCollisionFilter(mode,tags){this.GetWorldInfo().SetSolidCollisionFilter(mode===0,tags)},SetEffect(effect){this.GetWorldInfo().SetBlendMode(effect);this._runtime.UpdateRender()}}}
 {const C3=self.C3;C3.Plugins.Sprite.Exps={AnimationFrame(){return this._GetAnimFrame()},AnimationFrameTag(){return this._GetAnimFrameTag()},AnimationFrameCount(){return this._currentAnimation.GetFrameCount()},AnimationName(){return this._currentAnimation.GetName()},AnimationSpeed(){return this._GetAnimSpeed()},OriginalAnimationSpeed(){return this._currentAnimation.GetSpeed()},ImagePointX(imgpt){return this.GetImagePoint(imgpt)[0]},ImagePointY(imgpt){return this.GetImagePoint(imgpt)[1]},ImagePointZ(imgpt){return this.GetImagePoint(imgpt)[2]},
 ImagePointCount(){return this.GetImagePointCount()},ImageWidth(){return this.GetCurrentImageInfo().GetWidth()},ImageHeight(){return this.GetCurrentImageInfo().GetHeight()},PolyPointXAt(i){return this.GetCollisionPolyPoint(i)[0]},PolyPointYAt(i){return this.GetCollisionPolyPoint(i)[1]},PolyPointCount(){return this.GetCollisionPolyPointCount()}}};
+
+}
+
+{
+'use strict';{const C3=self.C3;C3.Plugins.FileSystem=class FileSystemPlugin extends C3.SDKPluginBase{constructor(opts){super(opts)}Release(){super.Release()}}}{const C3=self.C3;C3.Plugins.FileSystem.Type=class FileSystemType extends C3.SDKTypeBase{constructor(objectClass){super(objectClass)}Release(){super.Release()}OnCreate(){}}}
+{const C3=self.C3;const DOM_COMPONENT_ID="filesystem";C3.Plugins.FileSystem.Instance=class FileSystemInstance extends C3.SDKInstanceBase{constructor(inst,properties){super(inst,DOM_COMPONENT_ID);this._isSupported=false;this._pickerTag="";this._fileTag="";this._fileNames=[];this._folderNames=[];this._fileText="";this._acceptTypes=[];this._pickerTagSet=new Set;this._pickerStorage=localforage.createInstance({name:"c3-filesystemhandles-"+this._runtime.GetProjectUniqueId(),description:this._runtime.GetProjectName()});
+this.AddDOMMessageHandlers([["save-picker-map",e=>this._SavePickerMap(e)]]);this._runtime.AddLoadPromise(this._Init())}async _Init(){let pickerMap=null;try{pickerMap=await this._pickerStorage.getItem("picker-map");if(pickerMap)this._UpdatePickerTagSet(pickerMap)}catch(err){pickerMap=null;console.warn("[Construct] Unable to load picked file system handles: ",err)}const data=await this.PostToDOMAsync("init",{"pickerMap":pickerMap});this._isSupported=data["isSupported"]}async _SavePickerMap(e){const pickerMap=
+e["pickerMap"];this._UpdatePickerTagSet(pickerMap);try{await this._pickerStorage.setItem("picker-map",pickerMap)}catch(err){console.warn("[Construct] Unable to save picked file system handles: ",err)}}async _TriggerFileOperationResult(isOk,fileTag){this._fileTag=fileTag;if(isOk){await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnAnyFileOperationComplete);this._fileTag=fileTag;await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnFileOperationComplete)}else{await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnAnyFileOperationError);
+this._fileTag=fileTag;await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnFileOperationError)}this._fileTag=""}_UpdatePickerTagSet(pickerMap){this._pickerTagSet=new Set([...pickerMap.keys()])}_GetBinaryDataSdkInstance(objectClass){if(!objectClass)return null;const target=objectClass.GetFirstPicked(this._inst);if(!target)return null;return target.GetSdkInstance()}}}
+{const C3=self.C3;C3.Plugins.FileSystem.Cnds={IsSupported(){return this._isSupported},OnPickerComplete(pickerTag){return C3.equalsNoCase(this._pickerTag,pickerTag)},OnPickerError(pickerTag){return C3.equalsNoCase(this._pickerTag,pickerTag)},HasPickerTag(pickerTag){return this._pickerTagSet.has(pickerTag.toLowerCase())},OnFileOperationComplete(fileTag){return C3.equalsNoCase(this._fileTag,fileTag)},OnFileOperationError(fileTag){return C3.equalsNoCase(this._fileTag,fileTag)},OnAnyFileOperationComplete(){return true},
+OnAnyFileOperationError(){return true}}}
+{const C3=self.C3;const START_IN_ITEMS=["default","desktop","documents","downloads","music","pictures","videos"];C3.Plugins.FileSystem.Acts={AddAcceptType(mimeType,fileExts,description){if(!this._isSupported)return;const i=mimeType.indexOf(";");if(i>=0)mimeType=mimeType.substr(0,i);this._acceptTypes.push({"description":description,"accept":{[mimeType]:fileExts.split(";")}})},async ShowSaveFilePicker(pickerTag,showAcceptAll,suggestedName,id,startIn){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();
+const pickerOpts={"types":this._acceptTypes.slice(0),"excludeAcceptAllOption":!showAcceptAll};if(suggestedName)pickerOpts["suggestedName"]=suggestedName;if(id)pickerOpts["id"]=id;if(startIn>=1)pickerOpts["startIn"]=START_IN_ITEMS[startIn];C3.clearArray(this._acceptTypes);const result=await this.PostToDOMAsync("show-save-file-picker",{"pickerTag":pickerTag,"pickerOpts":pickerOpts});this._pickerTag=pickerTag;if(result["isOk"]){this._fileNames=result["pickedFileNames"];await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerComplete)}else await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerError);
+this._pickerTag=""},async ShowOpenFilePicker(pickerTag,showAcceptAll,multiple,id,startIn){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();const pickerOpts={"types":this._acceptTypes.slice(0),"excludeAcceptAllOption":!showAcceptAll,"multiple":multiple};if(id)pickerOpts["id"]=id;if(startIn>=1)pickerOpts["startIn"]=START_IN_ITEMS[startIn];C3.clearArray(this._acceptTypes);const result=await this.PostToDOMAsync("show-open-file-picker",{"pickerTag":pickerTag,"pickerOpts":pickerOpts});this._pickerTag=
+pickerTag;if(result["isOk"]){this._fileNames=result["pickedFileNames"];await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerComplete)}else await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerError);this._pickerTag=""},async ShowFolderPicker(pickerTag,mode,id,startIn){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();const pickerOpts={"mode":mode===0?"read":"readwrite"};if(id)pickerOpts["id"]=id;if(startIn>=1)pickerOpts["startIn"]=START_IN_ITEMS[startIn];const result=await this.PostToDOMAsync("show-folder-picker",
+{"pickerTag":pickerTag,"pickerOpts":pickerOpts});this._pickerTag=pickerTag;if(result["isOk"]){this._folderNames=result["pickedFolderNames"];await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerComplete)}else await this.TriggerAsync(C3.Plugins.FileSystem.Cnds.OnPickerError);this._pickerTag=""},async WriteTextFile(pickerTag,folderPath,fileTag,text,mode){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const result=await this.PostToDOMAsync("write-text-file",
+{"pickerTag":pickerTag,"folderPath":folderPath,"text":text,"keepExisting":mode===1});await this._TriggerFileOperationResult(result["isOk"],fileTag)},async WriteBinaryFile(pickerTag,folderPath,fileTag,objectClass){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const sdkInst=this._GetBinaryDataSdkInstance(objectClass);if(!sdkInst)return;const result=await this.PostToDOMAsync("write-binary-file",{"pickerTag":pickerTag,"folderPath":folderPath,"arrayBuffer":sdkInst.GetArrayBufferReadOnly()});
+await this._TriggerFileOperationResult(result["isOk"],fileTag)},async ReadTextFile(pickerTag,folderPath,fileTag){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const result=await this.PostToDOMAsync("read-text-file",{"pickerTag":pickerTag,"folderPath":folderPath});if(result["isOk"])this._fileText=result["text"];await this._TriggerFileOperationResult(result["isOk"],fileTag)},async ReadBinaryFile(pickerTag,folderPath,fileTag,objectClass){if(!this._isSupported)return;
+pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const sdkInst=this._GetBinaryDataSdkInstance(objectClass);if(!sdkInst)return;const result=await this.PostToDOMAsync("read-binary-file",{"pickerTag":pickerTag,"folderPath":folderPath});if(result["isOk"])sdkInst.SetArrayBufferTransfer(result["arrayBuffer"]);await this._TriggerFileOperationResult(result["isOk"],fileTag)},async CreateFolder(pickerTag,folderPath,fileTag){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=
+fileTag.toLowerCase();const result=await this.PostToDOMAsync("create-folder",{"pickerTag":pickerTag,"folderPath":folderPath});await this._TriggerFileOperationResult(result["isOk"],fileTag)},async CopyFile(pickerTag,srcFolderPath,destFolderPath,fileTag){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const result=await this.PostToDOMAsync("copy-file",{"pickerTag":pickerTag,"srcFolderPath":srcFolderPath,"destFolderPath":destFolderPath});await this._TriggerFileOperationResult(result["isOk"],
+fileTag)},async Delete(pickerTag,folderPath,isRecursive,fileTag){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const result=await this.PostToDOMAsync("delete",{"pickerTag":pickerTag,"folderPath":folderPath,"isRecursive":isRecursive});await this._TriggerFileOperationResult(result["isOk"],fileTag)},async ListContent(pickerTag,folderPath,fileTag){if(!this._isSupported)return;pickerTag=pickerTag.toLowerCase();fileTag=fileTag.toLowerCase();const result=await this.PostToDOMAsync("list-content",
+{"pickerTag":pickerTag,"folderPath":folderPath});if(result["isOk"]){this._fileNames=result["fileNames"];this._folderNames=result["folderNames"]}await this._TriggerFileOperationResult(result["isOk"],fileTag)}}}
+{const C3=self.C3;C3.Plugins.FileSystem.Exps={FileNameAt(index){index=Math.floor(index);if(index<0||index>=this._fileNames.length)return"";return this._fileNames[index]},FileCount(){return this._fileNames.length},FolderNameAt(index){index=Math.floor(index);if(index<0||index>=this._folderNames.length)return"";return this._folderNames[index]},FolderCount(){return this._folderNames.length},FileText(){return this._fileText},FileTag(){return this._fileTag}}};
 
 }
 
@@ -4412,19 +4412,18 @@ opts.tags,opts.startValue,endValue,time,easeIndex,!!opts.destroyOnComplete,!!opt
 const C3 = self.C3;
 self.C3_GetObjectRefTable = function () {
 	return [
-		C3.Plugins.FileSystem,
+		C3.Plugins.Button,
 		C3.Plugins.TextBox,
 		C3.Plugins.Text,
-		C3.Plugins.Button,
 		C3.Plugins.Sprite,
+		C3.Behaviors.Tween,
+		C3.Plugins.FileSystem,
 		C3.Plugins.Touch,
 		C3.Plugins.Keyboard,
 		C3.Plugins.Arr,
 		C3.Plugins.Audio,
-		C3.Behaviors.Tween,
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Cnds.OnLayoutStart,
-		C3.Plugins.TextBox.Acts.SetEnabled,
 		C3.Plugins.Button.Cnds.OnClicked,
 		C3.Plugins.TextBox.Acts.SetText,
 		C3.Plugins.System.Acts.SetVar,
@@ -4444,6 +4443,9 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetSize,
 		C3.Behaviors.Tween.Acts.TweenOneProperty,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
+		C3.Plugins.Button.Acts.SetCSSStyle,
+		C3.Plugins.TextBox.Acts.SetCSSStyle,
+		C3.Plugins.TextBox.Acts.SetEnabled,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.Sprite.Exps.UID,
@@ -4468,34 +4470,43 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
 		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.System.Exps.loopindex,
-		C3.Plugins.System.Acts.Wait
+		C3.Plugins.System.Acts.Wait,
+		C3.Plugins.Sprite.Cnds.CompareFrame,
+		C3.Plugins.System.Cnds.CompareBetween
 	];
 };
 self.C3_JsPropNameTable = [
-	{FileSystem: 0},
-	{ShowStations: 0},
-	{StatusText: 0},
+	{MinCost: 0},
+	{MinDistance: 0},
+	{MinTime: 0},
 	{Open: 0},
+	{OpenPrevious: 0},
+	{Reset: 0},
 	{Save: 0},
 	{SaveAs: 0},
+	{ShowResult: 0},
+	{ShowStations: 0},
+	{StatusText: 0},
+	{index: 0},
+	{Text: 0},
 	{FileNameText: 0},
+	{minTxt: 0},
+	{hourTxt: 0},
+	{Tween: 0},
+	{logo: 0},
+	{Map: 0},
+	{hud: 0},
 	{stationName: 0},
 	{set: 0},
 	{StationCol: 0},
-	{Map: 0},
-	{Text: 0},
+	{SunMoon: 0},
+	{BtnUpDown: 0},
+	{FileSystem: 0},
 	{Touch: 0},
 	{Keyboard: 0},
-	{OpenPrevious: 0},
 	{InputTime: 0},
-	{Read: 0},
 	{sendResults: 0},
-	{ShowResult: 0},
 	{Audio: 0},
-	{Tween: 0},
-	{logo: 0},
-	{hud: 0},
-	{Reset: 0},
 	{Finputtext: 0},
 	{Fbtn: 0},
 	{Ftext: 0},
@@ -4506,31 +4517,39 @@ self.C3_JsPropNameTable = [
 	{stationtemp1: 0},
 	{stationtemp2: 0},
 	{lastPickerTag: 0},
-	{readingTemp: 0}
+	{readingTemp: 0},
+	{minTemp: 0},
+	{hourTemp: 0}
 ];
 
 self.InstanceType = {
-	FileSystem: class extends self.IInstance {},
-	ShowStations: class extends self.ITextInputInstance {},
-	StatusText: class extends self.ITextInstance {},
+	MinCost: class extends self.IButtonInstance {},
+	MinDistance: class extends self.IButtonInstance {},
+	MinTime: class extends self.IButtonInstance {},
 	Open: class extends self.IButtonInstance {},
+	OpenPrevious: class extends self.IButtonInstance {},
+	Reset: class extends self.IButtonInstance {},
 	Save: class extends self.IButtonInstance {},
 	SaveAs: class extends self.IButtonInstance {},
-	FileNameText: class extends self.ITextInstance {},
-	StationCol: class extends self.ISpriteInstance {},
-	Map: class extends self.ISpriteInstance {},
+	ShowResult: class extends self.ITextInputInstance {},
+	ShowStations: class extends self.ITextInputInstance {},
+	StatusText: class extends self.ITextInstance {},
 	Text: class extends self.ITextInstance {},
+	FileNameText: class extends self.ITextInstance {},
+	minTxt: class extends self.ITextInstance {},
+	hourTxt: class extends self.ITextInstance {},
+	logo: class extends self.ISpriteInstance {},
+	Map: class extends self.ISpriteInstance {},
+	hud: class extends self.ISpriteInstance {},
+	StationCol: class extends self.ISpriteInstance {},
+	SunMoon: class extends self.ISpriteInstance {},
+	BtnUpDown: class extends self.ISpriteInstance {},
+	FileSystem: class extends self.IInstance {},
 	Touch: class extends self.IInstance {},
 	Keyboard: class extends self.IInstance {},
-	OpenPrevious: class extends self.IButtonInstance {},
 	InputTime: class extends self.ITextInputInstance {},
-	Read: class extends self.IButtonInstance {},
 	sendResults: class extends self.IArrayInstance {},
-	ShowResult: class extends self.ITextInputInstance {},
 	Audio: class extends self.IInstance {},
-	logo: class extends self.ISpriteInstance {},
-	hud: class extends self.ISpriteInstance {},
-	Reset: class extends self.IButtonInstance {},
 	Finputtext: class extends self.ITextInputInstance {},
 	Fbtn: class extends self.IButtonInstance {},
 	Ftext: class extends self.ITextInstance {}
@@ -4651,6 +4670,21 @@ self.C3_ExpressionFuncs = [
 		},
 		() => 1.5,
 		() => 1,
+		() => "Css style",
+		() => "border",
+		() => "none",
+		() => "text-align",
+		() => "center",
+		() => "font-weight",
+		() => "bold",
+		() => "font-family",
+		() => "cursive",
+		() => "cursor",
+		() => "pointer",
+		() => "border-radius",
+		() => "8px",
+		() => "font-size",
+		() => "18px",
 		() => "Stations",
 		p => {
 			const n0 = p._GetNode(0);
@@ -4693,11 +4727,12 @@ self.C3_ExpressionFuncs = [
 			return () => v0.GetValue();
 		},
 		p => {
-			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
-			return () => ((n0.ExpObject() + "*") + n1.ExpObject());
+			const v0 = p._GetNode(0).GetVar();
+			const v1 = p._GetNode(1).GetVar();
+			const n2 = p._GetNode(2);
+			return () => ((and(and(v0.GetValue(), "*"), v1.GetValue()) + "*") + n2.ExpObject());
 		},
-		() => "Read file",
+		() => "Read dist file",
 		() => "read picker complete",
 		() => "read picker error",
 		p => {
@@ -4710,7 +4745,25 @@ self.C3_ExpressionFuncs = [
 			const f1 = p._GetNode(1).GetBoundMethod();
 			return () => n0.ExpObject(f1());
 		},
-		() => "Animation 2"
+		() => "Animation 2",
+		() => "Read cost file",
+		() => "Read time file",
+		() => "Time input",
+		() => 12,
+		() => 9,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and("0", v0.GetValue());
+		},
+		() => 59,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and(":", v0.GetValue());
+		},
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and(":0", v0.GetValue());
+		}
 ];
 
 
