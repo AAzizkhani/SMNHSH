@@ -19,24 +19,28 @@ class operation
     
     private:
 
-         vector<string>bline1;
-         vector<string>bline2;
-         vector<string>bline3;
-         vector<string>sline1;
-         vector<string>sline2;
-         vector<string>sline3;
-         vector<string>sline4;
-         vector<int>bbline1;
-         vector<int>bbline2;
-         vector<int>bbline3;
-         vector<int>ssline1;
-         vector<int>ssline2;
-         vector<int>ssline3;
-         vector<int>ssline4;
-         vector<int>ttline1;
-         vector<int>ttline2;
-         vector<int>ttline3;
-         vector<int>ttline4;
+        vector<string>bline1;
+        vector<string>bline2;
+        vector<string>bline3;
+
+        vector<string>sline1;
+        vector<string>sline2;
+        vector<string>sline3;
+        vector<string>sline4;
+
+        vector<int>bbline1;
+        vector<int>bbline2;
+        vector<int>bbline3;
+
+        vector<int>ssline1;
+        vector<int>ssline2;
+        vector<int>ssline3;
+        vector<int>ssline4;
+        
+        vector<int>ttline1;
+        vector<int>ttline2;
+        vector<int>ttline3;
+        vector<int>ttline4;
         Save_data saveVehicles[V];
         //vector<saveDirect> bus;
 

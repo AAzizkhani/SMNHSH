@@ -64,22 +64,27 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
 
         }
 
-        cout << dir[dest].distance << "\n";
+        ofstream output;
+        output.open("min_dis.txt");
+        output << dir[dest].distance << '*';
 
         for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
         {
-            cout << dir[dest].direct[i]<<"\t";
-            cout<<dir[dest].type[i]<<"\t";
+            output << dir[dest].direct[i]<<'*';
+            output << dir[dest].type[i]<<'*';
         }
-        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
+        output << dir[dest].direct[dir[dest].direct.size() - 1];
+
         dir->distance=__INT_MAX__;
         dir->type.clear();
         dir->direct.clear();
         dir->line.clear();
        
+        output.close();
     }
 
     else throw invalid_argument("Not exist!");
+
 }
 /*void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap )
 {
@@ -167,6 +172,10 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
 }*/
 void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, operation operatorr )
 {
+    ofstream output;
+    output.open("min_cost.txt");
+
+
     if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
     {
@@ -209,20 +218,22 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                         }
                         if (flag)
                         {
-                          dir[j].direct = dir[minIndex].direct;
-                        dir[j].direct.push_back(search(j,inputMap));
+                            dir[j].direct = dir[minIndex].direct;
+                            dir[j].direct.push_back(search(j,inputMap));
 
-                        dir[j].type = dir[minIndex].type;
-                        dir[j].type.push_back(temp_type);
+                            dir[j].type = dir[minIndex].type;
+                            dir[j].type.push_back(temp_type);
 
-                        dir[j].line = dir[minIndex].line;
-                        dir[j].line.push_back(temp_line);  
+                            dir[j].line = dir[minIndex].line;
+                            dir[j].line.push_back(temp_line);  
                         }
                     }
             }
 
         }
-        cout << dir[dest].distance << "\n";
+
+        output << dir[dest].distance << '*';
+
        for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
         {
             int start, end;
@@ -246,9 +257,9 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                   int carry = start>end ? -1 : 1;
                   for(int k=start; k!=end; k+=carry)
                   {
-                    cout<<temp[k]<<" bus ";
+                    output<<temp[k]<<"*bus*";
                   }
-                  cout<<temp[end]<<" ";
+                  output<<temp[end]<<'*';
                     
                 }
                 if(dir[dest].line[i]=="line2")
@@ -268,9 +279,9 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                   int carry = start>end ? -1 : 1;
                   for(int k=start; k!=end; k+=carry)
                   {
-                    cout<<temp[k]<<" bus ";
+                    output<<temp[k]<<"*bus*";
                   }
-                    cout<<temp[end]<<" ";
+                    output<<temp[end]<<'*';
 
                     
                 }
@@ -291,9 +302,9 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                   int carry = start>end ? -1 : 1;
                   for(int k=start; k!=end; k+=carry)
                   {
-                    cout<<temp[k]<<" bus ";
+                    output<<temp[k]<<"*bus*";
                   }
-                  cout<<temp[end]<<" ";
+                  output<<temp[end]<<'*';
                     
                 }
             }
@@ -316,9 +327,9 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                   int carry = start>end ? -1 : 1;
                   for(int k=start; k!=end; k+=carry)
                   {
-                    cout<<temp[k]<<" subway ";
+                    output<<temp[k]<<"*subway*";
                   }
-                    cout<<temp[end]<<" ";
+                    output<<temp[end]<<'*';
 
                     
                 }
@@ -339,7 +350,7 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                   int carry = start>end ? -1 : 1;
                   for(int k=start; k!=end; k+=carry)
                   {
-                    cout<<temp[k]<<" subway ";
+                    output<<temp[k]<<"*subway*";
                   }
                     
                 }
@@ -360,9 +371,9 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                   int carry = start>end ? -1 : 1;
                   for(int k=start; k!=end; k+=carry)
                   {
-                    cout<<temp[k]<<" subway ";
+                    output<<temp[k]<<"*subway*";
                   }
-                  cout<<temp[end]<<" ";
+                  output<<temp[end]<<'*';
                     
                 }
                 if(dir[dest].line[i]=="line4")
@@ -382,20 +393,22 @@ void Dijkstra::dijkstra_cost (int src , int dest , DataType stations[V][V], unor
                   int carry = start>end ? -1 : 1;
                   for(int k=start; k!=end; k+=carry)
                   {
-                    cout<<temp[k]<<" subway ";
+                    output<<temp[k]<<"*subway*";
                   }
-                  cout<<temp[end]<<" ";
+                  output<<temp[end]<<'*';
                     
                 }
             }
         }
-        cout<<endl;
+
         dir->type.clear();
         dir->direct.clear();
         dir->line.clear();
     }
 
     else throw invalid_argument("Not exist!");
+
+    output.close();
 }
 
     
