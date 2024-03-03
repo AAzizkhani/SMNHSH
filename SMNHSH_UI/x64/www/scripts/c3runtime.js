@@ -4519,7 +4519,8 @@ self.C3_JsPropNameTable = [
 	{lastPickerTag: 0},
 	{readingTemp: 0},
 	{minTemp: 0},
-	{hourTemp: 0}
+	{hourTemp: 0},
+	{PmAm: 0}
 ];
 
 self.InstanceType = {
@@ -4749,17 +4750,24 @@ self.C3_ExpressionFuncs = [
 		() => "Read cost file",
 		() => "Read time file",
 		() => "Time input",
-		() => 12,
+		() => 23,
+		() => 24,
+		p => {
+			const v0 = p._GetNode(0).GetVar();
+			return () => and(":", v0.GetValue());
+		},
+		() => 59,
 		() => 9,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => and("0", v0.GetValue());
 		},
-		() => 59,
-		p => {
-			const v0 = p._GetNode(0).GetVar();
-			return () => and(":", v0.GetValue());
-		},
+		() => 3,
+		() => 11,
+		() => 12,
+		() => 17,
+		() => 18,
+		() => 60,
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => and(":0", v0.GetValue());

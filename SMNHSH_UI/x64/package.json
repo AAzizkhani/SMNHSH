@@ -6,7 +6,7 @@
 		"width": 1920,
 		"height": 1080,
 		"resizable": true,
-		"icon": "www\\icons\\icon-512.png"
+		"icon": "www\\icons\\icon-16.png"
 	},
 	"chromium-args": "--autoplay-policy=no-user-gesture-required --disable-features=HardwareMediaKeyHandling",
 	"settings": {
@@ -22,13 +22,8 @@
 	"c3-app-icons": [
 		{
 			"src": "www\\icons\\icon-16.png",
-			"width": 594,
-			"height": 435
-		},
-		{
-			"src": "www\\icons\\icon-512.png",
-			"width": 594,
-			"height": 512
+			"width": 593,
+			"height": 409
 		}
 	]
 }
