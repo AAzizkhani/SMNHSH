@@ -3,6 +3,8 @@
 #include <iostream>
 #include <vector>
 #include <stdexcept>
+#include <fstream>
+#include <string>
 
 #include "DataType.hpp"
 #include "Operation.hpp"
@@ -10,6 +12,18 @@
 
 #define V 59
 using namespace std;
+
+void readTestCase(string& st1 , string& st2 , string& startHour , string& startMin)
+{
+    ifstream input;
+    input.open("send_testCases.txt");
+
+    getline(input ,startHour, '*');
+    getline(input ,startMin, '*');
+
+    getline(input ,st1, '*');
+    getline(input, st2);
+}
 
 int main()
 {
@@ -26,10 +40,7 @@ int main()
 
         string st1,st2, start_min, start_hour;
 
-        getline(cin, start_hour);
-        getline(cin, start_min);
-        getline(cin,st1);
-        getline(cin,st2);
+       readTestCase(st1 , st2 , start_hour , start_min);
 
         int in1,in2, min, hour;
         in1=operatorr.getIndex(index,st1);
