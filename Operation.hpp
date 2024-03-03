@@ -37,10 +37,7 @@ class operation
          vector<int>ttline2;
          vector<int>ttline3;
          vector<int>ttline4;
-        Save_data saveVehicles[V];
-        //vector<saveDirect> bus;
-
-
+         Save_data saveVehicles[V];
          int  z = 0;
 
     
