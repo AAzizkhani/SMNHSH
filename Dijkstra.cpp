@@ -1,5 +1,6 @@
 #include <iostream>
 #include "Dijkstra.hpp"
+#include "Operation.hpp"
 
 
 using namespace std;
@@ -44,7 +45,6 @@ void Dijkstra::dijkstra (int src , int dest , DataType stations[V][V], unordered
 
         for (int i{0} ; i < V-1 ; i++)
         {
-            string viechel{""};
             int minIndex = minDistance(dir , setSpt);
             setSpt[minIndex] = true;
             for (int j{0} ; j< V ; j++)
@@ -511,7 +511,7 @@ void Dijkstra::dijkstra_ARtime (int src , int dest , DataType stations[V][V], un
     else throw invalid_argument("Not exist!");
 }
 void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType,
- int hour)
+ int hour, operation operatorr)
 {
      if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
@@ -521,22 +521,30 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
 
         dir[src].distance = 0;
         dir[src].direct.push_back(search(src,inputMap));
-        for (int i{0} ; i < V-1 ; i++)
+        for (int i{0} ; i < V ; i++)
         {
+
             int minIndex = minDistance(dir , setSpt);
-            //setSpt[minIndex] = true;
-            for (int j{0} ; j< V ; j++)
-            {    
-                vector <int> temptime=stations[minIndex][j].get_time();
-                if (!setSpt[j] && temptime.size()>0 && dir[minIndex].distance != __INT_MAX__)
-                    {
-                        vector <string> templine= stations[j][minIndex].get_timeLine();
-                        vector <string> temptype= stations[minIndex][j].get_timeType();
-                        string temp_line, temp_type;
-                    }
-            }
+            operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir );
+            setSpt[minIndex] = true;
+            cout<<"lk";
+
         }
+        //cout<<"?";
+        cout << dir[dest].distance << "\n";
+
+        for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+        {
+            cout << dir[dest].direct[i]<<"\t";
+            cout<<dir[dest].type[i]<<"\t";
+        }
+        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
+        dir->distance=__INT_MAX__;
+        dir->type.clear();
+        dir->direct.clear();
+        dir->line.clear();
     }
+    else throw invalid_argument("Not exist!");
 }
 
 /*void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType,

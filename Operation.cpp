@@ -349,9 +349,9 @@ using namespace std;
                     {
                         ssline3.push_back(timeOfType[2]*dis);
                     }
-                    else if(line=="line3")
+                    else if(line=="line4")
                     {
-                        ssline3.push_back(timeOfType[1]*dis);
+                        ssline4.push_back(timeOfType[1]*dis);
                     }
                 m[t[dataline1]][t[dataline2]].set_time(timeOfType[1]*dis);
                 m[t[dataline2]][t[dataline1]].set_time(timeOfType[1]*dis);
@@ -377,9 +377,9 @@ using namespace std;
                     {
                         ttline3.push_back(timeOfType[0]*dis*2);
                     }
-                    else if(line=="line3")
+                    else if(line=="line4")
                     {
-                        ttline3.push_back(timeOfType[0]*dis*2);
+                        ttline4.push_back(timeOfType[0]*dis*2);
                     }
                     m[t[dataline1]][t[dataline2]].set_time((timeOfType[0]*dis*2));
                     m[t[dataline2]][t[dataline1]].set_time((timeOfType[0]*dis*2));
@@ -398,9 +398,9 @@ using namespace std;
                     {
                         ttline3.push_back(timeOfType[0]*dis);
                     }
-                    else if(line=="line3")
+                    else if(line=="line4")
                     {
-                        ttline3.push_back(timeOfType[0]*dis);
+                        ttline4.push_back(timeOfType[0]*dis);
                     }
                     m[t[dataline1]][t[dataline2]].set_time(timeOfType[0]*dis);
                     m[t[dataline2]][t[dataline1]].set_time(timeOfType[0]*dis);
@@ -607,12 +607,10 @@ string operation::search(int inputKey , unordered_map<string , int> inputMap)
     }
     return 0;
 }
-void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
+void operation::setAlltype(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
 {
         vector <string>temptype= saveVehicles[index].get_type();
         vector <string>templine= saveVehicles[index].get_line();
-        vector <string>temptime;
-        dir[index].distance = 0;
         for(int i=0; i<temptype.size(); i++)
         {
             if(temptype[i]=="bus")
@@ -631,7 +629,7 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 }
                 
             }
-            else if(temptype[i]=="subway")
+             if(temptype[i]=="subway")
             {
                 if(templine[i]=="line1")
                 {
@@ -651,7 +649,7 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 }
    
             }
-            else if(temptype[i]=="taxi")
+             if(temptype[i]=="taxi")
             {
                 if(templine[i]=="line1")
                 {
@@ -678,10 +676,9 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
         dir[index].distance=0;
         if(index>0)
         {
-
-            if( bbline1[index] + timeoftype[5]< dir[index-1].distance)
+            if( bbline1[index-1] + timeoftype[5]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance= bbline1[index-1] + timeoftype[5];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -690,12 +687,11 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line1");
             }
         }
-        if(index<V)
+        if(index<bline1.size()-1)
         {
-
             if( bbline1[index] + timeoftype[5]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance = bbline1[index] + timeoftype[5];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
@@ -704,7 +700,32 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index+1].line.push_back("line1");
             }
         }
-        //for(int a=)
+        for(int a=index+1; a<bline1.size()-1; a++)
+        {
+            if(bbline1[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ bbline1[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1 , t));
+                dir[a+1].type.push_back("bus");
+                dir[a+1].line.push_back("line1");
+            }
+        }
+        for(int a=index-2; a >= 0; a--)
+        {
+            if(bbline1[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ bbline1[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("bus");
+                dir[a].line.push_back("line1");
+            }
+        }
     }
     void operation::set_bus_line2(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
@@ -712,9 +733,9 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
         if(index>0)
         {
 
-            if( bbline2[index] + timeoftype[5]< dir[index-1].distance)
+            if( bbline2[index-1] + timeoftype[5]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance = bbline2[index-1] + timeoftype[5];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -723,12 +744,11 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line2");
             }
         }
-        if(index<V)
+        if(index<bline2.size()-1)
         {
-
             if( bbline2[index] + timeoftype[5]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance = bbline2[index] + timeoftype[5];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
@@ -737,16 +757,43 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index+1].line.push_back("line2");
             }
         }
+        for(int a=index+1; a<bline2.size()-1; a++)
+        {
+            if(bbline2[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ bbline2[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1 , t));
+                dir[a+1].type.push_back("bus");
+                dir[a+1].line.push_back("line2");
+            }
+        }
+        for(int a=index-2; a>=0 ; a--)
+        {
+            if(bbline2[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ bbline2[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("bus");
+                dir[a].line.push_back("line2");
+            }
+        }
     }
     void operation::set_bus_line3(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
+        
         dir[index].distance=0;
         if(index>0)
         {
 
-            if( bbline3[index] + timeoftype[5]< dir[index-1].distance)
+            if( bbline3[index-1] + timeoftype[5]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance=bbline3[index-1] + timeoftype[5];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -755,18 +802,44 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line3");
             }
         }
-        if(index<V)
+        if(index<bline3.size()-1)
         {
 
             if( bbline3[index] + timeoftype[5]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance=bbline3[index] + timeoftype[5];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
                 dir[index+1].direct.push_back(search(index+1, t));
                 dir[index+1].type.push_back("bus");
                 dir[index+1].line.push_back("line3");
+            }
+        }
+        for(int a=index+1; a<bline3.size()-1; a++)
+        {
+            if(bbline3[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ bbline3[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1, t));
+                dir[a+1].type.push_back("bus");
+                dir[a+1].line.push_back("line3");
+            }
+        }
+        for(int a=index-2; a>=0 ; a--)
+        {
+            if(bbline3[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ bbline3[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("bus");
+                dir[a].line.push_back("line3");
             }
         }
     }
@@ -776,9 +849,9 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
         if(index>0)
         {
 
-            if( ssline1[index] + timeoftype[5]< dir[index-1].distance)
+            if( ssline1[index-1] + timeoftype[3]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance = ssline1[index-1] + timeoftype[3];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -787,18 +860,44 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line1");
             }
         }
-        if(index<V)
+        if(index<sline1.size()-1)
         {
 
-            if( ssline1[index] + timeoftype[5]< dir[index+1].distance)
+            if( ssline1[index] + timeoftype[3]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance=ssline1[index] + timeoftype[3];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
                 dir[index+1].direct.push_back(search(index+1, t));
                 dir[index+1].type.push_back("subway");
                 dir[index+1].line.push_back("line1");
+            }
+        }
+        for(int a=index+1; a<sline1.size()-1; a++)
+        {
+            if(ssline1[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ ssline1[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1 , t));
+                dir[a+1].type.push_back("subway");
+                dir[a+1].line.push_back("line1");
+            }
+        }
+        for(int a=index-2; a>=0 ; a--)
+        {
+            if(ssline1[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ ssline1[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("subway");
+                dir[a].line.push_back("line1");
             }
         }
     }
@@ -808,9 +907,9 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
         if(index>0)
         {
 
-            if( ssline2[index] + timeoftype[5]< dir[index-1].distance)
+            if( ssline2[index-1] + timeoftype[3]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance = ssline2[index-1]+ timeoftype[3];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -819,18 +918,44 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line2");
             }
         }
-        if(index<V)
+        if(index<sline2.size()-1)
         {
 
-            if( ssline2[index] + timeoftype[5]< dir[index+1].distance)
+            if( ssline2[index] + timeoftype[3]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance= ssline2[index] + timeoftype[3];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
                 dir[index+1].direct.push_back(search(index+1, t));
                 dir[index+1].type.push_back("subway");
                 dir[index+1].line.push_back("line2");
+            }
+        }
+        for(int a=index+1; a<sline2.size()-1; a++)
+        {
+            if(ssline2[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ ssline2[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1 , t));
+                dir[a+1].type.push_back("subway");
+                dir[a+1].line.push_back("line2");
+            }
+        }
+        for(int a=index-2; a>=0; a--)
+        {
+            if(ssline2[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ ssline2[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("subway");
+                dir[a].line.push_back("line2");
             }
         }
     }
@@ -840,9 +965,9 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
         if(index>0)
         {
 
-            if( ssline3[index] + timeoftype[5]< dir[index-1].distance)
+            if( ssline3[index-1] + timeoftype[3]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance = ssline3[index-1]  + timeoftype[3];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -851,18 +976,44 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line3");
             }
         }
-        if(index<V)
+        if(index<sline3.size()-1)
         {
 
-            if( ssline3[index] + timeoftype[5]< dir[index+1].distance)
+            if( ssline3[index] + timeoftype[3]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance = ssline3[index] + timeoftype[3];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
                 dir[index+1].direct.push_back(search(index+1, t));
                 dir[index+1].type.push_back("subway");
                 dir[index+1].line.push_back("line3");
+            }
+        }
+        for(int a=index+1; a<sline3.size()-1; a++)
+        {
+            if(ssline3[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ ssline3[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1 , t));
+                dir[a+1].type.push_back("subway");
+                dir[a+1].line.push_back("line3");
+            }
+        }
+        for(int a=index-2; a>=0; a--)
+        {
+            if(ssline3[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ ssline3[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("subway");
+                dir[a].line.push_back("line3");
             }
         }
     }
@@ -872,9 +1023,9 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
         if(index>0)
         {
 
-            if( ssline4[index] + timeoftype[5]< dir[index-1].distance)
+            if( ssline4[index-1] + timeoftype[3]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance=ssline4[index-1] + timeoftype[3];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -883,18 +1034,44 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line4");
             }
         }
-        if(index<V)
+        if(index<sline4.size()-1)
         {
 
-            if( ssline4[index] + timeoftype[5]< dir[index+1].distance)
+            if( ssline4[index] + timeoftype[3]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance=ssline4[index]+ timeoftype[3];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
                 dir[index+1].direct.push_back(search(index+1, t));
                 dir[index+1].type.push_back("subway");
                 dir[index+1].line.push_back("line4");
+            }
+        }
+        for(int a=index+1; a<sline4.size()-1; a++)
+        {
+            if(ssline4[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ ssline4[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1 , t));
+                dir[a+1].type.push_back("subway");
+                dir[a+1].line.push_back("line4");
+            }
+        }
+        for(int a=index-2; a>=0; a--)
+        {
+            if(ssline4[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ ssline4[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("subway");
+                dir[a].line.push_back("line4");
             }
         }
     }
@@ -904,9 +1081,9 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
         if(index>0)
         {
 
-            if( ttline1[index] + timeoftype[5]< dir[index-1].distance)
+            if( ttline1[index-1] + timeoftype[4]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance=ttline1[index-1] + timeoftype[4];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -915,18 +1092,44 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line1");
             }
         }
-        if(index<V)
+        if(index<sline1.size()-1)
         {
 
-            if( ttline1[index] + timeoftype[5]< dir[index+1].distance)
+            if( ttline1[index] + timeoftype[4]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance = ttline1[index] + timeoftype[4];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
                 dir[index+1].direct.push_back(search(index+1, t));
                 dir[index+1].type.push_back("taxi");
                 dir[index+1].line.push_back("line1");
+            }
+        }
+        for(int a=index+1; a<sline1.size()-1; a++)
+        {
+            if(ttline1[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ ttline1[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1, t));
+                dir[a+1].type.push_back("taxi");
+                dir[a+1].line.push_back("line1");
+            }
+        }
+        for(int a=index-2; a>=0; a--)
+        {
+            if(ttline1[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ ttline1[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("taxi");
+                dir[a].line.push_back("line1");
             }
         }
     }
@@ -936,9 +1139,9 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
         if(index>0)
         {
 
-            if( ttline2[index] + timeoftype[5]< dir[index-1].distance)
+            if( ttline2[index-1] + timeoftype[4]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance=ttline2[index-1]+ timeoftype[4];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -947,18 +1150,44 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line2");
             }
         }
-        if(index<V)
+        if(index<sline2.size()-1)
         {
 
-            if( ttline2[index] + timeoftype[5]< dir[index+1].distance)
+            if( ttline2[index] + timeoftype[4]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance=ttline2[index] + timeoftype[4];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
                 dir[index+1].direct.push_back(search(index+1, t));
                 dir[index+1].type.push_back("taxi");
                 dir[index+1].line.push_back("line2");
+            }
+        }
+        for(int a=index+1; a<sline2.size()-1; a++)
+        {
+            if(ttline2[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ ttline2[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1, t));
+                dir[a+1].type.push_back("taxi");
+                dir[a+1].line.push_back("line2");
+            }
+        }
+        for(int a=index-2; a>=0 ; a--)
+        {
+            if(ttline2[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ ttline2[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("taxi");
+                dir[a].line.push_back("line2");
             }
         }
     }
@@ -968,9 +1197,9 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
         if(index>0)
         {
 
-            if( ttline3[index] + timeoftype[5]< dir[index-1].distance)
+            if( ttline3[index-1] + timeoftype[4]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance=ttline3[index-1] + timeoftype[4];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -979,18 +1208,44 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line3");
             }
         }
-        if(index<V)
+        if(index<sline3.size()-1)
         {
 
             if( ttline3[index] + timeoftype[5]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance= ttline3[index]  + timeoftype[5];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
                 dir[index+1].direct.push_back(search(index+1, t));
                 dir[index+1].type.push_back("taxi");
                 dir[index+1].line.push_back("line3");
+            }
+        }
+        for(int a=index+1; a < sline3.size()-1; a++)
+        {
+            if(ttline3[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ ttline3[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1 , t));
+                dir[a+1].type.push_back("taxi");
+                dir[a+1].line.push_back("line3");
+            }
+        }
+        for(int a=index-2; a>=0; a--)
+        {
+            if(ttline3[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ ttline3[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("taxi");
+                dir[a].line.push_back("line3");
             }
         }
     }
@@ -1000,9 +1255,9 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
         if(index>0)
         {
 
-            if( ttline4[index] + timeoftype[5]< dir[index-1].distance)
+            if( ttline4[index-1] + timeoftype[4]< dir[index-1].distance)
             {
-                dir[index-1].distance=dir[index-1].distance + timeoftype[5];
+                dir[index-1].distance=ttline4[index-1] + timeoftype[4];
                 dir[index-1].direct=dir[index].direct;
                 dir[index-1].line=dir[index].line;
                 dir[index-1].type=dir[index].type;
@@ -1011,18 +1266,44 @@ void operation:: setAlltype(unordered_map<string , int> & t, DataType station[59
                 dir[index-1].line.push_back("line4");
             }
         }
-        if(index<V)
+        if(index<sline4.size()-1)
         {
 
-            if( ttline4[index] + timeoftype[5]< dir[index+1].distance)
+            if( ttline4[index] + timeoftype[4]< dir[index+1].distance)
             {
-                dir[index+1].distance=dir[index+1].distance + timeoftype[5];
+                dir[index+1].distance = ttline4[index]  + timeoftype[4];
                 dir[index+1].direct=dir[index].direct;
                 dir[index+1].line=dir[index].line;
                 dir[index+1].type=dir[index].type;
                 dir[index+1].direct.push_back(search(index+1, t));
                 dir[index+1].type.push_back("taxi");
                 dir[index+1].line.push_back("line4");
+            }
+        }
+        for(int a=index+1; a<sline4.size()-1; a++)
+        {
+            if(ttline4[a] + dir[a].distance < dir[a+1].distance)
+            {
+                dir[a+1].distance=dir[a].distance+ ttline4[a] ;
+                dir[a+1].direct=dir[a].direct;
+                dir[a+1].line=dir[a].line;
+                dir[a+1].type=dir[a].type;
+                dir[a+1].direct.push_back(search(a+1, t));
+                dir[a+1].type.push_back("taxi");
+                dir[a+1].line.push_back("line4");
+            }
+        }
+        for(int a=index-2; a>=0; a--)
+        {
+            if(ttline4[a] + dir[a+1].distance < dir[a].distance)
+            {
+                dir[a].distance=dir[a+1].distance+ ttline4[a] ;
+                dir[a].direct=dir[a].direct;
+                dir[a].line=dir[a].line;
+                dir[a].type=dir[a].type;
+                dir[a].direct.push_back(search(a, t));
+                dir[a].type.push_back("taxi");
+                dir[a].line.push_back("line4");
             }
         }
     }
