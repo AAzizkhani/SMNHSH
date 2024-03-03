@@ -4425,6 +4425,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.IsGroupActive,
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.Button.Cnds.OnClicked,
+		C3.Plugins.Arr.Acts.Clear,
 		C3.Plugins.TextBox.Acts.SetText,
 		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Sprite.Acts.SetAnim,
@@ -4655,11 +4656,11 @@ function or(l, r)
 
 self.C3_ExpressionFuncs = [
 		() => "Start",
+		() => "click",
+		() => 0,
 		() => "",
 		() => -1,
-		() => 0,
 		() => "Animation 1",
-		() => "click",
 		() => 10,
 		p => {
 			const f0 = p._GetNode(0).GetBoundMethod();
