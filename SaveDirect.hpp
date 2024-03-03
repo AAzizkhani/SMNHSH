@@ -18,7 +18,6 @@ class saveDirect
     vector<string> type;
     vector<string> line;
     vector<int> arr_time;
-
     };
 
 #endif

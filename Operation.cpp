@@ -158,7 +158,7 @@ using namespace std;
             getline (stfile1, num); //distance
             if(line=="line1")
             {
-                if (auto it = find(sline1.begin(), sline1.end(), dataline1)!= sline1.end())
+                if (auto it = find(sline1.begin(), sline1.end(), dataline1)== sline1.end())
                 {
                     sline1.push_back(dataline1);
                     saveVehicles[t[dataline1]].set_line(line);
@@ -167,7 +167,7 @@ using namespace std;
                 }
                     
                 }
-                if (auto it = find(sline1.begin(), sline1.end(), dataline2)!= sline1.end())
+                if (auto it = find(sline1.begin(), sline1.end(), dataline2)== sline1.end())
                 {
                     sline1.push_back(dataline2);
                     saveVehicles[t[dataline2]].set_line(line);
@@ -463,6 +463,7 @@ void operation:: setItems_cost(unordered_map<string , int> &t, DataType m[V][V],
         read_cost_tax(costs, stfile2, t, m, hour);
     }
     stfile2.close();  
+
 }
 vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType m[V][V], int hour)
 {
@@ -515,7 +516,8 @@ vector <int> operation:: setItems_time(unordered_map<string , int> &t, DataType 
 
         read_time('t',timeOfType, stfile2, t, m, hour);
     }
-    stfile2.close();  
+    stfile2.close();
+
     return timeOfType;
 }
 int operation::getIndex(unordered_map<string , int> t,string stn)
