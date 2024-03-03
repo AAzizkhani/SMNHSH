@@ -5,10 +5,10 @@
 		"title": "SMNHSH",
 		"width": 1920,
 		"height": 1080,
-		"resizable": false,
+		"resizable": true,
 		"icon": "www\\icons\\icon-512.png"
 	},
-	"chromium-args": "--autoplay-policy=no-user-gesture-required --disable-features=HardwareMediaKeyHandling C:/Users/Ali/Desktop/app.exe",
+	"chromium-args": "--autoplay-policy=no-user-gesture-required --disable-features=HardwareMediaKeyHandling",
 	"settings": {
 		"content-mode": "bundle",
 		"distribution-mode": "evergreen",
