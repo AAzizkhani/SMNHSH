@@ -166,7 +166,6 @@ using namespace std;
    
                 }
                     
-                }
                 if (auto it = find(sline1.begin(), sline1.end(), dataline2)== sline1.end())
                 {
                     sline1.push_back(dataline2);
@@ -231,6 +230,7 @@ using namespace std;
 
                 }
         }
+            }
         for (int i=0; i<sline1.size(); i++)
         {
             for(int j=0; j<sline1.size(); j++)
@@ -611,6 +611,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
 {
         vector <string>temptype= saveVehicles[index].get_type();
         vector <string>templine= saveVehicles[index].get_line();
+        
         for(int i=0; i<temptype.size(); i++)
         {
             if(temptype[i]=="bus")
@@ -624,7 +625,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                    set_bus_line2(t,station, index, timeoftype, dir); 
                 }
                 if(templine[i]=="line3")
-                {
+                {     
                    set_bus_line3(t,station, index, timeoftype, dir); 
                 }
                 
@@ -633,7 +634,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
             {
                 if(templine[i]=="line1")
                 {
-                    set_sub_line1(t,station, index, timeoftype, dir);
+                   set_sub_line1(t,station, index, timeoftype, dir);
                 }
                 if(templine[i]=="line2")
                 {
@@ -673,7 +674,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
 }
     void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
-        dir[index].distance=0;
+        //dir[index].distance=0;
         if(index>0)
         {
             if( bbline1[index-1] + timeoftype[5]< dir[index-1].distance)
@@ -729,7 +730,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
     }
     void operation::set_bus_line2(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
-        dir[index].distance=0;
+       // dir[index].distance=0;
         if(index>0)
         {
 
@@ -787,10 +788,9 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
     void operation::set_bus_line3(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
         
-        dir[index].distance=0;
+        //dir[index].distance=0;
         if(index>0)
         {
-
             if( bbline3[index-1] + timeoftype[5]< dir[index-1].distance)
             {
                 dir[index-1].distance=bbline3[index-1] + timeoftype[5];
@@ -804,7 +804,6 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
         }
         if(index<bline3.size()-1)
         {
-
             if( bbline3[index] + timeoftype[5]< dir[index+1].distance)
             {
                 dir[index+1].distance=bbline3[index] + timeoftype[5];
@@ -845,10 +844,8 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
     }
     void operation::set_sub_line1(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
-        dir[index].distance=0;
         if(index>0)
         {
-
             if( ssline1[index-1] + timeoftype[3]< dir[index-1].distance)
             {
                 dir[index-1].distance = ssline1[index-1] + timeoftype[3];
@@ -862,7 +859,6 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
         }
         if(index<sline1.size()-1)
         {
-
             if( ssline1[index] + timeoftype[3]< dir[index+1].distance)
             {
                 dir[index+1].distance=ssline1[index] + timeoftype[3];
@@ -903,7 +899,6 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
     }
     void operation::set_sub_line2(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
-        dir[index].distance=0;
         if(index>0)
         {
 
@@ -961,7 +956,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
     }
     void operation::set_sub_line3(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
-        dir[index].distance=0;
+       // dir[index].distance=0;
         if(index>0)
         {
 
@@ -1019,7 +1014,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
     }
     void operation::set_sub_line4(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
-        dir[index].distance=0;
+       // dir[index].distance=0;
         if(index>0)
         {
 
@@ -1077,7 +1072,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
     }
     void operation::set_taxi_line1(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
-        dir[index].distance=0;
+       // dir[index].distance=0;
         if(index>0)
         {
 
@@ -1135,7 +1130,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
     }
     void operation::set_taxi_line2(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
-        dir[index].distance=0;
+       // dir[index].distance=0;
         if(index>0)
         {
 
@@ -1193,7 +1188,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
     }
     void operation::set_taxi_line3(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
-        dir[index].distance=0;
+       // dir[index].distance=0;
         if(index>0)
         {
 
@@ -1251,7 +1246,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
     }
     void operation::set_taxi_line4(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V])
     {
-        dir[index].distance=0;
+       // dir[index].distance=0;
         if(index>0)
         {
 

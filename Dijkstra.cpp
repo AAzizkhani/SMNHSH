@@ -538,9 +538,10 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
         {
 
             int minIndex = minDistance(dir , setSpt);
+            dir[minIndex].distance=0;
             operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir );
             setSpt[minIndex] = true;
-            cout<<"lk";
+            //cout<<"lk";
 
         }
         //cout<<"?";
