@@ -40,13 +40,14 @@ int main()
 
         string st1,st2, start_min, start_hour;
 
-       readTestCase(st1 , st2 , start_hour , start_min);
-
+        //readTestCase(st1 , st2 , start_hour , start_min);
+        getline(cin,  st1);
+        getline(cin, st2);
         int in1,in2, min, hour;
         in1=operatorr.getIndex(index,st1);
         in2=operatorr.getIndex(index,st2);
-        min=stoi(start_min);
-        hour= stoi(start_hour);
+        //min=stoi(start_min);
+        //hour= stoi(start_hour);
         cout<<"min distance: "<<'\n';
         Dijkstra d;
         d.dijkstra(in1 , in2 , stations , index);
