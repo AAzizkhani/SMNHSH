@@ -43,7 +43,7 @@ int main()
         //readTestCase(st1 , st2 , start_hour , start_min);
         getline(cin,  st1);
         getline(cin, st2);
-        int in1,in2, min, hour;
+        int in1,in2, min=0, hour=2;
         in1=operatorr.getIndex(index,st1);
         in2=operatorr.getIndex(index,st2);
         //min=stoi(start_min);

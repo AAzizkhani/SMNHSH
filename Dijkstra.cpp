@@ -538,18 +538,16 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
         {
 
             int minIndex = minDistance(dir , setSpt);
-            //dir[minIndex].distance=0;
             operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir, setSpt);
             setSpt[minIndex] = true;
 
         }
-        cout<<dir[dest].distance;
-       for ( size_t i{0} ; i<V ;i++)
-        {
-                   
-           // cout << search(i , inputMap)<<"  "<<dir[i].distance << "\t";
-          //  cout << dir[dest].direct[i]<<"\t";dir[dest].direct.size() - 1
-            //cout<<dir[dest].type[i]<<"\t";
+        
+       for ( size_t i{0} ; i<V;i++)
+        { 
+            //cout<<search(i,inputMap)<<dir[i].distance<<"  ";      
+           // cout << dir[dest].direct[i]<<"\t";dir[dest].direct.size() - 1
+           // cout<<dir[dest].type[i]<<"\t";
         }
         //cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
         dir->distance=__INT_MAX__;
