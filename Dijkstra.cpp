@@ -543,14 +543,15 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
             setSpt[minIndex] = true;
 
         }
-        cout << dir[dest].distance << "\n";
-
-       for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+        cout<<dir[dest].distance;
+       for ( size_t i{0} ; i<V ;i++)
         {
-            cout << dir[dest].direct[i]<<"\t";
-            cout<<dir[dest].type[i]<<"\t";
+                   
+           // cout << search(i , inputMap)<<"  "<<dir[i].distance << "\t";
+          //  cout << dir[dest].direct[i]<<"\t";dir[dest].direct.size() - 1
+            //cout<<dir[dest].type[i]<<"\t";
         }
-        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
+        //cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
         dir->distance=__INT_MAX__;
         dir->type.clear();
         dir->direct.clear();

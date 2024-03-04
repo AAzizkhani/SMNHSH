@@ -63,7 +63,8 @@ class operation
     void set_taxi_line2(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
     void set_taxi_line3(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
     void set_taxi_line4(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-
+    void show();
+    int find_index(unordered_map<string , int> & t, int index, vector<string>  temp);
     vector <int>  setItems_time(unordered_map<string , int> &, DataType[59][59], int);
     int getIndex (unordered_map<string , int> , string);
     string search(int,unordered_map<string , int>);
