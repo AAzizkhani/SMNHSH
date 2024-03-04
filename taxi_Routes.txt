@@ -54,39 +54,39 @@ line1
 Shahr-e Rey
 Kahrizak
 13
-line6
+line2
 Haram-e Hazrat-e Abdolazim
 Shahid Rezaei
 10
-line6
+line2
 Shahid Rezaei
 Meydan-e Shohada
 6
-line6
+line2
 Meydan-e Shohada
 Emam Hossein
 2
-line6
+line2
 Emam Hossein
 Haftom-e Tir
 5
-line6
+line2
 Haftom-e Tir
 Meydan-e Hazrat-e ValiAsr
 2
-line6
+line2
 Meydan-e Hazrat-e ValiAsr
 Boostan-e laleh
 2
-line6
+line2
 Boostan-e laleh
 Yadegar-e Emam
 8
-line6
+line2
 Yadegar-e Emam
 Kashani
 6
-line6
+line2
 Kashani
 Kouhsar
 10

@@ -61,6 +61,7 @@ int main()
         cout<<"min time:"<<'\n';
         timeOfType=operatorr.setItems_time(index, stations, hour);
         d.dijkstra_time(in1 , in2 , stations , index, timeOfType, hour, operatorr);
+       // operatorr.show();
 
     }
 
