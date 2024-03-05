@@ -638,12 +638,10 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
 {
         vector <string>temptype= saveVehicles[index].get_type();
         vector <string>templine= saveVehicles[index].get_line();
+        
         int temp_ind;
-        // for(auto k:temptype)
-        // {
-        //     cout<<k<<"  ";
-        // }
-        for(int i=0; i<temptype.size(); i++)
+        int count=temptype.size()-1;
+        for(int i=0; i<count+1 ; i++)
         {
             
             if(temptype[i]=="bus")
@@ -658,7 +656,8 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                   set_bus_line1(t,station, temp_ind, index, timeoftype, dir,visit); 
+                   set_bus_line1(t,station, temp_ind, index, timeoftype, dir, count, i);
+                  
                 }
                 if(templine[i]=="line2")
                 {
@@ -670,7 +669,8 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                   set_bus_line2(t,station, temp_ind,index, timeoftype, dir,visit); 
+                   set_bus_line2(t,station, temp_ind,index, timeoftype, dir, count, i); 
+                  
                 }
                 if(templine[i]=="line3")
                 { 
@@ -682,7 +682,9 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }    
-                   set_bus_line3(t,station, temp_ind,index, timeoftype, dir,visit); 
+                   set_bus_line3(t,station, temp_ind,index, timeoftype, dir, count, i); 
+                  
+
                 }
                 
             }
@@ -698,7 +700,8 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                   set_sub_line1(t,station, temp_ind,index, timeoftype, dir,visit);
+                   set_sub_line1(t,station, temp_ind,index, timeoftype, dir, count, i);
+                 
                 }
                 if(templine[i]=="line2")
                 {
@@ -710,7 +713,8 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_sub_line2(t,station, temp_ind,index, timeoftype, dir,visit);
+                    set_sub_line2(t,station, temp_ind,index, timeoftype, dir, count, i);
+                  
                 }
                 if(templine[i]=="line3")
                 {
@@ -722,7 +726,8 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_sub_line3(t,station, temp_ind, index,timeoftype, dir,visit);
+                    set_sub_line3(t,station, temp_ind, index,timeoftype, dir, count, i);
+                   
                 }
                 if(templine[i]=="line4")
                 {
@@ -734,7 +739,8 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_sub_line4(t,station, temp_ind, index,timeoftype, dir,visit);
+                    set_sub_line4(t,station, temp_ind, index,timeoftype, dir, count, i);
+                    
                 }
    
             }
@@ -750,7 +756,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_taxi_line1(t,station, temp_ind,index, timeoftype, dir,visit);
+                    set_taxi_line1(t,station, temp_ind,index, timeoftype, dir, count, i);
                 }
                 if(templine[i]=="line2")
                 {
@@ -762,7 +768,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_taxi_line2(t,station, temp_ind, index,timeoftype, dir,visit);
+                    set_taxi_line2(t,station, temp_ind, index,timeoftype, dir, count, i);
                 }
                 if(templine[i]=="line3")
                 {
@@ -774,7 +780,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_taxi_line3(t,station, temp_ind,index, timeoftype, dir,visit);
+                    set_taxi_line3(t,station, temp_ind,index, timeoftype, dir, count, i);
                 }
                 if(templine[i]=="line4")
                 {
@@ -786,21 +792,24 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_taxi_line4(t,station, temp_ind,index, timeoftype, dir, visit);
+                    set_taxi_line4(t,station, temp_ind,index, timeoftype, dir,  count, i);
                 }
                 
             }
         }
+
+
 }
-void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
        int temp_f;
-        if(index>0)
+       int temASL=tem_in;
+        if(index>0 )
         {
             temp_f= find_index(t , index-1, bline1);
             if( dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
             {
-                if(dir[tem_in].distance + bbline1[index-1] + timeoftype[5]< dir[temp_f].distance)
+                if(!visited[temp_f] && dir[tem_in].distance + bbline1[index-1] + timeoftype[5]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance= dir[tem_in].distance +bbline1 [index-1] + timeoftype[5];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -809,6 +818,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line1");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
+                    
                 }
                 
             }
@@ -816,9 +831,9 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         if(index<bline1.size()-1)
         {
             temp_f= find_index(t , index+1, bline1);
-            if(dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
+            if( dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
             {
-                if(dir[tem_in].distance + bbline1[index] + timeoftype[3]< dir[temp_f].distance)
+                if(!visited[temp_f] &&dir[tem_in].distance + bbline1[index] + timeoftype[5]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance = dir[tem_in].distance + bbline1[index] + timeoftype[5];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -827,6 +842,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line1");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -835,7 +855,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, bline1);
             tem_in= find_index(t , a, bline1);
-            if( bbline1[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!visited[temp_f]&& bbline1[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ bbline1[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -844,13 +864,19 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("bus");
                 dir[temp_f].line.push_back("line1");
+                // if(i==count)
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
             }
         }
         for(int a=index-2; a >= 0; a--)
         {
             temp_f= find_index(t , a+1, bline1);
             tem_in= find_index(t , a, bline1);
-            if( bbline1[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(!visited[temp_f]&& bbline1[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ bbline1[a] ;
                 dir[tem_in].direct=dir[tem_in].direct;
@@ -859,6 +885,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(temp_f, t));
                 dir[tem_in].type.push_back("bus");
                 dir[tem_in].line.push_back("line1");
+                // if(i==count)
+                //     {
+                //         visited[tem_in]=true;
+                //         visited[temASL]=true;
+                //     }
+                
             }
         } 
     /*    int temp_f;
@@ -994,15 +1026,16 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
         }*/
     }
-    void operation::set_bus_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+    void operation::set_bus_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
        int temp_f;
+       int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t ,index-1, bline2);
             if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
             {
-                if(dir[tem_in].distance + bbline2[index-1] + timeoftype[5]< dir[temp_f].distance)
+                if(!visited[temp_f]&&dir[tem_in].distance + bbline2[index-1] + timeoftype[5]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance = dir[tem_in].distance +bbline2[index-1] + timeoftype[5];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1011,6 +1044,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line2");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -1020,15 +1058,20 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t ,index+1, bline2);
             if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
             {
-                if(dir[tem_in].distance + bbline2[index] + timeoftype[5]< dir[temp_f].distance)
+                if(!visited[temp_f]&&dir[tem_in].distance + bbline2[index] + timeoftype[5]< dir[temp_f].distance)
                 {
-                    dir[temp_f].distance = dir[tem_in].distance + bbline2[tem_in] + timeoftype[5];
+                    dir[temp_f].distance = dir[tem_in].distance + bbline2[index] + timeoftype[5];
                     dir[temp_f].direct=dir[tem_in].direct;
                     dir[temp_f].line=dir[tem_in].line;
                     dir[temp_f].type=dir[tem_in].type;
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line2");
+                //    if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
                 }
                 
             }
@@ -1037,7 +1080,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, bline2);
             tem_in= find_index(t , a, bline2);
-            if(bbline2[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!visited[temp_f]&&bbline2[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ bbline2[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -1046,13 +1089,18 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(tem_in , t));
                 dir[temp_f].type.push_back("bus");
                 dir[temp_f].line.push_back("line2");
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
             }
         }
         for(int a=index-2; a>=0 ; a--)
         {
             temp_f= find_index(t , a+1, bline2);
             tem_in= find_index(t , a, bline2);
-            if(bbline2[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(!visited[temp_f]&&bbline2[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ bbline2[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -1061,6 +1109,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(temp_f, t));
                 dir[tem_in].type.push_back("bus");
                 dir[tem_in].line.push_back("line2");
+                // if(i==count)
+                //     {
+                //         visited[tem_in]=true;
+                //         visited[temASL]=true;
+                //     }
+                
             }
         } 
         /*int temp_f;
@@ -1198,15 +1252,16 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
         }*/
     }
-    void operation::set_bus_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+    void operation::set_bus_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
        int temp_f;
+       int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t , index-1, bline3);
             if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
             {
-                if(dir[tem_in].distance + bbline3[index-1] + timeoftype[5]< dir[temp_f].distance)
+                if(!visited[temp_f]&& dir[tem_in].distance + bbline3[index-1] + timeoftype[5]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance= dir[tem_in].distance +bbline3[index-1] + timeoftype[5];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1215,7 +1270,13 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line3");
+                //    if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
                 }
+                //cout<< dir[temp_f].distance<<"\n";
                 
             }
         }
@@ -1224,15 +1285,21 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, bline3);
             if( dir[tem_in].line.size()==0 ||  dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
             {
-                if(dir[tem_in].distance + bbline3[index] + timeoftype[5]< dir[temp_f].distance )
+                //cout<<dir[tem_in].distance + bbline3[index] + timeoftype[5]<<'\n';
+                if(!visited[temp_f]&&dir[tem_in].distance + bbline3[index] + timeoftype[5]< dir[temp_f].distance )
                 {
-                    dir[temp_f].distance=dir[tem_in].distance + bbline3[tem_in] + timeoftype[5];
+                    dir[temp_f].distance=dir[tem_in].distance + bbline3[index] + timeoftype[5];
                     dir[temp_f].direct=dir[tem_in].direct;
                     dir[temp_f].line=dir[tem_in].line;
                     dir[temp_f].type=dir[tem_in].type;
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line3");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -1241,7 +1308,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, bline3);
             tem_in= find_index(t , a, bline3);
-            if( bbline3[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!visited[temp_f]&& bbline3[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ bbline3[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -1250,13 +1317,18 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(tem_in, t));
                 dir[temp_f].type.push_back("bus");
                 dir[temp_f].line.push_back("line3");
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
             }
         }
         for(int a=index-2; a>=0 ; a--)
         {
             temp_f= find_index(t , a+1, bline3);
             tem_in= find_index(t , a, bline3);
-            if( bbline3[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if( !visited[temp_f]&&bbline3[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ bbline3[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -1265,6 +1337,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("bus");
                 dir[tem_in].line.push_back("line3");
+                // if(i==count)
+                //     {
+                //         visited[tem_in]=true;
+                //         visited[temASL]=true;
+                //     }
+               
             }
         } 
         /*int temp_f;
@@ -1400,15 +1478,17 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
         }*/
     }
-    void operation::set_sub_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+    void operation::set_sub_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
        int temp_f;
+       int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t , index-1, sline1);
             if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
-                if(dir[tem_in].distance + ssline1[index-1] + timeoftype[3]< dir[temp_f].distance )
+                
+                if(!visited[temp_f] && dir[tem_in].distance + ssline1[index-1] + timeoftype[3]< dir[temp_f].distance )
                 {
                     dir[temp_f].distance =dir[tem_in].distance + ssline1[index-1] + timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1416,7 +1496,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].type=dir[tem_in].type;
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line1"); 
+                    dir[temp_f].line.push_back("line1");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -1426,7 +1511,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, sline1);
             if(dir[tem_in].line.size()==0 ||  dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
-                if( dir[tem_in].distance + ssline1[index] + timeoftype[3]< dir[temp_f].distance)
+                if( !visited[temp_f]&&dir[tem_in].distance + ssline1[index] + timeoftype[3]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance= dir[tem_in].distance +ssline1[index] + timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1434,7 +1519,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].type=dir[tem_in].type;
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line1"); 
+                    dir[temp_f].line.push_back("line1");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // } 
                 }
                 
             }
@@ -1443,7 +1533,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
              temp_f= find_index(t , a+1, sline1);
              tem_in= find_index(t , a, sline1);
-            if( ssline1[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if( !visited[temp_f]&&ssline1[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ ssline1[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -1452,13 +1542,18 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search( temp_f, t));
                 dir[temp_f].type.push_back("subway");
                 dir[temp_f].line.push_back("line1");
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
             }
         }
         for(int a=index-2; a>=0 ; a--)
         {
              temp_f= find_index(t , a+1, sline1);
              tem_in= find_index(t , a, sline1);
-            if( ssline1[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if( !visited[temp_f]&&ssline1[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ ssline1[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -1467,6 +1562,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(temp_f, t));
                 dir[tem_in].type.push_back("subway");
                 dir[tem_in].line.push_back("line1");
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
+               
             }
         }
         /*int temp_f;
@@ -1603,15 +1704,16 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         }*/
 
     }
-    void operation::set_sub_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+    void operation::set_sub_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
        int temp_f;
+       int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t , index-1, sline2);
             if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
-                if( dir[tem_in].distance + ssline2[index-1] + timeoftype[3]< dir[temp_f].distance )
+                if(!visited[temp_f]&& dir[tem_in].distance + ssline2[index-1] + timeoftype[3]< dir[temp_f].distance )
                 {
                     dir[temp_f].distance =dir[tem_in].distance + ssline2[index-1]+ timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1620,6 +1722,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line2");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -1629,7 +1736,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, sline2);
             if(dir[tem_in].line.size()==0 ||  dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
-                if( dir[tem_in].distance + ssline2[index] + timeoftype[3]< dir[temp_f].distance)
+                if( !visited[temp_f] &&dir[tem_in].distance + ssline2[index] + timeoftype[3]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance= dir[tem_in].distance +ssline2[index] + timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1638,6 +1745,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line2");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
             }
         }
@@ -1645,7 +1757,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, sline2);
             tem_in= find_index(t , a, sline2);
-            if(ssline2[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!visited[temp_f]&&ssline2[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ ssline2[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -1654,13 +1766,18 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("subway");
                 dir[temp_f].line.push_back("line2");
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
             }
         }
         for(int a=index-2; a>=0; a--)
         {
             temp_f= find_index(t , a+1, sline2);
             tem_in= find_index(t , a, sline2);
-            if(ssline2[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(!visited[temp_f]&&ssline2[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ ssline2[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -1669,6 +1786,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("subway");
                 dir[tem_in].line.push_back("line2");
+                // if(i==count)
+                //     {
+                //         visited[tem_in]=true;
+                //         visited[temASL]=true;
+                //     }
+               
             }
         }
         /*int temp_f;
@@ -1804,15 +1927,16 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
         }*/
     }
-    void operation::set_sub_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+    void operation::set_sub_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
         int temp_f;
+        int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t , index-1, sline3);
             if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
-                if(dir[tem_in].distance + ssline3[index-1] + timeoftype[3]< dir[temp_f].distance)
+                if(!visited[temp_f]&&dir[tem_in].distance + ssline3[index-1] + timeoftype[3]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance = dir[tem_in].distance +ssline3[index-1]+ timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1820,7 +1944,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].type=dir[tem_in].type;
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line3");  
+                    dir[temp_f].line.push_back("line3"); 
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -1830,7 +1959,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, sline3);
             if(dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
-                if(dir[tem_in].distance + ssline3[index] + timeoftype[3]< dir[temp_f].distance)
+                if(!visited[temp_f]&&dir[tem_in].distance + ssline3[index] + timeoftype[3]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance= dir[tem_in].distance +ssline3[index] + timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1839,6 +1968,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line3");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -1847,7 +1981,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, sline3);
             tem_in= find_index(t , a, sline3);
-            if(ssline3[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!visited[temp_f]&&ssline3[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ ssline3[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -1856,13 +1990,18 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("subway");
                 dir[temp_f].line.push_back("line3");
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
             }
         }
         for(int a=index-2; a>=0; a--)
         {
             temp_f= find_index(t , a+1, sline3);
             tem_in= find_index(t , a, sline3);
-            if(ssline3[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(!visited[temp_f]&&ssline3[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ ssline3[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -1871,6 +2010,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("subway");
                 dir[tem_in].line.push_back("line3");
+                // if(i==count)
+                //     {
+                //         visited[tem_in]=true;
+                //         visited[temASL]=true;
+                //     }
+              
             }
         }
         /*int temp_f;
@@ -2007,15 +2152,16 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
         }*/
     }
-    void operation::set_sub_line4(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+    void operation::set_sub_line4(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
     {
         int temp_f;
+        int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t , index-1, sline4);
             if(dir[tem_in].line.size()==0 ||  dir[tem_in].line[dir[tem_in].line.size()-1]!="line4" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
-                if(dir[tem_in].distance + ssline4[index-1] + timeoftype[3]< dir[temp_f].distance )
+                if(!visited[temp_f]&&dir[tem_in].distance + ssline4[index-1] + timeoftype[3]< dir[temp_f].distance )
                 {
                     dir[temp_f].distance =dir[tem_in].distance + ssline4[index-1]+ timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -2024,6 +2170,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line4"); 
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                
             }
@@ -2033,7 +2184,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, sline4);
             if( dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line4" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
-                if(dir[tem_in].distance + ssline4[index] + timeoftype[3]< dir[temp_f].distance )
+                if(!visited[temp_f]&& dir[tem_in].distance + ssline4[index] + timeoftype[3]< dir[temp_f].distance )
                 {
                     dir[temp_f].distance=dir[tem_in].distance + ssline4[index] + timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -2042,6 +2193,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line4");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -2050,7 +2206,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, sline4);
             tem_in= find_index(t , a, sline4);
-            if(ssline4[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!visited[temp_f]&&ssline4[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ ssline4[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -2059,13 +2215,18 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("subway");
                 dir[temp_f].line.push_back("line4");
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
             }
         }
         for(int a=index-2; a>=0; a--)
         {
             temp_f= find_index(t , a+1, sline4);
             tem_in= find_index(t , a, sline4);
-            if(ssline4[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(!visited[temp_f]&&ssline4[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ ssline4[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -2074,6 +2235,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("subway");
                 dir[tem_in].line.push_back("line4");
+                // if(i==count)
+                //     {
+                //         visited[tem_in]=true;
+                //         visited[temASL]=true;
+                //     }
+                
             }
         }
 /*        int temp_f;
@@ -2211,7 +2378,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
         }*/
     }
-    void operation::set_taxi_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+    void operation::set_taxi_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
     {
  /*       int tempASL=tem_in;
         int temp_f;
@@ -2346,12 +2513,14 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
         }*/
        int temp_f;
+       int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t , index-1, sline1);
             if( dir[tem_in].line.size()==0 ||  dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
             {
-                if(dir[tem_in].distance + ssline1[index-1] + timeoftype[4]< dir[temp_f].distance )
+                
+                if(!visited[temp_f]&&dir[tem_in].distance + ttline1[index-1] + timeoftype[4]< dir[temp_f].distance )
                 {
                     dir[temp_f].distance =dir[tem_in].distance + ttline1[index-1]+ timeoftype[4];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -2360,6 +2529,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line1");  
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -2369,8 +2543,9 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, sline1);
             if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
             {
-                if( dir[tem_in].distance + ssline1[index] + timeoftype[4]< dir[temp_f].distance)
+                if( !visited[temp_f]&&dir[tem_in].distance + ttline1[index] + timeoftype[4]< dir[temp_f].distance)
                 {
+                    
                     dir[temp_f].distance=dir[tem_in].distance + ttline1[index] + timeoftype[4];
                     dir[temp_f].direct=dir[tem_in].direct;
                     dir[temp_f].line=dir[tem_in].line;
@@ -2378,6 +2553,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line1");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -2386,7 +2566,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, sline1);
             tem_in= find_index(t , a, sline1);
-            if(ttline1[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!visited[temp_f]&&ttline1[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ ttline1[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -2395,13 +2575,18 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("taxi");
                 dir[temp_f].line.push_back("line1");
+            //    if(i==count)
+            //         {
+            //             visited[temp_f]=true;
+            //             visited[temASL]=true;
+            //         }
             }
         }
         for(int a=index-2; a>=0; a--)
         {
             temp_f= find_index(t , a+1, sline1);
             tem_in= find_index(t , a, sline1);
-            if(ttline1[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(!visited[temp_f]&&ttline1[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ ttline1[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -2410,13 +2595,20 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("taxi");
                 dir[tem_in].line.push_back("line1");
+                // if(i==count)
+                //     {
+                //         visited[tem_in]=true;
+                //         visited[temASL]=true;
+                //     }
+               
             }
         }
     }
-    void operation::set_taxi_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+    void operation::set_taxi_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i )
     {
+        int temASL=tem_in;
     /*    int temp_f;
-        int tempASL=tem_in;
+        
         for(int a=index-1; a>=0; a--)
         {  
             if(a==index-1)
@@ -2553,7 +2745,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index-1, sline2);
             if( dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
             {
-                if( dir[tem_in].distance + ssline2[index-1] + timeoftype[4]< dir[temp_f].distance )
+                if(!visited[temp_f]&& dir[tem_in].distance + ttline2[index-1] + timeoftype[4]< dir[temp_f].distance )
                 {
                     dir[temp_f].distance =dir[tem_in].distance + ttline2[index-1]+ timeoftype[4];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -2562,6 +2754,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line2");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -2571,7 +2768,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, sline2);
             if( dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
             {
-                if(dir[tem_in].distance + ssline2[index] + timeoftype[4]< dir[temp_f].distance)
+                if(!visited[temp_f]&&dir[tem_in].distance + ttline2[index] + timeoftype[4]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance=dir[tem_in].distance + ttline2[index] + timeoftype[4];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -2580,6 +2777,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line2");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
                 }
                 
             }
@@ -2588,7 +2790,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, sline2);
             tem_in= find_index(t , a, sline2);
-            if(ttline2[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!visited[temp_f]&&ttline2[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ ttline2[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -2597,13 +2799,18 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("taxi");
                 dir[temp_f].line.push_back("line2");
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
             }
         }
         for(int a=index-2; a>=0; a--)
         {
             temp_f= find_index(t , a+1, sline2);
             tem_in= find_index(t , a, sline2);
-            if(ttline2[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(!visited[temp_f]&&ttline2[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ ttline2[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -2612,18 +2819,26 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("taxi");
                 dir[tem_in].line.push_back("line2");
+                // if(i==count)
+                //     {
+                //          visited[tem_in]=true;
+                //         visited[temASL]=true;
+                //     }
+               
             }
         }
     }
-    void operation::set_taxi_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+    void operation::set_taxi_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
     {
        int temp_f;
+       int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t , index-1, sline3);
             if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
             {
-                if(dir[tem_in].distance + ssline3[index-1] + timeoftype[4]< dir[temp_f].distance )
+                
+                if(!visited[temp_f]&&dir[tem_in].distance + ttline3[index-1] + timeoftype[4]< dir[temp_f].distance )
                 {
                         dir[temp_f].distance = dir[tem_in].distance +ttline3[index-1]+ timeoftype[4];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -2632,6 +2847,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line3");
+                //    if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
                 }
                 
             }
@@ -2641,15 +2861,21 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, sline3);
             if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
             {
-                if(dir[tem_in].distance + ssline3[index] + timeoftype[4]< dir[temp_f].distance)
+                if(!visited[temp_f]&&dir[tem_in].distance + ttline3[index] + timeoftype[4]< dir[temp_f].distance)
                 {
-                        dir[temp_f].distance= dir[tem_in].distance +ttline3[index] + timeoftype[4];
+                    dir[temp_f].distance= dir[tem_in].distance +ttline3[index] + timeoftype[4];
                     dir[temp_f].direct=dir[tem_in].direct;
                     dir[temp_f].line=dir[tem_in].line;
                     dir[temp_f].type=dir[tem_in].type;
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line3");
+                    // if(i==count)
+                    // {
+                    //     visited[temp_f]=true;
+                    //     visited[temASL]=true;
+                    // }
+
                 }
                 
             }
@@ -2658,7 +2884,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, sline3);
             tem_in= find_index(t , a, sline3);
-            if(ttline3[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!visited[temp_f]&&ttline3[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ ttline3[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -2667,13 +2893,18 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("taxi");
                 dir[temp_f].line.push_back("line3");
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
             }
         }
         for(int a=index-2; a>=0; a--)
         {
             temp_f= find_index(t , a+1, sline3);
             tem_in= find_index(t , a, sline3);
-            if(ttline3[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(!visited[temp_f]&&ttline3[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ ttline3[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -2682,6 +2913,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("taxi");
                 dir[tem_in].line.push_back("line3");
+                // if(i==count)
+                //     {
+                //        visited[tem_in]=true;
+                //         visited[temASL]=true;
+                //     }
+              
             }
         }
         /*int temp_f;
@@ -2817,24 +3054,29 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
         }*/
     }
-    void operation::set_taxi_line4(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], bool vis[V])
+    void operation::set_taxi_line4(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V],int count , int i)
     {
        int temp_f;
+       int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t , index-1, sline4);
             if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line4" || dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
             {
-                if( dir[tem_in].distance + ssline4[index-1] + timeoftype[4]< dir[temp_f].distance)
+                if(!visited[temp_f]&& dir[tem_in].distance + ttline4[index-1] + timeoftype[4]< dir[temp_f].distance)
                 {
-                    //cout<<"vaa!!\n";
                     dir[temp_f].distance =dir[tem_in].distance + ttline4[index-1]+ timeoftype[4];
                     dir[temp_f].direct=dir[tem_in].direct;
                     dir[temp_f].line=dir[tem_in].line;
                     dir[temp_f].type=dir[tem_in].type;
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
-                    dir[temp_f].line.push_back("line4");  
+                    dir[temp_f].line.push_back("line4");
+                //    if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
                 }
                 
             }
@@ -2844,7 +3086,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, sline4);
             if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line4" || dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
             {
-                if(dir[tem_in].distance + ssline4[index] + timeoftype[4]< dir[temp_f].distance)
+                if(!visited[temp_f] &&dir[tem_in].distance + ttline4[index] + timeoftype[4]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance= dir[tem_in].distance +ttline4[index] + timeoftype[4];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -2852,8 +3094,13 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].type=dir[tem_in].type;
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
-                    dir[temp_f].line.push_back("line4");  
-                }
+                    dir[temp_f].line.push_back("line4"); 
+                //     if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
+                 }
                 
             }
         }
@@ -2861,7 +3108,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, sline4);
             tem_in= find_index(t , a, sline4);
-            if(ttline4[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!visited[temp_f]&&ttline4[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ ttline4[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -2870,13 +3117,18 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("taxi");
                 dir[temp_f].line.push_back("line4");
+                // if(i==count)
+                //     {
+                //         visited[temp_f]=true;
+                //         visited[temASL]=true;
+                //     }
             }
         }
         for(int a=index-2; a>=0; a--)
         {
             temp_f= find_index(t , a+1, sline4);
             tem_in= find_index(t , a, sline4);
-            if(ttline4[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(!visited[tem_in] && ttline4[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ ttline4[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -2885,6 +3137,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("taxi");
                 dir[tem_in].line.push_back("line4");
+                // if(i==count)
+                //     {
+                //         visited[tem_in]=true;
+                //         visited[temASL]=true;
+                //     }
+                
             }
         }
        /* int temp_f;
@@ -3029,10 +3287,10 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
     }
     void operation:: show()
     {
-        for(auto a:sline2)
+        for(auto a:bline3)
         cout<<a<<" - ";
 
-        for(auto b:ssline2)
+        for(auto b:bbline3)
         cout<<b<<" * ";
     }
 

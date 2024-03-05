@@ -534,31 +534,37 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
 
         dir[src].distance = 0;
         dir[src].direct.push_back(search(src,inputMap));
-       // for (int i{0} ; i < V ; i++)
-        //{
+        // for (int i{0} ; i < V ; i++)
+        //  {
 
             int minIndex = minDistance(dir , setSpt);
             operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir, setSpt);
             setSpt[minIndex] = true;
            for(int p=0; p<V; p++){
             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
-            cout<<"***********************************\n";
-            minIndex = minDistance(dir , setSpt);
-            operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir, setSpt);
-            setSpt[minIndex] = true;
-            for(int p=0; p<V; p++){
-            cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+            cout<<"***********************************\n\n";
+        //     minIndex = minDistance(dir , setSpt);
+        //     operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir, setSpt);
+        //     setSpt[minIndex] = true;
+        //     for(int p=0; p<V; p++){
+        //     cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+        //      cout<<"***********************************\n\n";
+        //      minIndex = minDistance(dir , setSpt);
+        //     operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir, setSpt);
+        //     setSpt[minIndex] = true;
+        //     for(int p=0; p<V; p++){
+        //     cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
 
 
-      // }
-        //cout<<"  "<<dir[dest].distance;
-       //for ( size_t i{0} ; i<V;i++)
-        //{ 
-            //cout<<search(i,inputMap)<<dir[i].distance<<"  ";      
-           // cout << dir[dest].direct[i]<<"\t";dir[dest].direct.size() - 1
-           // cout<<dir[dest].type[i]<<"\t";
-       // }
-        //cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
+    //}
+          cout<<dir[dest].distance<<endl;
+        // for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+        //  { 
+        //      cout<<dir[ inputMap[dir[dest].direct[i]] ].distance;     
+        //     cout << dir[dest].direct[i]<<"\t";
+        //      cout<<dir[dest].type[i]<<"\t";
+        //  }
+    //     cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n';
         dir->distance=__INT_MAX__;
         dir->type.clear();
         dir->direct.clear();

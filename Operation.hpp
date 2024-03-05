@@ -38,6 +38,7 @@ class operation
          vector<int>ttline3;
          vector<int>ttline4;
          Save_data saveVehicles[V];
+         bool visited[V]{false};
          int  z = 0;
 
     
@@ -52,17 +53,17 @@ class operation
     void setItems_dis(unordered_map<string , int> &, DataType[59][59]);
     void setItems_cost(unordered_map<string , int> &, DataType[59][59], int );
     void setAlltype(unordered_map<string , int> &, DataType[59][59], int, vector<int>, saveDirect [V], bool[V]);
-    void set_bus_line1(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-    void set_bus_line2(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-    void set_bus_line3(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-    void set_sub_line1(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-    void set_sub_line2(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-    void set_sub_line3(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-    void set_sub_line4(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-    void set_taxi_line1(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-    void set_taxi_line2(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-    void set_taxi_line3(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
-    void set_taxi_line4(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], bool[V]);
+    void set_bus_line1(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V],int , int);
+    void set_bus_line2(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], int, int);
+    void set_bus_line3(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V],int , int);
+    void set_sub_line1(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], int , int);
+    void set_sub_line2(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], int , int);
+    void set_sub_line3(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], int , int);
+    void set_sub_line4(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V],  int , int);
+    void set_taxi_line1(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], int , int);
+    void set_taxi_line2(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], int , int);
+    void set_taxi_line3(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V], int , int);
+    void set_taxi_line4(unordered_map<string , int> & t, DataType station[59][59], int index,int, vector<int> timeoftype, saveDirect dir[V],int , int);
     void show();
     int find_index(unordered_map<string , int> & t, int index, vector<string>  temp);
     vector <int>  setItems_time(unordered_map<string , int> &, DataType[59][59], int);
