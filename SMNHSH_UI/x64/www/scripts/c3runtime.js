@@ -4432,21 +4432,11 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
 		C3.Plugins.Sprite.Acts.SetAnimSpeed,
 		C3.Plugins.Sprite.Acts.SetAnimFrame,
-		C3.Plugins.System.Cnds.CompareVar,
-		C3.Plugins.Audio.Acts.Play,
-		C3.Plugins.Button.Acts.SetVisible,
-		C3.Plugins.TextBox.Acts.SetVisible,
-		C3.Plugins.Text.Acts.SetVisible,
-		C3.Plugins.Sprite.Acts.SetVisible,
-		C3.Plugins.Sprite.Acts.SetPos,
-		C3.Plugins.System.Exps.layoutwidth,
-		C3.Plugins.System.Exps.layoutheight,
-		C3.Plugins.Sprite.Acts.SetSize,
-		C3.Behaviors.Tween.Acts.TweenOneProperty,
-		C3.Plugins.System.Acts.WaitForPreviousActions,
+		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.Button.Acts.SetCSSStyle,
 		C3.Plugins.TextBox.Acts.SetCSSStyle,
 		C3.Plugins.TextBox.Acts.SetEnabled,
+		C3.Plugins.System.Cnds.CompareVar,
 		C3.Plugins.Touch.Cnds.OnTapGestureObject,
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.Sprite.Exps.UID,
@@ -4454,7 +4444,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.FileSystem.Acts.AddAcceptType,
 		C3.Plugins.FileSystem.Acts.ShowOpenFilePicker,
 		C3.Plugins.FileSystem.Cnds.OnPickerComplete,
-		C3.Plugins.Text.Acts.SetText,
 		C3.Plugins.FileSystem.Exps.FileNameAt,
 		C3.Plugins.Button.Acts.SetEnabled,
 		C3.Plugins.FileSystem.Acts.ReadTextFile,
@@ -4465,15 +4454,27 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.FileSystem.Cnds.HasPickerTag,
 		C3.Plugins.FileSystem.Acts.WriteTextFile,
 		C3.Plugins.TextBox.Exps.Text,
+		C3.Plugins.Sprite.Cnds.CompareFrame,
+		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
+		C3.Plugins.System.Cnds.CompareBetween,
 		C3.Plugins.Arr.Acts.SplitString,
+		C3.Plugins.Arr.Exps.At,
+		C3.Plugins.Audio.Acts.Play,
+		C3.Plugins.Sprite.Acts.SetPos,
+		C3.Plugins.System.Exps.layoutwidth,
+		C3.Plugins.System.Exps.layoutheight,
+		C3.Plugins.Sprite.Acts.SetSize,
+		C3.Plugins.Button.Acts.SetVisible,
+		C3.Plugins.TextBox.Acts.SetVisible,
+		C3.Plugins.Text.Acts.SetVisible,
+		C3.Plugins.Sprite.Acts.SetVisible,
+		C3.Behaviors.Tween.Acts.TweenOneProperty,
+		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Plugins.System.Cnds.For,
 		C3.Plugins.Arr.Exps.Width,
-		C3.Plugins.Sprite.Cnds.CompareInstanceVar,
-		C3.Plugins.Arr.Exps.At,
 		C3.Plugins.System.Exps.loopindex,
 		C3.Plugins.System.Acts.Wait,
-		C3.Plugins.Sprite.Cnds.CompareFrame,
-		C3.Plugins.System.Cnds.CompareBetween
+		C3.Plugins.System.Cnds.Compare
 	];
 };
 self.C3_JsPropNameTable = [
@@ -4493,6 +4494,7 @@ self.C3_JsPropNameTable = [
 	{FileNameText: 0},
 	{minTxt: 0},
 	{hourTxt: 0},
+	{resultTxt: 0},
 	{Tween: 0},
 	{logo: 0},
 	{Map: 0},
@@ -4502,6 +4504,9 @@ self.C3_JsPropNameTable = [
 	{StationCol: 0},
 	{SunMoon: 0},
 	{BtnUpDown: 0},
+	{taxi: 0},
+	{subway: 0},
+	{bus: 0},
 	{FileSystem: 0},
 	{Touch: 0},
 	{Keyboard: 0},
@@ -4511,7 +4516,7 @@ self.C3_JsPropNameTable = [
 	{Finputtext: 0},
 	{Fbtn: 0},
 	{Ftext: 0},
-	{tag: 0},
+	{FObj: 0},
 	{pickUid1: 0},
 	{pickUid2: 0},
 	{Count: 0},
@@ -4521,7 +4526,8 @@ self.C3_JsPropNameTable = [
 	{readingTemp: 0},
 	{minTemp: 0},
 	{hourTemp: 0},
-	{PmAm: 0}
+	{PmAm: 0},
+	{tag: 0}
 ];
 
 self.InstanceType = {
@@ -4540,12 +4546,16 @@ self.InstanceType = {
 	FileNameText: class extends self.ITextInstance {},
 	minTxt: class extends self.ITextInstance {},
 	hourTxt: class extends self.ITextInstance {},
+	resultTxt: class extends self.ITextInstance {},
 	logo: class extends self.ISpriteInstance {},
 	Map: class extends self.ISpriteInstance {},
 	hud: class extends self.ISpriteInstance {},
 	StationCol: class extends self.ISpriteInstance {},
 	SunMoon: class extends self.ISpriteInstance {},
 	BtnUpDown: class extends self.ISpriteInstance {},
+	taxi: class extends self.ISpriteInstance {},
+	subway: class extends self.ISpriteInstance {},
+	bus: class extends self.ISpriteInstance {},
 	FileSystem: class extends self.IInstance {},
 	Touch: class extends self.IInstance {},
 	Keyboard: class extends self.IInstance {},
@@ -4554,7 +4564,8 @@ self.InstanceType = {
 	Audio: class extends self.IInstance {},
 	Finputtext: class extends self.ITextInputInstance {},
 	Fbtn: class extends self.IButtonInstance {},
-	Ftext: class extends self.ITextInstance {}
+	Ftext: class extends self.ITextInstance {},
+	FObj: class extends self.ISpriteInstance {}
 }
 }
 
@@ -4660,18 +4671,7 @@ self.C3_ExpressionFuncs = [
 		() => "",
 		() => -1,
 		() => "Animation 1",
-		() => "click",
-		() => 10,
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (f0() / 2);
-		},
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => f0();
-		},
-		() => 1.5,
-		() => 1,
+		() => "Show Result",
 		() => "Css style",
 		() => "border",
 		() => "none",
@@ -4694,6 +4694,8 @@ self.C3_ExpressionFuncs = [
 		() => "5px",
 		() => "2px solid rgb(32, 201, 151)",
 		() => "Stations",
+		() => 1,
+		() => "click",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject();
@@ -4721,6 +4723,10 @@ self.C3_ExpressionFuncs = [
 		() => "read",
 		() => "Open picker error",
 		() => "Read complete",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => f0();
+		},
 		() => "Read error",
 		() => "Saving files",
 		() => 2,
@@ -4740,22 +4746,6 @@ self.C3_ExpressionFuncs = [
 			const n2 = p._GetNode(2);
 			return () => ((and(and(v0.GetValue(), "*"), v1.GetValue()) + "*") + n2.ExpObject());
 		},
-		() => "Read dist file",
-		() => "read picker complete",
-		() => "read picker error",
-		p => {
-			const f0 = p._GetNode(0).GetBoundMethod();
-			return () => (f0()).toString();
-		},
-		() => "*",
-		p => {
-			const n0 = p._GetNode(0);
-			const f1 = p._GetNode(1).GetBoundMethod();
-			return () => n0.ExpObject(f1());
-		},
-		() => "Animation 2",
-		() => "Read cost file",
-		() => "Read time file",
 		() => "Time input",
 		() => 23,
 		() => 24,
@@ -4778,7 +4768,48 @@ self.C3_ExpressionFuncs = [
 		p => {
 			const v0 = p._GetNode(0).GetVar();
 			return () => and(":0", v0.GetValue());
-		}
+		},
+		() => "Read dist file",
+		() => "readD",
+		() => "read picker complete",
+		() => "read picker error",
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (f0()).toString();
+		},
+		() => "*",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("Best Distance : ", n0.ExpObject(0));
+		},
+		() => "Read cost file",
+		() => "readC",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("Best Cost : ", n0.ExpObject(0));
+		},
+		() => "Read time file",
+		() => "readT",
+		p => {
+			const n0 = p._GetNode(0);
+			return () => and("Best Time : ", n0.ExpObject(0));
+		},
+		() => "Functions",
+		() => 10,
+		p => {
+			const f0 = p._GetNode(0).GetBoundMethod();
+			return () => (f0() / 2);
+		},
+		() => 1.5,
+		p => {
+			const n0 = p._GetNode(0);
+			const f1 = p._GetNode(1).GetBoundMethod();
+			return () => n0.ExpObject(f1());
+		},
+		() => "Animation 2",
+		() => "taxi",
+		() => "subway",
+		() => "bus"
 ];
 
 
