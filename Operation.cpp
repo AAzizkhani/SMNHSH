@@ -656,7 +656,7 @@ int operation::find_index(unordered_map<string , int> & t, int index, vector<str
         }
         return -1;
 }
-void operation::setAlltype(unordered_map<string , int> & t, DataType station[59][59], int index, vector<int> timeoftype, saveDirect dir[V], bool visit[V])
+void operation::setAlltype(unordered_map<string , int> & t, int index, vector<int> timeoftype, saveDirect dir[V], bool visit[V])
 {
         vector <string>temptype= saveVehicles[index].get_type();
         vector <string>templine= saveVehicles[index].get_line();
@@ -666,7 +666,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
         { 
             if(temptype[i]=="bus")
             {
-                if(templine[i]=="line1")
+                if(templine[i]=="line1" )
                 {
                     for(int k=0; k<bline1.size(); k++)
                     {
@@ -676,7 +676,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                   set_bus_line1(t,station, temp_ind, index, timeoftype, dir, count, i);
+                   set_bus_line1(t, temp_ind, index, timeoftype, dir, count, i);
                    for(int j=0; j<bline1.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[bline1[j]]].get_type().size(); q++ )
@@ -699,7 +699,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                   set_bus_line2(t,station, temp_ind,index, timeoftype, dir, count, i); 
+                   set_bus_line2(t,temp_ind,index, timeoftype, dir, count, i); 
                    for(int j=0; j<bline2.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[bline2[j]]].get_type().size(); q++ )
@@ -723,7 +723,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }    
-                   set_bus_line3(t,station, temp_ind,index, timeoftype, dir, count, i); 
+                   set_bus_line3(t,temp_ind,index, timeoftype, dir, count, i); 
                   for(int j=0; j<bline3.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[bline3[j]]].get_type().size(); q++ )
@@ -751,7 +751,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                   set_sub_line1(t,station, temp_ind,index, timeoftype, dir, count, i);
+                   set_sub_line1(t,temp_ind,index, timeoftype, dir, count, i);
                  for(int j=0; j<sline1.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[sline1[j]]].get_type().size(); q++ )
@@ -775,7 +775,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_sub_line2(t,station, temp_ind,index, timeoftype, dir, count, i);
+                    set_sub_line2(t,temp_ind,index, timeoftype, dir, count, i);
                      for(int j=0; j<sline2.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[sline2[j]]].get_type().size(); q++ )
@@ -799,7 +799,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_sub_line3(t,station, temp_ind, index,timeoftype, dir, count, i);
+                    set_sub_line3(t,temp_ind, index,timeoftype, dir, count, i);
                       for(int j=0; j<sline3.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[sline3[j]]].get_type().size(); q++ )
@@ -822,7 +822,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_sub_line4(t,station, temp_ind, index,timeoftype, dir, count, i);
+                    set_sub_line4(t,temp_ind, index,timeoftype, dir, count, i);
                       for(int j=0; j<sline4.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[sline4[j]]].get_type().size(); q++ )
@@ -850,7 +850,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_taxi_line1(t,station, temp_ind,index, timeoftype, dir, count, i);
+                    set_taxi_line1(t, temp_ind,index, timeoftype, dir, count, i);
                      for(int j=0; j<sline1.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[sline1[j]]].get_type().size(); q++ )
@@ -873,7 +873,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_taxi_line2(t,station, temp_ind, index,timeoftype, dir, count, i);
+                    set_taxi_line2(t, temp_ind, index,timeoftype, dir, count, i);
                        for(int j=0; j<sline2.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[sline2[j]]].get_type().size(); q++ )
@@ -896,7 +896,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_taxi_line3(t,station, temp_ind,index, timeoftype, dir, count, i);
+                    set_taxi_line3(t,temp_ind,index, timeoftype, dir, count, i);
                         for(int j=0; j<sline3.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[sline3[j]]].get_type().size(); q++ )
@@ -919,7 +919,7 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             break;
                         }
                     }
-                    set_taxi_line4(t,station, temp_ind,index, timeoftype, dir,  count, i);
+                    set_taxi_line4(t, temp_ind,index, timeoftype, dir,  count, i);
                       for(int j=0; j<sline4.size(); j++)
                    {
                         for(int q=0; q<saveVehicles[t[sline4[j]]].get_type().size(); q++ )
@@ -935,17 +935,18 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
         }
 
 }
-void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
+void operation::set_bus_line1(unordered_map<string , int> & t, int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
        int temp_f;
        int temASL=tem_in;
         if(index>0 )
         {
             temp_f= find_index(t , index-1, bline1);
-            // if()
-            if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
+            if(saveVehicles[temp_f].get_vis()[i]==false)
             {
-                if(!saveVehicles[temp_f].get_vis()[i] && dir[tem_in].distance + bbline1[index-1] + timeoftype[5]< dir[temp_f].distance)
+               if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
+                {
+                if( dir[tem_in].distance + bbline1[index-1] + timeoftype[5]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance= dir[tem_in].distance +bbline1 [index-1] + timeoftype[5];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -957,52 +958,60 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                   
                 }
                 
+                } 
             }
+            
         }
         if(index<bline1.size()-1)
         {
             temp_f= find_index(t , index+1, bline1);
-            if( dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
+            if(saveVehicles[temp_f].get_vis()[i]==false)
             {
-                if(!saveVehicles[temp_f].get_vis()[i] &&dir[tem_in].distance + bbline1[index] + timeoftype[5]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance = dir[tem_in].distance + bbline1[index] + timeoftype[5];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("bus");
-                    dir[temp_f].line.push_back("line1");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
-                }
-                
+                if( dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
+                            {
+                                if(dir[tem_in].distance + bbline1[index] + timeoftype[5]< dir[temp_f].distance)
+                                {
+                                    dir[temp_f].distance = dir[tem_in].distance + bbline1[index] + timeoftype[5];
+                                    dir[temp_f].direct=dir[tem_in].direct;
+                                    dir[temp_f].line=dir[tem_in].line;
+                                    dir[temp_f].type=dir[tem_in].type;
+                                    dir[temp_f].direct.push_back(search(temp_f, t));
+                                    dir[temp_f].type.push_back("bus");
+                                    dir[temp_f].line.push_back("line1");
+                                  
+                                }
+                                
+                            }
             }
+           
         }
         for(int a=index+1; a<bline1.size()-1; a++)
         {
             temp_f= find_index(t , a+1, bline1);
             tem_in= find_index(t , a, bline1);
-            if(!saveVehicles[temp_f].get_vis()[i] && bbline1[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(saveVehicles[temp_f].get_vis()[i]==false)
             {
-                dir[temp_f].distance=dir[tem_in].distance+ bbline1[a] ;
-                dir[temp_f].direct=dir[tem_in].direct;
-                dir[temp_f].line=dir[tem_in].line;
-                dir[temp_f].type=dir[tem_in].type;
-                dir[temp_f].direct.push_back(search(temp_f , t));
-                dir[temp_f].type.push_back("bus");
-                dir[temp_f].line.push_back("line1");
+                if( bbline1[a] + dir[tem_in].distance < dir[temp_f].distance)
+                    {
+                        dir[temp_f].distance=dir[tem_in].distance+ bbline1[a] ;
+                        dir[temp_f].direct=dir[tem_in].direct;
+                        dir[temp_f].line=dir[tem_in].line;
+                        dir[temp_f].type=dir[tem_in].type;
+                        dir[temp_f].direct.push_back(search(temp_f , t));
+                        dir[temp_f].type.push_back("bus");
+                        dir[temp_f].line.push_back("line1");
 
+                    }
             }
+            
         }
         for(int a=index-2; a >= 0; a--)
         {
             temp_f= find_index(t , a+1, bline1);
             tem_in= find_index(t , a, bline1);
-            if(!saveVehicles[tem_in].get_vis()[i]&& bbline1[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(saveVehicles[tem_in].get_vis()[i]==false)
+            {
+                if(bbline1[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ bbline1[a] ;
                 dir[tem_in].direct=dir[tem_in].direct;
@@ -1013,18 +1022,22 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].line.push_back("line1");
                 
             }
+            }
+            
         } 
     }
-    void operation::set_bus_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
+    void operation::set_bus_line2(unordered_map<string , int> & t,  int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
        int temp_f;
        int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t ,index-1, bline2);
-            if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
+            if(saveVehicles[temp_f].get_vis()[i]==false)
             {
-                if(!saveVehicles[temp_f].get_vis()[i] &&dir[tem_in].distance + bbline2[index-1] + timeoftype[5]< dir[temp_f].distance)
+                if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
+            {
+                if(dir[tem_in].distance + bbline2[index-1] + timeoftype[5]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance = dir[tem_in].distance +bbline2[index-1] + timeoftype[5];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1037,13 +1050,17 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 }
                 
             }
+            }
+            
         }
         if(index<bline2.size()-1)
         {
             temp_f= find_index(t ,index+1, bline2);
-            if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
+            if(saveVehicles[temp_f].get_vis()[i]==false)
             {
-                if(!saveVehicles[temp_f].get_vis()[i] &&dir[tem_in].distance + bbline2[index] + timeoftype[5]< dir[temp_f].distance)
+               if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
+            {
+                if(dir[tem_in].distance + bbline2[index] + timeoftype[5]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance = dir[tem_in].distance + bbline2[index] + timeoftype[5];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1055,13 +1072,17 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             
                 }
                 
+            } 
             }
+            
         }
         for(int a=index+1; a<bline2.size()-1; a++)
         {
             temp_f= find_index(t , a+1, bline2);
             tem_in= find_index(t , a, bline2);
-            if(!saveVehicles[temp_f].get_vis()[i] &&bbline2[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(saveVehicles[temp_f].get_vis()[i]==false)
+            {
+                if(bbline2[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ bbline2[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -1072,12 +1093,16 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].line.push_back("line2");
                
             }
+            }
+            
         }
         for(int a=index-2; a>=0 ; a--)
         {
             temp_f= find_index(t , a+1, bline2);
             tem_in= find_index(t , a, bline2);
-            if(!saveVehicles[tem_in].get_vis()[i] &&bbline2[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(saveVehicles[tem_in].get_vis()[i]==false)
+            {
+                if(bbline2[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ bbline2[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -1089,10 +1114,12 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 
                 
             }
+            }
+            
         } 
         
     }
-    void operation::set_bus_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
+    void operation::set_bus_line3(unordered_map<string , int> & t, int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
        int temp_f;
        int temASL=tem_in;
@@ -1101,8 +1128,8 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index-1, bline3);
             if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
             {
-                 cout<<tem_in<<" k "<<saveVehicles[temp_f].get_vis()[i];
-                 cout<<search(tem_in, t)<<"  ";
+                //  cout<<tem_in<<" k "<<saveVehicles[temp_f].get_vis()[i];
+                //  cout<<search(tem_in, t)<<"  ";
                 // cout<<dir[tem_in].distance<<" f ";
                 if(!saveVehicles[temp_f].get_vis()[i] && dir[tem_in].distance + bbline3[index-1] + timeoftype[5]< dir[temp_f].distance)
                 {
@@ -1172,7 +1199,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         } 
         
     }
-    void operation::set_sub_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
+    void operation::set_sub_line1(unordered_map<string , int> & t, int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
        int temp_f;
        int temASL=tem_in;
@@ -1251,16 +1278,17 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
 
     }
-    void operation::set_sub_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
+    void operation::set_sub_line2(unordered_map<string , int> & t, int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
        int temp_f;
        int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t , index-1, sline2);
-            if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
+            if(saveVehicles[temp_f].get_vis()[i]==false)
             {
-               // cout<<dir[tem_in].distance<<'\n';
+                if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
+            {
                 if(!saveVehicles[temp_f].get_vis()[i] && dir[tem_in].distance + ssline2[index-1] + timeoftype[3]< dir[temp_f].distance )
                 {
                     
@@ -1275,13 +1303,16 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 }
                 
             }
+            } 
         }
         if(index<sline2.size()-1)
         {
             temp_f= find_index(t , index+1, sline2);
-            if(dir[tem_in].line.size()==0 ||  dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
+            if(saveVehicles[temp_f].get_vis()[i]==false)
             {
-                if(!saveVehicles[temp_f].get_vis()[i] &&dir[tem_in].distance + ssline2[index] + timeoftype[3]< dir[temp_f].distance)
+                if(dir[tem_in].line.size()==0 ||  dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
+            {
+                if(dir[tem_in].distance + ssline2[index] + timeoftype[3]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance= dir[tem_in].distance +ssline2[index] + timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1293,12 +1324,16 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
                 }
             }
+            }
+            
         }
         for(int a=index+1; a<sline2.size()-1; a++)
         {
             temp_f= find_index(t , a+1, sline2);
             tem_in= find_index(t , a, sline2);
-            if(!saveVehicles[temp_f].get_vis()[i] &&ssline2[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(saveVehicles[temp_f].get_vis()[i]==false)
+            {
+                if(ssline2[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ ssline2[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -1309,12 +1344,16 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].line.push_back("line2");
  
             }
+            }
+            
         }
         for(int a=index-2; a>=0; a--)
         {
             temp_f= find_index(t , a+1, sline2);
             tem_in= find_index(t , a, sline2);
-            if(!saveVehicles[tem_in].get_vis()[i] && ssline2[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(saveVehicles[tem_in].get_vis()[i]==false)
+            {
+                if(!saveVehicles[tem_in].get_vis()[i] && ssline2[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ ssline2[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -1326,19 +1365,23 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
 
                
             }
+            }
+            
         }
 
     }
-    void operation::set_sub_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
+    void operation::set_sub_line3(unordered_map<string , int> & t, int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
         int temp_f;
         int temASL=tem_in;
         if(index>0)
         {
             temp_f= find_index(t , index-1, sline3);
+            if(saveVehicles[temp_f].get_vis()[i]==false)
+            {
             if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
-                if(!saveVehicles[temp_f].get_vis()[i] &&dir[tem_in].distance + ssline3[index-1] + timeoftype[3]< dir[temp_f].distance)
+                if( dir[tem_in].distance + ssline3[index-1] + timeoftype[3]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance = dir[tem_in].distance +ssline3[index-1]+ timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
@@ -1351,16 +1394,16 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 }
                 
             }
+            }
+            
         }
         if(index<sline3.size()-1)
         {
             temp_f= find_index(t , index+1, sline3);
             if(dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
-               // cout<<saveVehicles[temp_f].get_vis()[i] <<"  "<< ssline3[index] <<'\n';
                 if(!saveVehicles[temp_f].get_vis()[i] &&dir[tem_in].distance + ssline3[index] + timeoftype[3]< dir[temp_f].distance)
                 {
-                 //   cout<<"hhg\n";
                     dir[temp_f].distance= dir[tem_in].distance +ssline3[index] + timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
                     dir[temp_f].line=dir[tem_in].line;
@@ -1377,7 +1420,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
             temp_f= find_index(t , a+1, sline3);
             tem_in= find_index(t , a, sline3);
-            if(!saveVehicles[temp_f].get_vis()[i] &&ssline3[a] + dir[tem_in].distance < dir[temp_f].distance)
+            if(!saveVehicles[temp_f].get_vis()[i] && ssline3[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
                 dir[temp_f].distance=dir[tem_in].distance+ ssline3[a] ;
                 dir[temp_f].direct=dir[tem_in].direct;
@@ -1407,7 +1450,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         }
 
     }
-    void operation::set_sub_line4(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
+    void operation::set_sub_line4(unordered_map<string , int> & t, int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
     {
         int temp_f;
         int temASL=tem_in;
@@ -1483,7 +1526,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         }
 
     }
-    void operation::set_taxi_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
+    void operation::set_taxi_line1(unordered_map<string , int> & t, int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
     {
 
        int temp_f;
@@ -1562,7 +1605,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             }
         }
     }
-    void operation::set_taxi_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i )
+    void operation::set_taxi_line2(unordered_map<string , int> & t,  int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i )
     {
         int temASL=tem_in;
         int temp_f;
@@ -1638,7 +1681,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             }
         }
     }
-    void operation::set_taxi_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
+    void operation::set_taxi_line3(unordered_map<string , int> & t,  int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
     {
        int temp_f;
        int temASL=tem_in;
@@ -1717,7 +1760,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         }
  
     }
-    void operation::set_taxi_line4(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V],int count , int i)
+    void operation::set_taxi_line4(unordered_map<string , int> & t,  int index, int tem_in, vector<int> timeoftype, saveDirect dir[V],int count , int i)
     {
        int temp_f;
        int temASL=tem_in;

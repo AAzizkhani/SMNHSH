@@ -60,8 +60,8 @@ int main()
         d.dijkstra_cost(in1 , in2 , stations , index, operatorr);
         cout<<"min time:"<<'\n';
         timeOfType=operatorr.setItems_time(index, stations, hour);
-        d.dijkstra_time(in1 , in2 , stations , index, timeOfType, hour, operatorr);
-        operatorr.show();
+        d.dijkstra_time(in1 , in2 , index, timeOfType, hour, operatorr);
+//        operatorr.show();
 
     }
 

@@ -523,8 +523,8 @@ void Dijkstra::dijkstra_ARtime (int src , int dest , DataType stations[V][V], un
 
     else throw invalid_argument("Not exist!");
 }
-void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType,
- int hour, operation operatorr)
+void Dijkstra::dijkstra_time (int src , int dest , unordered_map<string , int> inputMap, vector <int> timeOfType,
+ int hour, operation &operatorr)
 {
      if (src >= 0 && src <= V-1 &&
        dest >= 0 && dest<= V-1)
@@ -534,26 +534,110 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
 
         dir[src].distance = 0;
         dir[src].direct.push_back(search(src,inputMap));
-         for (int i{0} ; i < V ; i++)
-          {
-
+          for (int i{0} ; i < V ; i++)
+           {
             int minIndex = minDistance(dir , setSpt);
-            operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir, setSpt);
-            setSpt[minIndex] = true;
-           }
-        //    for(int p=0; p<V; p++){
-        //     cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
-        //     cout<<"***********************************\n\n";
-
-
+            //cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";
+            //cout<<endl;
+            operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+            setSpt[minIndex] = true; }
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//             minIndex = minDistance(dir , setSpt);
+// cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";            cout<<endl;
+//             operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//             minIndex = minDistance(dir , setSpt);
+// cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";            cout<<endl;
+//             operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//             minIndex = minDistance(dir , setSpt);
+// cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";            cout<<endl;
+//             operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//  minIndex = minDistance(dir , setSpt);
+//             cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";
+//             cout<<endl;
+//             operatorr.setAlltype(inputMap, minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//              minIndex = minDistance(dir , setSpt);
+//             cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";
+//             cout<<endl;
+//             operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//              minIndex = minDistance(dir , setSpt);
+//             cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";
+//             cout<<endl;
+//             operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//              minIndex = minDistance(dir , setSpt);
+//             cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";
+//             cout<<endl;
+//             operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//                          minIndex = minDistance(dir , setSpt);
+//             cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";
+//             cout<<endl;
+//             operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//                                      minIndex = minDistance(dir , setSpt);
+//             cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";
+//             cout<<endl;
+//             operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//                                      minIndex = minDistance(dir , setSpt);
+//             cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";
+//             cout<<endl;
+//             operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+//                                      minIndex = minDistance(dir , setSpt);
+//             cout<<"//////"<<search(minIndex,inputMap)<<"/////\n";
+//             cout<<endl;
+//             operatorr.setAlltype(inputMap,  minIndex, timeOfType, dir, setSpt);
+//             setSpt[minIndex] = true;
+//             for(int p=0; p<V; p++){
+//             cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
+//             cout<<"***********************************\n\n";
+ 
     //}
-          cout<<dir[dest].distance<<endl;
-        for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
-         { 
-             cout<<dir[ inputMap[dir[dest].direct[i]] ].distance;     
-            cout << dir[dest].direct[i]<<"\t";
-             cout<<dir[dest].type[i]<<"\t";
-         }
+           cout<<dir[dest].distance<<endl;
+         for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
+          { 
+              cout<<dir[ inputMap[dir[dest].direct[i]] ].distance;     
+              cout << dir[dest].direct[i]<<"\t";
+              cout<<dir[dest].type[i]<<"\t";
+          }
         dir->distance=__INT_MAX__;
         dir->type.clear();
         dir->direct.clear();
