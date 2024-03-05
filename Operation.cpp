@@ -385,7 +385,7 @@ using namespace std;
                     }
                     else if(line=="line3")
                     {
-                        ssline3.push_back(timeOfType[2]*dis);
+                        ssline3.push_back(timeOfType[1]*dis);
                     }
                     else if(line=="line4")
                     {
@@ -660,16 +660,10 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
 {
         vector <string>temptype= saveVehicles[index].get_type();
         vector <string>templine= saveVehicles[index].get_line();
-            // for(int h=0; h<temptype.size(); h++)
-            // {
-            //     cout<<saveVehicles[index]
-            // }
-
         int temp_ind;
         int count=temptype.size()-1;
         for(int i=0; i<count+1 ; i++)
-        {
-            
+        { 
             if(temptype[i]=="bus")
             {
                 if(templine[i]=="line1")
@@ -934,18 +928,12 @@ void operation::setAlltype(unordered_map<string , int> & t, DataType station[59]
                             {
                                 saveVehicles[t[sline4[j]]].set_true(q);
                             }
-                        }
-                        
+                        }   
                    }
                 }
-                
             }
         }
-        // for(int p=0; p<V; p++)
-        // {
-        //     for(int y=0; y<saveVehicles[p].get_type().size();y++)
-        //     cout<<saveVehicles[p].get_vis()[y]<<"   "<< saveVehicles[p].get_name()<<"  "<< saveVehicles[p].get_type()[y];
-        // }
+
 }
 void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
@@ -954,11 +942,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         if(index>0 )
         {
             temp_f= find_index(t , index-1, bline1);
-            if( dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
+            // if()
+            if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line1" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
             {
                 if(!saveVehicles[temp_f].get_vis()[i] && dir[tem_in].distance + bbline1[index-1] + timeoftype[5]< dir[temp_f].distance)
                 {
-                    //cout<<"ya alllaj \n";
                     dir[temp_f].distance= dir[tem_in].distance +bbline1 [index-1] + timeoftype[5];
                     dir[temp_f].direct=dir[tem_in].direct;
                     dir[temp_f].line=dir[tem_in].line;
@@ -966,12 +954,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line1");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
-                    
+                  
                 }
                 
             }
@@ -1012,12 +995,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("bus");
                 dir[temp_f].line.push_back("line1");
-                // if(i==count)
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
             }
         }
         for(int a=index-2; a >= 0; a--)
@@ -1033,146 +1011,9 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(temp_f, t));
                 dir[tem_in].type.push_back("bus");
                 dir[tem_in].line.push_back("line1");
-                // if(i==count)
-                //     {
-                //         visited[tem_in]=true;
-                //         visited[temASL]=true;
-                //     }
                 
             }
         } 
-    /*    int temp_f;
-        int tempASL=tem_in;
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, bline1);
-                   if(dir[tem_in].distance + bbline1[a] + timeoftype[5]< dir[temp_f].distance )
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + bbline1[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line1");
-                    } 
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line1")
-                {
-                    temp_f= find_index(t , a, bline1);
-                   if( dir[tem_in].distance + bbline1[a] + timeoftype[5]< dir[temp_f].distance )
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + bbline1[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
-                {
-                    temp_f= find_index(t , a, bline1);
-                   if( dir[tem_in].distance + bbline1[a] + timeoftype[5]< dir[temp_f].distance )
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + bbline1[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, bline1);
-                temp_f= find_index(t , a, bline1);
-                if( dir[tem_in].distance + bbline1[a]< dir[temp_f].distance )
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + bbline1[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("bus");
-                    dir[temp_f].line.push_back("line1");
-                }
-            }
-
-        }
-        for(int a=index+1; a<bbline1.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, bline1);
-                   if( dir[tempASL].distance + bbline1[a] + timeoftype[5]< dir[temp_f].distance )
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + bbline1[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line1");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line1")
-                {
-                    temp_f= find_index(t , a, bline1);
-                   if( dir[tempASL].distance + bbline1[a] + timeoftype[5]< dir[temp_f].distance )
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + bbline1[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="bus")
-                {
-                    temp_f= find_index(t , a, bline1);
-                   if( dir[tempASL].distance + bbline1[a] + timeoftype[5]< dir[temp_f].distance )
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + bbline1[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, bline1);
-                temp_f= find_index(t , a, bline1);
-                if( dir[tem_in].distance + bbline1[a]< dir[temp_f].distance )
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + bbline1[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("bus");
-                    dir[temp_f].line.push_back("line1");
-                }
-            }
-
-        }*/
     }
     void operation::set_bus_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
@@ -1192,11 +1033,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line2");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+
                 }
                 
             }
@@ -1215,11 +1052,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line2");
-                //    if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+            
                 }
                 
             }
@@ -1237,11 +1070,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(tem_in , t));
                 dir[temp_f].type.push_back("bus");
                 dir[temp_f].line.push_back("line2");
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+               
             }
         }
         for(int a=index-2; a>=0 ; a--)
@@ -1257,148 +1086,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(temp_f, t));
                 dir[tem_in].type.push_back("bus");
                 dir[tem_in].line.push_back("line2");
-                // if(i==count)
-                //     {
-                //         visited[tem_in]=true;
-                //         visited[temASL]=true;
-                //     }
+                
                 
             }
         } 
-        /*int temp_f;
-        int tempASL=tem_in;
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, bline2);
-                   if( dir[tem_in].distance + bbline2[a] + timeoftype[5]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + bbline2[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line2");
-                    } 
-                   
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line2")
-                {
-                    temp_f= find_index(t , a, bline2);
-                   if( dir[tem_in].distance + bbline2[a] + timeoftype[5]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + bbline2[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line2");
-                   } 
-                  // cout<<dir[tem_in].direct[dir[tem_in].direct.size()-1]<<dir[tem_in].distance;
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
-                {
-                    temp_f= find_index(t , a, bline2);
-                   if( dir[tem_in].distance + bbline2[a] + timeoftype[5]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + bbline2[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, bline2);
-                temp_f= find_index(t , a, bline2);
-                if( dir[tem_in].distance + bbline2[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + bbline2[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("bus");
-                    dir[temp_f].line.push_back("line2");
-                }
-            }
-
-        }
-        for(int a=index+1; a<bbline2.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, bline2);
-                   if( dir[tempASL].distance + bbline2[a] + timeoftype[5]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + bbline2[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line2");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line2")
-                {
-                    temp_f= find_index(t , a, bline2);
-                   if( dir[tempASL].distance + bbline2[a] + timeoftype[5]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + bbline2[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="bus")
-                {
-                    temp_f= find_index(t , a, bline2);
-                   if( dir[tempASL].distance + bbline2[a] + timeoftype[5]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + bbline2[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, bline2);
-                temp_f= find_index(t , a, bline2);
-                if( dir[tem_in].distance + bbline2[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + bbline2[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("bus");
-                    dir[temp_f].line.push_back("line2");
-                }
-            }
-
-        }*/
+        
     }
     void operation::set_bus_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
@@ -1409,6 +1101,9 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index-1, bline3);
             if( dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
             {
+                 cout<<tem_in<<" k "<<saveVehicles[temp_f].get_vis()[i];
+                 cout<<search(tem_in, t)<<"  ";
+                // cout<<dir[tem_in].distance<<" f ";
                 if(!saveVehicles[temp_f].get_vis()[i] && dir[tem_in].distance + bbline3[index-1] + timeoftype[5]< dir[temp_f].distance)
                 {
                     dir[temp_f].distance= dir[tem_in].distance +bbline3[index-1] + timeoftype[5];
@@ -1418,13 +1113,8 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line3");
-                //    if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+                
                 }
-                //cout<< dir[temp_f].distance<<"\n";
                 
             }
         }
@@ -1433,7 +1123,6 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, bline3);
             if( dir[tem_in].line.size()==0 ||  dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
             {
-                //cout<<dir[tem_in].distance + bbline3[index] + timeoftype[5]<<'\n';
                 if(!saveVehicles[temp_f].get_vis()[i] &&dir[tem_in].distance + bbline3[index] + timeoftype[5]< dir[temp_f].distance )
                 {
                     dir[temp_f].distance=dir[tem_in].distance + bbline3[index] + timeoftype[5];
@@ -1443,11 +1132,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("bus");
                     dir[temp_f].line.push_back("line3");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+                    
                 }
                 
             }
@@ -1465,11 +1150,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(tem_in, t));
                 dir[temp_f].type.push_back("bus");
                 dir[temp_f].line.push_back("line3");
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+               
             }
         }
         for(int a=index-2; a>=0 ; a--)
@@ -1485,146 +1166,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("bus");
                 dir[tem_in].line.push_back("line3");
-                // if(i==count)
-                //     {
-                //         visited[tem_in]=true;
-                //         visited[temASL]=true;
-                //     }
+                
                
             }
         } 
-        /*int temp_f;
-        int tempASL=tem_in;
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, bline3);
-                   if( dir[tem_in].distance + bbline3[a] + timeoftype[5]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + bbline3[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line3");
-                    } 
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line3")
-                {
-                    temp_f= find_index(t , a, bline3);
-                   if( dir[tem_in].distance + bbline3[a] + timeoftype[5]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + bbline3[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="bus")
-                {
-                    temp_f= find_index(t , a, bline3);
-                   if( dir[tem_in].distance + bbline3[a] + timeoftype[5]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + bbline3[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, bline3);
-                temp_f= find_index(t , a, bline3);
-                if( dir[tem_in].distance + bbline3[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + bbline3[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("bus");
-                    dir[temp_f].line.push_back("line3");
-                }
-            }
-
-        }
-        for(int a=index+1; a<bbline3.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, bline3);
-                   if( dir[tempASL].distance + bbline3[a] + timeoftype[5]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + bbline3[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line3");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line3")
-                {
-                    temp_f= find_index(t , a, bline3);
-                   if( dir[tempASL].distance + bbline3[a] + timeoftype[5]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + bbline3[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="bus")
-                {
-                    temp_f= find_index(t , a, bline3);
-                   if( dir[tempASL].distance + bbline3[a] + timeoftype[5]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + bbline3[a]+ timeoftype[5];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("bus");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, bline3);
-                temp_f= find_index(t , a, bline3);
-                if( dir[tem_in].distance + bbline3[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + bbline3[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("bus");
-                    dir[temp_f].line.push_back("line3");
-                }
-            }
-
-        }*/
+        
     }
     void operation::set_sub_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
@@ -1644,11 +1190,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line1");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+
                 }
                 
             }
@@ -1667,11 +1209,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line1");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // } 
+ 
                 }
                 
             }
@@ -1680,7 +1218,6 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
         {
              temp_f= find_index(t , a+1, sline1);
              tem_in= find_index(t , a, sline1);
-          //  cout<<saveVehicles[temp_f].get_vis()[i]<<"  m  "<<saveVehicles[temp_f].get_name();
 
             if( !saveVehicles[temp_f].get_vis()[i] &&ssline1[a] + dir[tem_in].distance < dir[temp_f].distance)
             {
@@ -1691,11 +1228,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search( temp_f, t));
                 dir[temp_f].type.push_back("subway");
                 dir[temp_f].line.push_back("line1");
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
             }
         }
         for(int a=index-2; a>=0 ; a--)
@@ -1711,146 +1244,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(temp_f, t));
                 dir[tem_in].type.push_back("subway");
                 dir[tem_in].line.push_back("line1");
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
                
             }
         }
-        /*int temp_f;
-        int tempASL=tem_in;
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tem_in].distance + ssline1[a] + timeoftype[3]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline1[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line1");
-                    } 
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line1")
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tem_in].distance + ssline1[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline1[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tem_in].distance + ssline1[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline1[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("sybway");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, sline1);
-                temp_f= find_index(t , a, sline1);
-                if( dir[tem_in].distance + ssline1[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ssline1[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line1");
-                }
-            }
 
-        }
-        for(int a=index+1; a<ssline1.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tempASL].distance + ssline1[a] + timeoftype[3]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline1[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line1");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line1")
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tempASL].distance + ssline1[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline1[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="subway")
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tempASL].distance + ssline1[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline1[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, sline1);
-                temp_f= find_index(t , a, sline1);
-                if( dir[tem_in].distance + ssline1[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ssline1[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line1");
-                }
-            }
-
-        }*/
 
     }
     void operation::set_sub_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
@@ -1862,8 +1260,10 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index-1, sline2);
             if(dir[tem_in].line.size()==0 || dir[tem_in].line[dir[tem_in].line.size()-1]!="line2" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
+               // cout<<dir[tem_in].distance<<'\n';
                 if(!saveVehicles[temp_f].get_vis()[i] && dir[tem_in].distance + ssline2[index-1] + timeoftype[3]< dir[temp_f].distance )
                 {
+                    
                     dir[temp_f].distance =dir[tem_in].distance + ssline2[index-1]+ timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
                     dir[temp_f].line=dir[tem_in].line;
@@ -1871,11 +1271,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line2");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+
                 }
                 
             }
@@ -1894,11 +1290,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line2");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+
                 }
             }
         }
@@ -1915,18 +1307,14 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("subway");
                 dir[temp_f].line.push_back("line2");
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+ 
             }
         }
         for(int a=index-2; a>=0; a--)
         {
             temp_f= find_index(t , a+1, sline2);
             tem_in= find_index(t , a, sline2);
-            if(!saveVehicles[tem_in].get_vis()[i]&&ssline2[a] + dir[temp_f].distance < dir[tem_in].distance)
+            if(!saveVehicles[tem_in].get_vis()[i] && ssline2[a] + dir[temp_f].distance < dir[tem_in].distance)
             {
                 dir[tem_in].distance=dir[temp_f].distance+ ssline2[a] ;
                 dir[tem_in].direct=dir[temp_f].direct;
@@ -1935,146 +1323,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("subway");
                 dir[tem_in].line.push_back("line2");
-                // if(i==count)
-                //     {
-                //         visited[tem_in]=true;
-                //         visited[temASL]=true;
-                //     }
+
                
             }
         }
-        /*int temp_f;
-        int tempASL=tem_in;
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tem_in].distance + ssline2[a] + timeoftype[3]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline2[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line2");
-                    } 
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line2")
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tem_in].distance + ssline2[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline2[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tem_in].distance + ssline2[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline2[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("sybway");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, sline2);
-                temp_f= find_index(t , a, sline2);
-                if( dir[tem_in].distance + ssline2[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ssline2[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line2");
-                }
-            }
 
-        }
-        for(int a=index+1; a<ssline2.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tempASL].distance + ssline2[a] + timeoftype[3]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline2[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line2");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line2")
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tempASL].distance + ssline2[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline2[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="subway")
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tempASL].distance + ssline2[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline2[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, sline2);
-                temp_f= find_index(t , a, sline2);
-                if( dir[tem_in].distance + ssline2[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ssline2[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line2");
-                }
-            }
-
-        }*/
     }
     void operation::set_sub_line3(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count, int i)
     {
@@ -2094,11 +1347,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line3"); 
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+ 
                 }
                 
             }
@@ -2108,8 +1357,10 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
             temp_f= find_index(t , index+1, sline3);
             if(dir[tem_in].line.size()==0 ||dir[tem_in].line[dir[tem_in].line.size()-1]!="line3" || dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
             {
+               // cout<<saveVehicles[temp_f].get_vis()[i] <<"  "<< ssline3[index] <<'\n';
                 if(!saveVehicles[temp_f].get_vis()[i] &&dir[tem_in].distance + ssline3[index] + timeoftype[3]< dir[temp_f].distance)
                 {
+                 //   cout<<"hhg\n";
                     dir[temp_f].distance= dir[tem_in].distance +ssline3[index] + timeoftype[3];
                     dir[temp_f].direct=dir[tem_in].direct;
                     dir[temp_f].line=dir[tem_in].line;
@@ -2117,11 +1368,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line3");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+
                 }
                 
             }
@@ -2139,11 +1386,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("subway");
                 dir[temp_f].line.push_back("line3");
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
             }
         }
         for(int a=index-2; a>=0; a--)
@@ -2159,147 +1402,10 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("subway");
                 dir[tem_in].line.push_back("line3");
-                // if(i==count)
-                //     {
-                //         visited[tem_in]=true;
-                //         visited[temASL]=true;
-                //     }
-              
+
             }
         }
-        /*int temp_f;
-        int tempASL=tem_in;
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tem_in].distance + ssline3[a] + timeoftype[3]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline3[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line3");
-                    } 
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line3")
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tem_in].distance + ssline3[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline3[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tem_in].distance + ssline3[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline3[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("sybway");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, sline3);
-                temp_f= find_index(t , a, sline3);
-                if( dir[tem_in].distance + ssline3[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ssline3[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line3");
-                }
-            }
 
-        }
-        for(int a=index+1; a<ssline3.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tempASL].distance + ssline3[a] + timeoftype[3]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline3[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line3");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line3")
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tempASL].distance + ssline3[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline3[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="subway")
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tempASL].distance + ssline3[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline3[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, sline3);
-                temp_f= find_index(t , a, sline3);
-                cout<<ssline3[a]<<"  ";
-                if( dir[tem_in].distance + ssline3[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ssline3[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line3");
-                }
-            }
-
-        }*/
     }
     void operation::set_sub_line4(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
     {
@@ -2319,11 +1425,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line4"); 
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+
                 }
                
             }
@@ -2342,11 +1444,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("subway");
                     dir[temp_f].line.push_back("line4");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+
                 }
                 
             }
@@ -2364,11 +1462,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("subway");
                 dir[temp_f].line.push_back("line4");
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
             }
         }
         for(int a=index-2; a>=0; a--)
@@ -2384,283 +1478,14 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("subway");
                 dir[tem_in].line.push_back("line4");
-                // if(i==count)
-                //     {
-                //         visited[tem_in]=true;
-                //         visited[temASL]=true;
-                //     }
                 
             }
         }
-/*        int temp_f;
-        int tempASL=tem_in;
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                //cout<<dir[tem_in].line.size()<<" h ";
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline4);
-                    //cout<<dir[tem_in].direct[dir[tem_in].direct.size()-1]<<"  "<<dir[tem_in].distance<<"  ";
-                   if(dir[tem_in].distance + ssline4[a] + timeoftype[3]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline4[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line4");
-                    } 
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line4")
-                {
-                    temp_f= find_index(t , a, sline4);
-                   if( dir[tem_in].distance + ssline4[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline4[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line4");
-                   }
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="subway")
-                {
-                    temp_f= find_index(t , a, sline4);
-                   if( dir[tem_in].distance + ssline4[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ssline4[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("sybway");
-                        dir[temp_f].line.push_back("line4");
-                   }
-                }  
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, sline4);
-                temp_f= find_index(t , a, sline4);
-                if( dir[tem_in].distance + ssline4[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ssline4[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line4");
-                }
-            }
 
-        }
-        for(int a=index+1; a<ssline4.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline4);
-                    //cout<<dir[temp_f].distance<<'\n'<<dir[tempASL].distance<<'\n';
-                   if( dir[tempASL].distance + ssline4[a] + timeoftype[3]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline4[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line4");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line4")
-                {
-                    temp_f= find_index(t , a, sline4);
-                   if( dir[tempASL].distance + ssline4[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline4[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line4");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="subway")
-                {
-                    temp_f= find_index(t , a, sline4);
-                   if( dir[tempASL].distance + ssline4[a] + timeoftype[3]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ssline4[a]+ timeoftype[3];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("subway");
-                        dir[temp_f].line.push_back("line4");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, sline4);
-                temp_f= find_index(t , a, sline4);
-                if( dir[tem_in].distance + ssline4[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ssline4[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("subway");
-                    dir[temp_f].line.push_back("line4");
-                }
-            }
-
-        }*/
     }
     void operation::set_taxi_line1(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i)
     {
- /*       int tempASL=tem_in;
-        int temp_f;
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tem_in].distance + ttline1[a] + timeoftype[4]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline1[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line1");
-                    } 
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line1")
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tem_in].distance + ttline1[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline1[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tem_in].distance + ttline1[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline1[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, sline1);
-                temp_f= find_index(t , a, sline1);
-                if( dir[tem_in].distance + ttline1[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ttline1[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("taxi");
-                    dir[temp_f].line.push_back("line1");
-                }
-            }
 
-        }
-        for(int a=index+1; a<ttline1.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tempASL].distance + ttline1[a] + timeoftype[4]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline1[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line1");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line1")
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tempASL].distance + ttline1[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline1[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="taxi")
-                {
-                    temp_f= find_index(t , a, sline1);
-                   if( dir[tempASL].distance + ttline1[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline1[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line1");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, sline1);
-                temp_f= find_index(t , a, sline1);
-                if( dir[tem_in].distance + ttline1[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ttline1[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("taxi");
-                    dir[temp_f].line.push_back("line1");
-                }
-            }
-
-        }*/
        int temp_f;
        int temASL=tem_in;
         if(index>0)
@@ -2678,11 +1503,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line1");  
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+
                 }
                 
             }
@@ -2702,11 +1523,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line1");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+  
                 }
                 
             }
@@ -2724,11 +1541,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("taxi");
                 dir[temp_f].line.push_back("line1");
-            //    if(i==count)
-            //         {
-            //             visited[temp_f]=true;
-            //             visited[temASL]=true;
-            //         }
+
             }
         }
         for(int a=index-2; a>=0; a--)
@@ -2744,11 +1557,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("taxi");
                 dir[tem_in].line.push_back("line1");
-                // if(i==count)
-                //     {
-                //         visited[tem_in]=true;
-                //         visited[temASL]=true;
-                //     }
+
                
             }
         }
@@ -2756,138 +1565,6 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
     void operation::set_taxi_line2(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V], int count , int i )
     {
         int temASL=tem_in;
-    /*    int temp_f;
-        
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tem_in].distance + ttline2[a] + timeoftype[4]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline2[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line2");
-                    } 
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line2")
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tem_in].distance + ttline2[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline2[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tem_in].distance + ttline2[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline2[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, sline2);
-                temp_f= find_index(t , a, sline2);
-                if( dir[tem_in].distance + ttline2[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ttline2[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("taxi");
-                    dir[temp_f].line.push_back("line2");
-                }
-            }
-
-        }
-        for(int a=index+1; a<ttline2.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tempASL].distance + ttline2[a] + timeoftype[4]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline2[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line2");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line2")
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tempASL].distance + ttline2[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline2[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="taxi")
-                {
-                    temp_f= find_index(t , a, sline2);
-                   if( dir[tempASL].distance + ttline2[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline2[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line2");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, sline2);
-                temp_f= find_index(t , a, sline2);
-                if( dir[tem_in].distance + ttline2[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ttline2[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("taxi");
-                    dir[temp_f].line.push_back("line2");
-                }
-            }
-
-        }*/
         int temp_f;
         if(index>0)
         {
@@ -2903,11 +1580,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line2");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+ 
                 }
                 
             }
@@ -2926,11 +1599,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line2");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+
                 }
                 
             }
@@ -2948,11 +1617,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("taxi");
                 dir[temp_f].line.push_back("line2");
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
             }
         }
         for(int a=index-2; a>=0; a--)
@@ -2968,11 +1633,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("taxi");
                 dir[tem_in].line.push_back("line2");
-                // if(i==count)
-                //     {
-                //          visited[tem_in]=true;
-                //         visited[temASL]=true;
-                //     }
+
                
             }
         }
@@ -2989,18 +1650,14 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 
                 if(!saveVehicles[temp_f].get_vis()[i]&&dir[tem_in].distance + ttline3[index-1] + timeoftype[4]< dir[temp_f].distance )
                 {
-                        dir[temp_f].distance = dir[tem_in].distance +ttline3[index-1]+ timeoftype[4];
+                    dir[temp_f].distance = dir[tem_in].distance +ttline3[index-1]+ timeoftype[4];
                     dir[temp_f].direct=dir[tem_in].direct;
                     dir[temp_f].line=dir[tem_in].line;
                     dir[temp_f].type=dir[tem_in].type;
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line3");
-                //    if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
                 }
                 
             }
@@ -3019,11 +1676,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line3");
-                    // if(i==count)
-                    // {
-                    //     visited[temp_f]=true;
-                    //     visited[temASL]=true;
-                    // }
+
 
                 }
                 
@@ -3042,11 +1695,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("taxi");
                 dir[temp_f].line.push_back("line3");
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
             }
         }
         for(int a=index-2; a>=0; a--)
@@ -3062,146 +1711,11 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("taxi");
                 dir[tem_in].line.push_back("line3");
-                // if(i==count)
-                //     {
-                //        visited[tem_in]=true;
-                //         visited[temASL]=true;
-                //     }
+
               
             }
         }
-        /*int temp_f;
-        int tempASL=tem_in;
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tem_in].distance + ttline3[a] + timeoftype[4]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline3[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line3");
-                    } 
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line3")
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tem_in].distance + ttline3[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline3[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tem_in].distance + ttline3[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline3[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, sline3);
-                temp_f= find_index(t , a, sline3);
-                if( dir[tem_in].distance + ttline3[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ttline3[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("taxi");
-                    dir[temp_f].line.push_back("line3");
-                }
-            }
-
-        }
-        for(int a=index+1; a<ttline3.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tempASL].distance + ttline3[a] + timeoftype[4]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline3[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line3");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line3")
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tempASL].distance + ttline3[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline3[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="taxi")
-                {
-                    temp_f= find_index(t , a, sline3);
-                   if( dir[tempASL].distance + ttline3[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline3[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line3");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, sline3);
-                temp_f= find_index(t , a, sline3);
-                if( dir[tem_in].distance + ttline3[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ttline3[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("taxi");
-                    dir[temp_f].line.push_back("line3");
-                }
-            }
-
-        }*/
+ 
     }
     void operation::set_taxi_line4(unordered_map<string , int> & t, DataType station[59][59], int index, int tem_in, vector<int> timeoftype, saveDirect dir[V],int count , int i)
     {
@@ -3221,11 +1735,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line4");
-                //    if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
                 }
                 
             }
@@ -3244,11 +1754,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                     dir[temp_f].direct.push_back(search(temp_f, t));
                     dir[temp_f].type.push_back("taxi");
                     dir[temp_f].line.push_back("line4"); 
-                //     if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
                  }
                 
             }
@@ -3266,11 +1772,7 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[temp_f].direct.push_back(search(temp_f , t));
                 dir[temp_f].type.push_back("taxi");
                 dir[temp_f].line.push_back("line4");
-                // if(i==count)
-                //     {
-                //         visited[temp_f]=true;
-                //         visited[temASL]=true;
-                //     }
+
             }
         }
         for(int a=index-2; a>=0; a--)
@@ -3286,160 +1788,17 @@ void operation::set_bus_line1(unordered_map<string , int> & t, DataType station[
                 dir[tem_in].direct.push_back(search(tem_in, t));
                 dir[tem_in].type.push_back("taxi");
                 dir[tem_in].line.push_back("line4");
-                // if(i==count)
-                //     {
-                //         visited[tem_in]=true;
-                //         visited[temASL]=true;
-                //     }
                 
             }
         }
-       /* int temp_f;
-        int tempASL=tem_in;
-        for(int a=index-1; a>=0; a--)
-        {  
-            if(a==index-1)
-            {
-                if(dir[tem_in].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline4);
-                   if( dir[tem_in].distance + ttline4[a] + timeoftype[4]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline4[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line4");
-                    } 
-                    //cout<<dir[tem_in].direct[dir[tem_in].direct.size()-1]<<dir[tem_in].distance<<"  ";
 
-                }
-                else if(dir[tem_in].line[dir[tem_in].line.size()-1]!="line4")
-                {
-                    temp_f= find_index(t , a, sline4);
-                   if( dir[tem_in].distance + ttline4[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline4[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line4");
-                   }
-                }
-                else if(dir[tem_in].type[dir[tem_in].type.size()-1]!="taxi")
-                {
-                    
-                    temp_f= find_index(t , a, sline4);
-                   if( dir[tem_in].distance + ttline4[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tem_in].distance + ttline4[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tem_in].direct;
-                        dir[temp_f].line=dir[tem_in].line;
-                        dir[temp_f].type=dir[tem_in].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line4");
-                   }
-                 //  cout<<dir[tem_in].direct[dir[tem_in].direct.size()-1]<<dir[tem_in].distance<<"  ";
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a+1, sline4);
-                temp_f= find_index(t , a, sline4);
-                if( dir[tem_in].distance + ttline4[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ttline4[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("taxi");
-                    dir[temp_f].line.push_back("line4");
-                }
-            }
-        }
-        for(int a=index+1; a < ttline4.size(); a++)
-        {  
-            if(a==index+1)
-            {
-                if(dir[tempASL].line.size()==0)
-                {
-                    temp_f= find_index(t , a, sline4);
-                   if( dir[tempASL].distance + ttline4[a] + timeoftype[4]< dir[temp_f].distance)
-                    {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline4[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line4");
-                    } 
-                }
-                else if(dir[tempASL].line[dir[tempASL].line.size()-1]!="line4")
-                {
-                    temp_f= find_index(t , a, sline4);
-                   if( dir[tempASL].distance + ttline4[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline4[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line4");
-                   }
-                }
-                else if(dir[tempASL].type[dir[tempASL].type.size()-1]!="taxi")
-                {
-                    temp_f= find_index(t , a, sline4);
-                   if( dir[tempASL].distance + ttline4[a] + timeoftype[4]< dir[temp_f].distance)
-                   {
-                        dir[temp_f].distance =dir[tempASL].distance + ttline4[a]+ timeoftype[4];
-                        dir[temp_f].direct=dir[tempASL].direct;
-                        dir[temp_f].line=dir[tempASL].line;
-                        dir[temp_f].type=dir[tempASL].type;
-                        dir[temp_f].direct.push_back(search(temp_f, t));
-                        dir[temp_f].type.push_back("taxi");
-                        dir[temp_f].line.push_back("line4");
-                   }
-                }
-                
-            }
-            else
-            {
-                tem_in=find_index(t , a-1, sline4);
-                temp_f= find_index(t , a, sline4);
-                cout<<ttline4[a]<<"  ";
-                if( dir[tem_in].distance + ttline4[a]< dir[temp_f].distance)
-                {
-                    dir[temp_f].distance =dir[tem_in].distance + ttline4[a];
-                    dir[temp_f].direct=dir[tem_in].direct;
-                    dir[temp_f].line=dir[tem_in].line;
-                    dir[temp_f].type=dir[tem_in].type;
-                    dir[temp_f].direct.push_back(search(temp_f, t));
-                    dir[temp_f].type.push_back("taxi");
-                    dir[temp_f].line.push_back("line4");
-                }
-            }
-        } */
-
-        /*    for(int p=0; p<V; p++){
-            cout<<search(p,t)<<"  "<<dir[p].distance<<"  ";
-        }*/
     }
     void operation:: show()
     {
-        for(auto a:bline3)
+        for(auto a:sline3)
         cout<<a<<" - ";
 
-        for(auto b:bbline3)
+        for(auto b:ssline3)
         cout<<b<<" * ";
     }
 

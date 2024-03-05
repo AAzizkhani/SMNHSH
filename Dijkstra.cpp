@@ -22,7 +22,7 @@ int Dijkstra::minDistance(saveDirect dir[] , bool setSpt[])
 
     for (int ver{0} ; ver < V ; ver++ )
     {
-        if (!setSpt[ver] && dir[ver].distance <= min)
+        if (!setSpt[ver] && dir[ver].distance <= min )
         {
             min = dir[ver].distance;
             minIndex = ver;
@@ -540,21 +540,10 @@ void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unor
             int minIndex = minDistance(dir , setSpt);
             operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir, setSpt);
             setSpt[minIndex] = true;
-          }
+           }
         //    for(int p=0; p<V; p++){
         //     cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
         //     cout<<"***********************************\n\n";
-        //     minIndex = minDistance(dir , setSpt);
-        //     operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir, setSpt);
-        //     setSpt[minIndex] = true;
-        //     for(int p=0; p<V; p++){
-        //     cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
-        //      cout<<"***********************************\n\n";
-        //      minIndex = minDistance(dir , setSpt);
-        //     operatorr.setAlltype(inputMap, stations, minIndex, timeOfType, dir, setSpt);
-        //     setSpt[minIndex] = true;
-        //     for(int p=0; p<V; p++){
-        //     cout<<search(p,inputMap)<<"  "<<dir[p].distance<<"  ";}
 
 
     //}
