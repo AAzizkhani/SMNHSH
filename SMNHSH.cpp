@@ -40,25 +40,25 @@ int main()
 
         string st1,st2, start_min, start_hour;
 
-        //readTestCase(st1 , st2 , start_hour , start_min);
-        getline(cin,  st1);
-        getline(cin, st2);
+        readTestCase(st1 , st2 , start_hour , start_min);
+        //getline(cin,  st1);
+        //getline(cin, st2);
         int in1,in2, min=0, hour=2;
         in1=operatorr.getIndex(index,st1);
         in2=operatorr.getIndex(index,st2);
         //min=stoi(start_min);
         //hour= stoi(start_hour);
-        cout<<"min distance: "<<'\n';
+        //cout<<"min distance: "<<'\n';
         Dijkstra d;
         d.dijkstra(in1 , in2 , stations , index);
-        cout<<endl;
-        cout<< "Arriving time (ad minute): "<<'\n';
+        //cout<<endl;
+        //cout<< "Arriving time (ad minute): "<<'\n';
         d.dijkstra_ARtime(in1 , in2 , stations , index );
-        cout<<endl;
-        cout<<"min cost: "<<'\n';
+        //cout<<endl;
+        //cout<<"min cost: "<<'\n';
         operatorr.setItems_cost(index, stations, hour);
         d.dijkstra_cost(in1 , in2 , stations , index, operatorr);
-        cout<<"min time:"<<'\n';
+        //cout<<"min time:"<<'\n';
         timeOfType=operatorr.setItems_time(index, stations, hour);
         d.dijkstra_time(in1 , in2 , index, timeOfType, hour, operatorr, stations);
 //        operatorr.show();

@@ -485,17 +485,24 @@ void Dijkstra::dijkstra_ARtime(int src, int dest, DataType stations[V][V], unord
             }
         }
 
+        ofstream out;
+        out.open("min_ArTime.txt");
+
         int tut_time = 0;
         for (size_t i{0}; i < dir[dest].direct.size() - 1; i++)
         {
-            cout << dir[dest].direct[i] << "\t";
-            cout << dir[dest].type[i] << "\t";
-            cout << dir[dest].arr_time[i] << "\t";
+            out << dir[dest].direct[i] << "*";
+            out << dir[dest].type[i] << "*";
+            out << dir[dest].arr_time[i] << "*";
             tut_time += dir[dest].arr_time[i];
         }
-        cout << dir[dest].direct[dir[dest].direct.size() - 1] << '\n'
-             << "total: ";
-        cout << tut_time << '\n';
+        out << dir[dest].direct[dir[dest].direct.size() - 1] << '*';
+             //<< "total: ";
+        out << tut_time
+        ;
+
+        out.close();
+
         dir->type.clear();
         dir->direct.clear();
         dir->arr_time.clear();
@@ -532,13 +539,18 @@ void Dijkstra::dijkstra_time(int src, int dest, unordered_map<string, int> input
         }
         else
         {
-            cout << dir[dest].distance << '\n';
+            ofstream out;
+            out.open("min_time.txt");
+
+            out << "*"<<dir[dest].distance << '*';
             for (size_t i{0}; i < dir[dest].direct.size() - 1; i++)
             {
-                cout << dir[inputMap[dir[dest].direct[i]]].distance;
-                cout << dir[dest].direct[i] << "\t";
-                cout << dir[dest].type[i] << "\t";
+                out << "*"<<dir[inputMap[dir[dest].direct[i]]].distance;
+                out << "*"<<dir[dest].direct[i] << "*";
+                out << "*"<<dir[dest].type[i];
             }
+
+            out.close();
         }
 
         dir->distance = __INT_MAX__;
@@ -939,15 +951,21 @@ void Dijkstra::dijkstra_time1(int src, int dest, DataType stations[V][V], unorde
                 }
             }
         }
+        ofstream out;
+        out.open("min_time.txt");
+
         int tut_time=0;
             for (size_t i{0}; i < dir[dest].direct.size() - 1; i++)
             {
-                cout << dir[dest].direct[i] << "\t";
-                cout << dir[dest].type[i] << "\t";
+                out << "*"<<dir[dest].direct[i] << "*";
+                out << "*"<<dir[dest].type[i] << "*";
                 tut_time += dir[dest].distance;
             }
-            cout << dir[dest].direct[dir[dest].direct.size() - 1] << '\n';
-                cout << "total: "<<dir[dest].distance;
+            out << "*"<<dir[dest].direct[dir[dest].direct.size() - 1] << '*';
+                out<<"*"<<dir[dest].distance;
+
+        out.close();
+
         dir->type.clear();
         dir->direct.clear();
         dir->arr_time.clear();

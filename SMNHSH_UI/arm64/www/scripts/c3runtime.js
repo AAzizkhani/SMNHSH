@@ -4426,7 +4426,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.OnLayoutStart,
 		C3.Plugins.Button.Cnds.OnClicked,
 		C3.Plugins.Arr.Acts.Clear,
-		C3.Plugins.TextBox.Acts.SetText,
 		C3.Plugins.System.Acts.SetVar,
 		C3.Plugins.Sprite.Acts.SetAnim,
 		C3.Plugins.Sprite.Acts.SetBoolInstanceVar,
@@ -4441,6 +4440,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.Sprite.Cnds.IsBoolInstanceVarSet,
 		C3.Plugins.Sprite.Exps.UID,
 		C3.Plugins.System.Acts.AddVar,
+		C3.Plugins.TextBox.Acts.SetText,
 		C3.Plugins.FileSystem.Acts.AddAcceptType,
 		C3.Plugins.FileSystem.Acts.ShowOpenFilePicker,
 		C3.Plugins.FileSystem.Cnds.OnPickerComplete,
@@ -4459,6 +4459,7 @@ self.C3_GetObjectRefTable = function () {
 		C3.Plugins.System.Cnds.CompareBetween,
 		C3.Plugins.Arr.Acts.SplitString,
 		C3.Plugins.Arr.Exps.At,
+		C3.Plugins.Arr.Exps.Width,
 		C3.Plugins.Audio.Acts.Play,
 		C3.Plugins.Sprite.Acts.SetPos,
 		C3.Plugins.System.Exps.layoutwidth,
@@ -4471,7 +4472,6 @@ self.C3_GetObjectRefTable = function () {
 		C3.Behaviors.Tween.Acts.TweenOneProperty,
 		C3.Plugins.System.Acts.WaitForPreviousActions,
 		C3.Plugins.System.Cnds.For,
-		C3.Plugins.Arr.Exps.Width,
 		C3.Plugins.System.Exps.loopindex,
 		C3.Plugins.System.Acts.Wait,
 		C3.Plugins.System.Cnds.Compare
@@ -4488,6 +4488,7 @@ self.C3_JsPropNameTable = [
 	{SaveAs: 0},
 	{ShowResult: 0},
 	{ShowStations: 0},
+	{ArivingTime: 0},
 	{StatusText: 0},
 	{index: 0},
 	{Text: 0},
@@ -4541,6 +4542,7 @@ self.InstanceType = {
 	SaveAs: class extends self.IButtonInstance {},
 	ShowResult: class extends self.ITextInputInstance {},
 	ShowStations: class extends self.ITextInputInstance {},
+	ArivingTime: class extends self.IButtonInstance {},
 	StatusText: class extends self.ITextInstance {},
 	Text: class extends self.ITextInstance {},
 	FileNameText: class extends self.ITextInstance {},
@@ -4667,9 +4669,10 @@ function or(l, r)
 
 self.C3_ExpressionFuncs = [
 		() => "Start",
+		() => "click",
 		() => 0,
-		() => "",
 		() => -1,
+		() => "",
 		() => "Animation 1",
 		() => "Show Result",
 		() => "Css style",
@@ -4695,7 +4698,6 @@ self.C3_ExpressionFuncs = [
 		() => "2px solid rgb(32, 201, 151)",
 		() => "Stations",
 		() => 1,
-		() => "click",
 		p => {
 			const n0 = p._GetNode(0);
 			return () => n0.ExpObject();
@@ -4792,7 +4794,15 @@ self.C3_ExpressionFuncs = [
 		() => "readT",
 		p => {
 			const n0 = p._GetNode(0);
-			return () => and("Best Time : ", n0.ExpObject(0));
+			const n1 = p._GetNode(1);
+			return () => (and("Best Time : ", n0.ExpObject((n1.ExpObject() - 1))) + " min");
+		},
+		() => "Read ArTime",
+		() => "readA",
+		p => {
+			const n0 = p._GetNode(0);
+			const n1 = p._GetNode(1);
+			return () => (and("Ariving Time : ", n0.ExpObject((n1.ExpObject() - 1))) + " min");
 		},
 		() => "Functions",
 		() => 10,
