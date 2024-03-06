@@ -24,7 +24,8 @@ public:
     void dijkstra        (int, int, DataType[V][V], unordered_map<string , int>);
     void dijkstra_cost   (int, int, DataType[V][V], unordered_map<string , int>, operation );
     void dijkstra_ARtime (int, int, DataType[V][V], unordered_map<string , int>);
-    void dijkstra_time   (int, int, unordered_map<string , int>, vector <int>, int,  operation& );
+    void dijkstra_time   (int, int,unordered_map<string , int>, vector <int>, int,  operation&, DataType[V][V] );
+    void dijkstra_time1 (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType,int hour);
 
     
 };

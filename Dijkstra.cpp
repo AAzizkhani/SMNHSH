@@ -506,7 +506,7 @@ void Dijkstra::dijkstra_ARtime(int src, int dest, DataType stations[V][V], unord
         throw invalid_argument("Not exist!");
 }
 void Dijkstra::dijkstra_time(int src, int dest, unordered_map<string, int> inputMap, vector<int> timeOfType,
-                             int hour, operation &operatorr)
+                             int hour, operation &operatorr, DataType stations[V][V])
 {
     if (src >= 0 && src <= V - 1 &&
         dest >= 0 && dest <= V - 1)
@@ -524,13 +524,23 @@ void Dijkstra::dijkstra_time(int src, int dest, unordered_map<string, int> input
             setSpt[minIndex] = true;
         }
 
-        cout << dir[dest].distance << endl;
-        for (size_t i{0}; i < dir[dest].direct.size() - 1; i++)
+        if (dir[dest].distance > 200 || dir[dest].distance <0)
         {
-            cout << dir[inputMap[dir[dest].direct[i]]].distance;
-            cout << dir[dest].direct[i] << "\t";
-            cout << dir[dest].type[i] << "\t";
+            
+            dijkstra_time1(src, dest, stations, inputMap, timeOfType, hour);
+            
         }
+        else
+        {
+            cout << dir[dest].distance << '\n';
+            for (size_t i{0}; i < dir[dest].direct.size() - 1; i++)
+            {
+                cout << dir[inputMap[dir[dest].direct[i]]].distance;
+                cout << dir[dest].direct[i] << "\t";
+                cout << dir[dest].type[i] << "\t";
+            }
+        }
+
         dir->distance = __INT_MAX__;
         dir->type.clear();
         dir->direct.clear();
@@ -540,146 +550,252 @@ void Dijkstra::dijkstra_time(int src, int dest, unordered_map<string, int> input
         throw invalid_argument("Not exist!");
 }
 
-/*void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType,
- int hour)
+void Dijkstra::dijkstra_time1(int src, int dest, DataType stations[V][V], unordered_map<string, int> inputMap, vector<int> timeOfType,
+                                       int hour)
 {
-     if (src >= 0 && src <= V-1 &&
-       dest >= 0 && dest<= V-1)
+    if (src >= 0 && src <= V - 1 &&
+        dest >= 0 && dest <= V - 1)
     {
         saveDirect dir[V], taxi[V], bus[V], sub[V];
-        bool setSpt[V] {false};
+        bool setSpt[V]{false};
 
         dir[src].distance = 0;
         taxi[src].distance = 0;
         bus[src].distance = 0;
         sub[src].distance = 0;
-        dir[src].direct.push_back(search(src,inputMap));
-        for (int i{0} ; i < V-1 ; i++)
+        dir[src].direct.push_back(search(src, inputMap));
+        for (int i{0}; i < V - 1; i++)
         {
-            int minIndex = minDistance(dir , setSpt);
+            int minIndex = minDistance(dir, setSpt);
             setSpt[minIndex] = true;
-            for (int j{0} ; j< V ; j++)
+            for (int j{0}; j < V; j++)
             {
-                vector <int> temptime=stations[minIndex][j].get_time();
-                if (!setSpt[j] && temptime.size()>0 && dir[minIndex].distance != __INT_MAX__)
+                vector<int> temptime = stations[minIndex][j].get_time();
+                if (!setSpt[j] && temptime.size() > 0 && dir[minIndex].distance != __INT_MAX__)
+                {
+                    vector<string> templine = stations[j][minIndex].get_timeLine();
+                    vector<string> temptype = stations[minIndex][j].get_timeType();
+                    string temp_line, temp_type;
+                    for (int k = 0; k < temptime.size(); k++)
                     {
-                        vector <string> templine= stations[j][minIndex].get_timeLine();
-                        vector <string> temptype= stations[minIndex][j].get_timeType();
-                        string temp_line, temp_type;
-                        for(int k=0; k<temptime.size(); k++ )
+                        if (dir[minIndex].type.size() == 0 || temptype[k] != dir[minIndex].type[dir[minIndex].type.size() - 1])
                         {
-                            if(dir[minIndex].type.size()==0 || temptype[k] != dir[minIndex].type[dir[minIndex].type.size()-1])
+                            if (temptype[k] == "bus")
                             {
-                                if(temptype[k]=="bus")
+                                if (dir[minIndex].distance + temptime[k] + timeOfType[5] < dir[j].distance)
                                 {
-                                    if(dir[minIndex].distance + temptime[k] + timeOfType[5] < dir[j].distance)
-                                    {
-                                        dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[5];
-                                        temp_line=templine[k];
-                                        temp_type=temptype[k];
-                                    }
-                                    if(bus[minIndex].distance != __INT_MAX__)
-                                    {
+                                    dir[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[5];
+                                    temp_line = templine[k];
+                                    temp_type = temptype[k];
+                                }
+                                if (bus[minIndex].distance != __INT_MAX__)
+                                {
 
-                                        if(bus[minIndex].line.size()==0||bus[minIndex].line[bus[minIndex].line.size()-1]!=templine[k])
-                                        {
-                                            bus[j].distance=bus[minIndex].distance + temptime[k]+timeOfType[5] ;
-                                        }
-                                        else
-                                            bus[j].distance=bus[minIndex].distance + temptime[k] ;
+                                    if (bus[minIndex].line.size() == 0 || bus[minIndex].line[bus[minIndex].line.size() - 1] != templine[k])
+                                    {
+                                        bus[j].distance = bus[minIndex].distance + temptime[k] + timeOfType[5];
                                     }
                                     else
-                                    {
-                                            bus[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[5] ;
+                                        bus[j].distance = bus[minIndex].distance + temptime[k];
+                                }
+                                else
+                                {
+                                    bus[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[5];
+                                }
 
+                                bus[j].direct = bus[minIndex].direct;
+                                bus[j].direct.push_back(search(j, inputMap));
+
+                                bus[j].type = bus[minIndex].type;
+                                bus[j].type.push_back("bus");
+
+                                bus[j].line = bus[minIndex].line;
+                                bus[j].line.push_back(templine[k]);
+                            }
+                            if (temptype[k] == "subway")
+                            {
+                                if (hour > 5 && hour < 9)
+                                {
+                                    if (dir[minIndex].distance + temptime[k] + (timeOfType[3] * 3) < dir[j].distance)
+                                    {
+                                        dir[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[3] * 3;
+                                        temp_line = templine[k];
+                                        temp_type = temptype[k];
                                     }
+                                }
+                                else
+                                {
+                                    if (dir[minIndex].distance + temptime[k] + timeOfType[3] < dir[j].distance)
+                                    {
+                                        dir[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[3];
+                                        temp_line = templine[k];
+                                        temp_type = temptype[k];
+                                    }
+                                }
+
+                                if (sub[minIndex].distance != __INT_MAX__)
+                                {
+                                    if (sub[minIndex].line.size() == 0 || sub[minIndex].line[sub[minIndex].line.size() - 1] != templine[k])
+                                    {
+                                        if (hour > 5 && hour < 9)
+                                            sub[j].distance = sub[minIndex].distance + temptime[k] + timeOfType[3] * 3;
+                                        else
+                                            sub[j].distance = sub[minIndex].distance + temptime[k] + timeOfType[3];
+                                    }
+                                    else
+                                        sub[j].distance = sub[minIndex].distance + temptime[k];
+                                }
+                                else if (hour > 5 && hour < 9)
+                                    sub[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[3] * 3;
+                                else
+                                {
+                                    sub[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[3];
+                                }
+
+                                sub[j].direct = sub[minIndex].direct;
+                                sub[j].direct.push_back(search(j, inputMap));
+
+                                sub[j].type = sub[minIndex].type;
+                                sub[j].type.push_back("subway");
+
+                                sub[j].line = sub[minIndex].line;
+                                sub[j].line.push_back(templine[k]);
+                            }
+                            if (temptype[k] == "taxi")
+                            {
+
+                                if (dir[minIndex].distance + temptime[k] + timeOfType[4] < dir[j].distance)
+                                {
+                                    dir[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[4];
+                                    temp_line = templine[k];
+                                    temp_type = temptype[k];
+                                }
+                                if (taxi[minIndex].distance != __INT_MAX__)
+                                {
+                                    if (taxi[minIndex].line.size() == 0 || taxi[minIndex].line[taxi[minIndex].line.size() - 1] != templine[k])
+                                    {
+                                        taxi[j].distance = taxi[minIndex].distance + temptime[k] + timeOfType[4];
+                                    }
+                                    else
+                                        taxi[j].distance = taxi[minIndex].distance + temptime[k];
+                                }
+                                else
+                                {
+                                    taxi[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[4];
+                                }
+
+                                taxi[j].direct = taxi[minIndex].direct;
+                                taxi[j].direct.push_back(search(j, inputMap));
+
+                                taxi[j].type = taxi[minIndex].type;
+                                taxi[j].type.push_back("taxi");
+
+                                taxi[j].line = taxi[minIndex].line;
+                                taxi[j].line.push_back(templine[k]);
+                            }
+                        }
+                        if (dir[minIndex].type.size() > 0 && temptype[k] == dir[minIndex].type[dir[minIndex].type.size() - 1])
+                        {
+                            if (dir[minIndex].line.size() == 0 || templine[k] != dir[minIndex].line[dir[minIndex].line.size() - 1])
+                            {
+                                if (temptype[k] == "bus")
+                                {
+                                    if (dir[minIndex].distance + temptime[k] + timeOfType[5] < dir[j].distance)
+                                    {
+                                        dir[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[5];
+                                        temp_line = templine[k];
+                                        temp_type = temptype[k];
+                                    }
+                                    if (bus[minIndex].distance != __INT_MAX__)
+                                    {
+                                        if (bus[minIndex].line.size() == 0 || bus[minIndex].line[bus[minIndex].line.size() - 1] != templine[k])
+                                        {
+                                            bus[j].distance = bus[minIndex].distance + temptime[k] + timeOfType[5];
+                                        }
+                                        else
+                                            bus[j].distance = bus[minIndex].distance + temptime[k];
+                                    }
+                                    else
+                                        bus[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[5];
 
                                     bus[j].direct = bus[minIndex].direct;
-                                    bus[j].direct.push_back(search(j,inputMap));
+                                    bus[j].direct.push_back(search(j, inputMap));
 
                                     bus[j].type = bus[minIndex].type;
                                     bus[j].type.push_back("bus");
 
                                     bus[j].line = bus[minIndex].line;
                                     bus[j].line.push_back(templine[k]);
-
                                 }
-                                if(temptype[k]=="subway")
+                                if (temptype[k] == "subway")
                                 {
-                                    if(hour>5 && hour<9)
+                                    if (hour > 5 && hour < 9)
                                     {
-                                        if(dir[minIndex].distance + temptime[k] + (timeOfType[3]*3)  < dir[j].distance)
+                                        if (dir[minIndex].distance + temptime[k] + (timeOfType[3] * 3) < dir[j].distance)
                                         {
-                                        dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[3]*3;
-                                        temp_line=templine[k];
-                                        temp_type=temptype[k];
+                                            dir[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[3] * 3;
+                                            temp_line = templine[k];
+                                            temp_type = temptype[k];
                                         }
                                     }
                                     else
                                     {
-                                        if(dir[minIndex].distance + temptime[k] + timeOfType[3]  < dir[j].distance)
+                                        if (dir[minIndex].distance + temptime[k] + timeOfType[3] < dir[j].distance)
                                         {
-                                        dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[3];
-                                        temp_line=templine[k];
-                                        temp_type=temptype[k];
+                                            dir[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[3];
+                                            temp_line = templine[k];
+                                            temp_type = temptype[k];
                                         }
                                     }
-
-                                    if(sub[minIndex].distance != __INT_MAX__)
+                                    if (sub[minIndex].distance != __INT_MAX__)
                                     {
-                                        if(sub[minIndex].line.size()==0||sub[minIndex].line[sub[minIndex].line.size()-1]!=templine[k])
+                                        if (sub[minIndex].line.size() == 0 || sub[minIndex].line[sub[minIndex].line.size() - 1] != templine[k])
                                         {
-                                            if(hour>5 && hour<9)
-                                            sub[j].distance=sub[minIndex].distance + temptime[k]+timeOfType[3]*3;
+                                            if (hour > 5 && hour < 9)
+                                                sub[j].distance = sub[minIndex].distance + temptime[k] + timeOfType[3] * 3;
                                             else
-                                            sub[j].distance=sub[minIndex].distance + temptime[k]+timeOfType[3];
+                                                sub[j].distance = sub[minIndex].distance + temptime[k] + timeOfType[3];
                                         }
                                         else
-                                            sub[j].distance=sub[minIndex].distance + temptime[k];
+                                            sub[j].distance = sub[minIndex].distance + temptime[k];
                                     }
-                                    else if(hour>5 && hour<9)
-                                    sub[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[3]*3;
+                                    else if (hour > 5 && hour < 9)
+                                        sub[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[3] * 3;
                                     else
-                                    {
-                                        sub[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[3];
-                                    }
-
+                                        sub[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[3];
 
                                     sub[j].direct = sub[minIndex].direct;
-                                    sub[j].direct.push_back(search(j,inputMap));
+                                    sub[j].direct.push_back(search(j, inputMap));
 
                                     sub[j].type = sub[minIndex].type;
                                     sub[j].type.push_back("subway");
 
                                     sub[j].line = sub[minIndex].line;
                                     sub[j].line.push_back(templine[k]);
-
                                 }
-                                if(temptype[k]=="taxi")
+                                if (temptype[k] == "taxi")
                                 {
-
-                                    if(dir[minIndex].distance + temptime[k] + timeOfType[4] < dir[j].distance)
+                                    if (dir[minIndex].distance + temptime[i] + timeOfType[4] < dir[j].distance)
                                     {
-                                        dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[4];
-                                        temp_line=templine[k];
-                                        temp_type=temptype[k];
+                                        dir[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[4];
+                                        temp_line = templine[k];
+                                        temp_type = temptype[k];
                                     }
-                                    if(taxi[minIndex].distance != __INT_MAX__)
+                                    if (taxi[minIndex].distance != __INT_MAX__)
                                     {
-                                        if(taxi[minIndex].line.size()==0 ||taxi[minIndex].line[taxi[minIndex].line.size()-1]!=templine[k])
+                                        if (taxi[minIndex].line.size() == 0 || taxi[minIndex].line[taxi[minIndex].line.size() - 1] != templine[k])
                                         {
-                                            taxi[j].distance=taxi[minIndex].distance + temptime[k]+timeOfType[4];
+
+                                            taxi[j].distance = taxi[minIndex].distance + temptime[k] + timeOfType[4];
                                         }
                                         else
-                                            taxi[j].distance=taxi[minIndex].distance + temptime[k];
+                                            taxi[j].distance = taxi[minIndex].distance + temptime[k];
                                     }
                                     else
-                                    {
-                                        taxi[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[4];
-                                    }
+                                        taxi[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[4];
 
                                     taxi[j].direct = taxi[minIndex].direct;
-                                    taxi[j].direct.push_back(search(j,inputMap));
+                                    taxi[j].direct.push_back(search(j, inputMap));
 
                                     taxi[j].type = taxi[minIndex].type;
                                     taxi[j].type.push_back("taxi");
@@ -687,274 +803,160 @@ void Dijkstra::dijkstra_time(int src, int dest, unordered_map<string, int> input
                                     taxi[j].line = taxi[minIndex].line;
                                     taxi[j].line.push_back(templine[k]);
                                 }
-
                             }
-                            if(dir[minIndex].type.size()>0 && temptype[k] == dir[minIndex].type[dir[minIndex].type.size()-1])
+                            if (dir[minIndex].line.size() > 0 && templine[k] == dir[minIndex].line[dir[minIndex].line.size() - 1])
                             {
-                                if(dir[minIndex].line.size()==0 ||templine[k]!=dir[minIndex].line[dir[minIndex].line.size()-1])
+                                if (temptype[k] == "bus")
                                 {
-                                    if(temptype[k]=="bus")
+                                    if (dir[minIndex].distance + temptime[k] < dir[j].distance)
                                     {
-                                        if(dir[minIndex].distance + temptime[k] + timeOfType[5] < dir[j].distance)
-                                        {
-                                        dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[5] ;
-                                        temp_line=templine[k];
-                                        temp_type=temptype[k];
-                                        }
-                                        if(bus[minIndex].distance != __INT_MAX__)
-                                        {
-                                            if(bus[minIndex].line.size()==0 ||bus[minIndex].line[bus[minIndex].line.size()-1]!=templine[k])
-                                            {
-                                                bus[j].distance=bus[minIndex].distance + temptime[k]+timeOfType[5];
-                                            }
-                                            else
-                                                bus[j].distance=bus[minIndex].distance + temptime[k];
-                                        }
-                                        else
-                                            bus[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[5];
-
-                                        bus[j].direct = bus[minIndex].direct;
-                                        bus[j].direct.push_back(search(j,inputMap));
-
-                                        bus[j].type = bus[minIndex].type;
-                                        bus[j].type.push_back("bus");
-
-                                        bus[j].line = bus[minIndex].line;
-                                        bus[j].line.push_back(templine[k]);
-                                    }
-                                    if(temptype[k]=="subway")
-                                    {
-                                        if(hour>5 && hour<9)
-                                        {
-                                            if(dir[minIndex].distance + temptime[k] + (timeOfType[3]*3)  < dir[j].distance)
-                                            {
-                                            dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[3]*3;
-                                            temp_line=templine[k];
-                                            temp_type=temptype[k];
-                                            }
-
-                                        }
-                                        else
-                                        {
-                                            if(dir[minIndex].distance + temptime[k] + timeOfType[3]  < dir[j].distance)
-                                            {
-                                            dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[3];
-                                            temp_line=templine[k];
-                                            temp_type=temptype[k];
-                                            }
-
-                                        }
-                                        if(sub[minIndex].distance != __INT_MAX__)
-                                        {
-                                            if(sub[minIndex].line.size()==0||sub[minIndex].line[sub[minIndex].line.size()-1]!=templine[k])
-                                            {
-                                                if(hour>5 && hour<9)
-                                                sub[j].distance=sub[minIndex].distance + temptime[k]+timeOfType[3]*3;
-                                                else
-                                                sub[j].distance=sub[minIndex].distance + temptime[k]+timeOfType[3];
-                                            }
-                                            else
-                                                sub[j].distance=sub[minIndex].distance + temptime[k];
-                                        }
-                                        else if(hour>5 && hour<9)
-                                                sub[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[3]*3;
-                                        else
-                                                sub[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[3];
-
-                                            sub[j].direct = sub[minIndex].direct;
-                                            sub[j].direct.push_back(search(j,inputMap));
-
-                                            sub[j].type = sub[minIndex].type;
-                                            sub[j].type.push_back("subway");
-
-                                            sub[j].line = sub[minIndex].line;
-                                            sub[j].line.push_back(templine[k]);
-
-                                    }
-                                    if(temptype[k]=="taxi")
-                                    {
-                                        if(dir[minIndex].distance + temptime[i] + timeOfType[4] < dir[j].distance)
-                                        {
-                                            dir[j].distance = dir[minIndex].distance + temptime[k]+ timeOfType[4];
-                                            temp_line=templine[k];
-                                            temp_type=temptype[k];
-                                        }
-                                        if(taxi[minIndex].distance != __INT_MAX__)
-                                        {
-                                            if(taxi[minIndex].line.size()==0||taxi[minIndex].line[taxi[minIndex].line.size()-1]!=templine[k])
-                                            {
-
-                                                taxi[j].distance=taxi[minIndex].distance + temptime[k]+timeOfType[4];
-                                            }
-                                            else
-                                                taxi[j].distance=taxi[minIndex].distance + temptime[k];
-                                        }
-                                        else
-                                        taxi[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[4];
-
-                                        taxi[j].direct = taxi[minIndex].direct;
-                                        taxi[j].direct.push_back(search(j,inputMap));
-
-                                        taxi[j].type = taxi[minIndex].type;
-                                        taxi[j].type.push_back("taxi");
-
-                                        taxi[j].line = taxi[minIndex].line;
-                                        taxi[j].line.push_back(templine[k]);
-                                    }
-                                }
-                                if(dir[minIndex].line.size()>0 && templine[k]==dir[minIndex].line[dir[minIndex].line.size()-1])
-                                {
-                                    if(temptype[k]=="bus")
-                                    {
-                                        if(dir[minIndex].distance + temptime[k] < dir[j].distance)
-                                        {
-                                        dir[j].distance = dir[minIndex].distance + temptime[k] ;
-                                        temp_line=templine[k];
-                                        temp_type=temptype[k];
-                                        }
-                                        if(bus[minIndex].distance != __INT_MAX__)
-                                        {
-                                        if(bus[minIndex].line.size()==0 ||bus[minIndex].line[bus[minIndex].line.size()-1]!=templine[k])
-                                        {
-                                            bus[j].distance=bus[minIndex].distance + temptime[k]+timeOfType[5];
-                                        }
-                                        else
-                                            bus[j].distance=bus[minIndex].distance + temptime[k];
-                                        }
-                                        else
-
-                                            bus[j].distance=dir[minIndex].distance + temptime[k]+timeOfType[5];
-
-                                        bus[j].direct = bus[minIndex].direct;
-                                        bus[j].direct.push_back(search(j,inputMap));
-
-                                        bus[j].type = bus[minIndex].type;
-                                        bus[j].type.push_back("bus");
-
-                                        bus[j].line = bus[minIndex].line;
-                                        bus[j].line.push_back(templine[k]);
-                                    }
-                                    if(temptype[k]=="subway")
-                                    {
-
-                                        if(dir[minIndex].distance + temptime[k]  < dir[j].distance)
-                                            {
-                                            dir[j].distance = dir[minIndex].distance + temptime[k];
-                                            temp_line=templine[k];
-                                            temp_type=temptype[k];
-                                            }
-                                        //sub[j].distance=sub[minIndex].distance + temptime[k] ;
-
-                                        if(sub[minIndex].distance != __INT_MAX__)
-                                        {
-                                            if(sub[minIndex].line.size()==0||sub[minIndex].line[sub[minIndex].line.size()-1]!=templine[k])
-                                            {
-                                                if(hour>5 && hour<9)
-                                                sub[j].distance=sub[minIndex].distance + temptime[k]+timeOfType[3]*3;
-                                                else
-                                                sub[j].distance=sub[minIndex].distance + temptime[k]+timeOfType[3];
-                                            }
-                                            else
-                                                sub[j].distance=sub[minIndex].distance + temptime[k];
-                                        }
-                                        else
-                                            sub[j].distance=dir[minIndex].distance + temptime[k];
-
-
-                                            sub[j].direct = sub[minIndex].direct;
-                                            sub[j].direct.push_back(search(j,inputMap));
-
-                                            sub[j].type = sub[minIndex].type;
-                                            sub[j].type.push_back("subway");
-
-                                            sub[j].line = sub[minIndex].line;
-                                            sub[j].line.push_back(templine[k]);
-                                    }
-                                    if(temptype[k]=="taxi")
-                                    {
-                                        if(dir[minIndex].distance + temptime[k]< dir[j].distance)
-                                        {
                                         dir[j].distance = dir[minIndex].distance + temptime[k];
-                                        temp_line=templine[k];
-                                        temp_type=temptype[k];
-                                        }
-                                    if(taxi[minIndex].distance != __INT_MAX__)
+                                        temp_line = templine[k];
+                                        temp_type = temptype[k];
+                                    }
+                                    if (bus[minIndex].distance != __INT_MAX__)
                                     {
-                                        if(taxi[minIndex].line.size()==0 ||taxi[minIndex].line[taxi[minIndex].line.size()-1]!=templine[k])
+                                        if (bus[minIndex].line.size() == 0 || bus[minIndex].line[bus[minIndex].line.size() - 1] != templine[k])
                                         {
-                                            taxi[j].distance=taxi[minIndex].distance + temptime[k]+timeOfType[4];
+                                            bus[j].distance = bus[minIndex].distance + temptime[k] + timeOfType[5];
                                         }
                                         else
-                                            taxi[j].distance=taxi[minIndex].distance + temptime[k];
+                                            bus[j].distance = bus[minIndex].distance + temptime[k];
+                                    }
+                                    else
+
+                                        bus[j].distance = dir[minIndex].distance + temptime[k] + timeOfType[5];
+
+                                    bus[j].direct = bus[minIndex].direct;
+                                    bus[j].direct.push_back(search(j, inputMap));
+
+                                    bus[j].type = bus[minIndex].type;
+                                    bus[j].type.push_back("bus");
+
+                                    bus[j].line = bus[minIndex].line;
+                                    bus[j].line.push_back(templine[k]);
+                                }
+                                if (temptype[k] == "subway")
+                                {
+
+                                    if (dir[minIndex].distance + temptime[k] < dir[j].distance)
+                                    {
+                                        dir[j].distance = dir[minIndex].distance + temptime[k];
+                                        temp_line = templine[k];
+                                        temp_type = temptype[k];
+                                    }
+                                    // sub[j].distance=sub[minIndex].distance + temptime[k] ;
+
+                                    if (sub[minIndex].distance != __INT_MAX__)
+                                    {
+                                        if (sub[minIndex].line.size() == 0 || sub[minIndex].line[sub[minIndex].line.size() - 1] != templine[k])
+                                        {
+                                            if (hour > 5 && hour < 9)
+                                                sub[j].distance = sub[minIndex].distance + temptime[k] + timeOfType[3] * 3;
+                                            else
+                                                sub[j].distance = sub[minIndex].distance + temptime[k] + timeOfType[3];
+                                        }
+                                        else
+                                            sub[j].distance = sub[minIndex].distance + temptime[k];
+                                    }
+                                    else
+                                        sub[j].distance = dir[minIndex].distance + temptime[k];
+
+                                    sub[j].direct = sub[minIndex].direct;
+                                    sub[j].direct.push_back(search(j, inputMap));
+
+                                    sub[j].type = sub[minIndex].type;
+                                    sub[j].type.push_back("subway");
+
+                                    sub[j].line = sub[minIndex].line;
+                                    sub[j].line.push_back(templine[k]);
+                                }
+                                if (temptype[k] == "taxi")
+                                {
+                                    if (dir[minIndex].distance + temptime[k] < dir[j].distance)
+                                    {
+                                        dir[j].distance = dir[minIndex].distance + temptime[k];
+                                        temp_line = templine[k];
+                                        temp_type = temptype[k];
+                                    }
+                                    if (taxi[minIndex].distance != __INT_MAX__)
+                                    {
+                                        if (taxi[minIndex].line.size() == 0 || taxi[minIndex].line[taxi[minIndex].line.size() - 1] != templine[k])
+                                        {
+                                            taxi[j].distance = taxi[minIndex].distance + temptime[k] + timeOfType[4];
+                                        }
+                                        else
+                                            taxi[j].distance = taxi[minIndex].distance + temptime[k];
                                     }
                                     else
                                     {
-                                        taxi[j].distance=dir[minIndex].distance + temptime[k];
+                                        taxi[j].distance = dir[minIndex].distance + temptime[k];
                                     }
 
                                     taxi[j].direct = taxi[minIndex].direct;
-                                    taxi[j].direct.push_back(search(j,inputMap));
+                                    taxi[j].direct.push_back(search(j, inputMap));
 
                                     taxi[j].type = taxi[minIndex].type;
                                     taxi[j].type.push_back("taxi");
 
                                     taxi[j].line = taxi[minIndex].line;
                                     taxi[j].line.push_back(templine[k]);
-                                    }
                                 }
                             }
-                        }
-
-                        if(dir[minIndex].type.size()>0 &&  bus[j].distance < dir[j].distance)
-                        {
-                            dir[j].distance=bus[j].distance;
-                            temp_line=bus[j].line[bus[j].line.size()-1];
-                            temp_type="bus";
-                            dir[j].line = bus[minIndex].line;
-                            dir[j].type = bus[minIndex].type;
-                        }
-                        if(dir[minIndex].type.size()>0 && taxi[j].distance < dir[j].distance)
-                        {
-                            dir[j].distance=taxi[j].distance;
-                            temp_line=taxi[j].line[taxi[j].line.size()-1];
-                            temp_type="taxi";
-                            dir[j].line = taxi[minIndex].line;
-                            dir[j].type = taxi[minIndex].type;
-                        }
-                        if(dir[minIndex].type.size()>0 &&  sub[j].distance < dir[j].distance)
-                        {
-                            dir[j].distance=sub[j].distance;
-                            temp_line=sub[j].line[sub[j].line.size()-1];
-                            temp_type="subway";
-                            dir[j].line = sub[minIndex].line;
-                            dir[j].type = sub[minIndex].type;
-                        }
-                        dir[j].direct = dir[minIndex].direct;
-                        dir[j].direct.push_back(search(j,inputMap));
-                        dir[j].line = dir[minIndex].line; dir[j].line.push_back(temp_line);
-                        dir[j].type = dir[minIndex].type; dir[j].type.push_back(temp_type);
-
                         }
                     }
-                }
 
-        int tut_time=0;
-        for ( size_t i{0} ; i<dir[dest].direct.size() - 1 ;i++)
-        {
-            cout << dir[dest].direct[i]<<"\t";
-            cout<<dir[dest].type[i]<<"\t";
-            tut_time+=dir[dest].distance;
+                    if (dir[minIndex].type.size() > 0 && bus[j].distance < dir[j].distance)
+                    {
+                        dir[j].distance = bus[j].distance;
+                        temp_line = bus[j].line[bus[j].line.size() - 1];
+                        temp_type = "bus";
+                        dir[j].line = bus[minIndex].line;
+                        dir[j].type = bus[minIndex].type;
+                    }
+                    if (dir[minIndex].type.size() > 0 && taxi[j].distance < dir[j].distance)
+                    {
+                        dir[j].distance = taxi[j].distance;
+                        temp_line = taxi[j].line[taxi[j].line.size() - 1];
+                        temp_type = "taxi";
+                        dir[j].line = taxi[minIndex].line;
+                        dir[j].type = taxi[minIndex].type;
+                    }
+                    if (dir[minIndex].type.size() > 0 && sub[j].distance < dir[j].distance)
+                    {
+                        dir[j].distance = sub[j].distance;
+                        temp_line = sub[j].line[sub[j].line.size() - 1];
+                        temp_type = "subway";
+                        dir[j].line = sub[minIndex].line;
+                        dir[j].type = sub[minIndex].type;
+                    }
+                    dir[j].direct = dir[minIndex].direct;
+                    dir[j].direct.push_back(search(j, inputMap));
+                    dir[j].line = dir[minIndex].line;
+                    dir[j].line.push_back(temp_line);
+                    dir[j].type = dir[minIndex].type;
+                    dir[j].type.push_back(temp_type);
+                }
+            }
         }
-        cout << dir[dest].direct[dir[dest].direct.size() - 1]<<'\n'<<"total: ";
-        cout<<dir[dest].distance<<'\n';
+        int tut_time=0;
+            for (size_t i{0}; i < dir[dest].direct.size() - 1; i++)
+            {
+                cout << dir[dest].direct[i] << "\t";
+                cout << dir[dest].type[i] << "\t";
+                tut_time += dir[dest].distance;
+            }
+            cout << dir[dest].direct[dir[dest].direct.size() - 1] << '\n';
+                cout << "total: "<<dir[dest].distance;
         dir->type.clear();
         dir->direct.clear();
         dir->arr_time.clear();
     }
 
-    else throw invalid_argument("Not exist!");
+    else
+        throw invalid_argument("Not exist!");
 }
-*/
+
 /*void Dijkstra::dijkstra_time (int src , int dest , DataType stations[V][V], unordered_map<string , int> inputMap, vector <int> timeOfType, int hour)
 {
     if (src >= 0 && src <= V-1 &&
