@@ -8,11 +8,11 @@
 		"resizable": true,
 		"icon": "www\\icons\\icon-16.png"
 	},
-	"chromium-args": "--autoplay-policy=no-user-gesture-required --disable-features=HardwareMediaKeyHandling",
+	"chromium-args": "--autoplay-policy=no-user-gesture-required --disable-features=HardwareMediaKeyHandling --ignore-gpu-blacklist",
 	"settings": {
 		"content-mode": "bundle",
 		"distribution-mode": "evergreen",
-		"enable-devtools": false
+		"enable-devtools": true
 	},
 	"messages": {
 		"install-webview2": "This app requires the Microsoft Edge WebView2 runtime. It will be downloaded and installed for you now.",

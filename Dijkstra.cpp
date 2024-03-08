@@ -542,12 +542,12 @@ void Dijkstra::dijkstra_time(int src, int dest, unordered_map<string, int> input
             ofstream out;
             out.open("min_time.txt");
 
-            out << "*"<<dir[dest].distance << '*';
+            out <<dir[dest].distance << '*';
             for (size_t i{0}; i < dir[dest].direct.size() - 1; i++)
             {
-                out << "*"<<dir[inputMap[dir[dest].direct[i]]].distance;
-                out << "*"<<dir[dest].direct[i] << "*";
-                out << "*"<<dir[dest].type[i];
+                out <<dir[inputMap[dir[dest].direct[i]]].distance << '*';
+                out <<dir[dest].type[i]   <<'*';
+                out <<dir[dest].direct[i] << '*';
             }
 
             out.close();
@@ -955,14 +955,16 @@ void Dijkstra::dijkstra_time1(int src, int dest, DataType stations[V][V], unorde
         out.open("min_time.txt");
 
         int tut_time=0;
+            out<<dir[dest].distance << '*';
             for (size_t i{0}; i < dir[dest].direct.size() - 1; i++)
             {
-                out << "*"<<dir[dest].direct[i] << "*";
-                out << "*"<<dir[dest].type[i] << "*";
+                out <<dir[dest].direct[i] << '*';
+                out <<dir[dest].type[i] << '*';
                 tut_time += dir[dest].distance;
+                cout << "\n2 ";
             }
-            out << "*"<<dir[dest].direct[dir[dest].direct.size() - 1] << '*';
-                out<<"*"<<dir[dest].distance;
+
+            out <<dir[dest].direct[dir[dest].direct.size() - 1] << '*';
 
         out.close();
 

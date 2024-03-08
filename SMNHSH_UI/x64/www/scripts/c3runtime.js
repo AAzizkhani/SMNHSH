@@ -4794,8 +4794,7 @@ self.C3_ExpressionFuncs = [
 		() => "readT",
 		p => {
 			const n0 = p._GetNode(0);
-			const n1 = p._GetNode(1);
-			return () => (and("Best Time : ", n0.ExpObject((n1.ExpObject() - 1))) + " min");
+			return () => (and("Best Time : ", n0.ExpObject(0)) + " min");
 		},
 		() => "Read ArTime",
 		() => "readA",
